@@ -1,0 +1,241 @@
+:root {
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+main {
+    padding: 1vw;
+    display: flex;
+    justify-content: end;
+    align-items: flex-start;
+}
+
+/* Header */
+header {
+    position: fixed;
+    background-color: aliceblue;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+}
+
+#navbarNavAltMarkup.collapse.navbar-collapse {
+    display: flex;
+    justify-content: space-between;
+}
+div.navbar-nav {
+    padding-left: 4vh;
+    padding-right: 4vh;
+    font-size: 1.3em;
+}
+
+a.nav-link {
+    padding-right: 10vh !important;
+}
+
+a.nav-link:hover {
+    color: rgb(4, 4, 121);
+    font-weight: bold;
+}
+
+img.imgCarro {
+    height: 10px !important;
+}
+
+
+/* Card Productos */
+
+.contenedor {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-area: span;
+    margin-top: 200px;
+    margin-left: 0.4vw;
+    padding: auto;
+    gap:10px;
+}
+
+.card {
+    border: solid 1px gray;
+    border-radius: 2%;
+    padding-bottom: 1vh;
+    width: 22vw;
+    height: 80vh;
+}
+
+img.imgPdto {
+    height: 40vh;
+    object-fit: cover;
+    padding: 1.5vh;
+    border-radius: 5%;
+}
+
+.btn.btn-info {
+  margin: 0rem 1rem;
+}
+.btn.btn-primary {
+    margin-top: 1rem;
+    border-radius: 10%;
+    padding: 0.5rem 1.5rem;
+}
+
+button.btnAdd {
+    padding: 1vw;
+    border: solid 1px gray;
+    border-radius: 10%;
+    margin: 0vw 1vw;
+}
+
+button.btnAdd:hover {
+    background-color: rgb(4, 4, 121);
+    color:antiquewhite;
+}
+
+div.agregarCarro {
+    display: flex;
+    justify-content: center;
+}
+
+.d-inline-flex {
+    padding-left:10px;
+    padding-right: 10px;
+} 
+
+/* carro de compras */
+
+.offcanvas.offcanvas-end.show {
+    width: 50%;
+}
+
+.contenedor-Cart {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    justify-items: center;
+    align-items:initial;
+    text-align: center;
+}
+
+div.cart-notification {
+    border-radius: 50%;
+    background-color: blue;
+    color: antiquewhite;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    display: none; 
+}
+
+table {
+    margin-bottom: 2vw;
+    border: solid 1px grey;
+}
+
+table td {
+    padding: 2vw 0.5vw;
+}
+
+.datosProductosAComprar {
+    width: 100%;
+}
+
+.filaTabla tr {
+    padding: 2vw;
+}
+
+.offcanvas-footer {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5vw;
+}
+
+.preciosCarrito {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1vw;
+}
+
+button.btnAddCanasta {
+    border: solid 1px gray;
+    border-radius: 10%;
+    text-size-adjust:initial;
+} 
+
+p#cantCanasta.mb-0.mt-2.align-self\:center {
+    margin-left: 10px !important;
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 820px){
+    .row.row-cols-2.row-cols-md-4.g-5 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: auto;
+        gap:5px;
+    }
+    .card {
+        border: solid 1px gray;
+        border-radius: 2%;
+        padding-bottom: 2vw;
+        width: 45vw;
+        height: max-content;
+    }
+    
+}
+
+@media screen and (max-width: 420px){
+    .row.row-cols-1.row-cols-md-2.g-4 {
+        display: grid;
+        grid-template-columns: 1fr !important;
+        padding: 0px 7px;
+        margin-top: 0px;
+        margin-right: 0px;
+        gap:5px;
+    }
+    .card {
+        border: solid 1px gray;
+        border-radius: 2%;
+        padding-bottom: 2vw;
+        margin-right: 20px;
+        width: 85vw;
+        height: max-content;
+    }    
+
+    .btn.btn-info {
+        width: 20vw !important;
+    }
+}
+
+/* Carrito */
+#fotoCarrito {
+    height: 80px;
+    object-fit:cover;
+}
+    
+button.btnAddCarro {
+    height: 3vh;
+    padding: 0vw 0.5vw;
+    border: solid 1px gray;
+    border-radius: 10%;
+    margin: 0vw 1vw;
+}
+
+.offcanvas-footer {
+    display: flex;
+    justify-content: space-around;
+}
+
+/* Formulario contacto */
+.container-contact {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+    padding: 0rem 6rem;
+}
+
+.container-contact h6 {
+    text-align: center;
+}
+
+#form-header {
+    padding-top: 12rem;
+}

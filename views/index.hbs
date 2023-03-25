@@ -1,0 +1,24 @@
+{{#> template}}
+
+  <main >
+        <!-- AQUÍ SE CARGA EL CARRITO DE COMPRAS -->
+       <div class="carritoCompras offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Carro de Compras</h5>
+        <button type="button" class="btn-close"data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <!-- Aquí van los productos en el carrito -->
+        <table class="datosProductosAComprar"></table>
+        <!-- Aquí van los valores finales del carrito -->
+        <div class="valoresTotales"></div>
+      </div>
+      <div class="offcanvas-footer">
+        <button class="btn btn-primary" type="button" onclick="vaciarCarrito()">Vaciar Carrito</button>
+        <button class="btn btn-primary" type="button">Comprar</button>
+      </div>
+    </div>
+  </main>
+
+  {{/template}}
+
