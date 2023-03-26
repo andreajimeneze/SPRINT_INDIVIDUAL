@@ -1,60 +1,47 @@
 {{#> template}}
-<p class="tip">Click on button in image container</p>
-<div class="cont">
-  <div class="form sign-in">
-    <h2>Welcome back,</h2>
-    <label>
-      <span>Email</span>
-      <input type="email" />
-    </label>
-    <label>
-      <span>Password</span>
-      <input type="password" />
-    </label>
-    <p class="forgot-pass">Forgot password?</p>
-    <button type="button" class="submit">Sign In</button>
-    <button type="button" class="fb-btn">Connect with <span>facebook</span></button>
-  </div>
-  <div class="sub-cont">
-    <div class="img">
-      <div class="img__text m--up">
-        <h2>New here?</h2>
-        <p>Sign up and discover great amount of new opportunities!</p>
-      </div>
-      <div class="img__text m--in">
-        <h2>One of us?</h2>
-        <p>If you already has an account, just sign in. We've missed you!</p>
-      </div>
-      <div class="img__btn">
-        <span class="m--up">Sign Up</span>
-        <span class="m--in">Sign In</span>
-      </div>
-    </div>
-    <div class="form sign-up">
-      <h2>Time to feel like home,</h2>
-      <label>
-        <span>Name</span>
-        <input type="text" />
-      </label>
-      <label>
-        <span>Email</span>
-        <input type="email" />
-      </label>
-      <label>
-        <span>Password</span>
-        <input type="password" />
-      </label>
-      <button type="button" class="submit">Sign Up</button>
-      <button type="button" class="fb-btn">Join with <span>facebook</span></button>
-    </div>
-  </div>
+<main class="ingreso">
+<div class="container right-panel-active">
+	<!-- Sign Up -->
+	<div class="container__form container--signup">
+		<form action="/ingreso" method="post" class="form" id="form1">
+			<h2 class="form__title">Acceso usuario</h2>
+			<input type="text" placeholder="Usuario" class="input" name="usuario"/>
+			<input type="email" placeholder="Email" class="input" name="email"/>
+			<input type="password" placeholder="Password" class="input" name="password" />
+			<a href="#" class="link">Olvidaste tu clave?</a>
+			<button class="btn btn-in">Ingresar</button>
+		</form>
+	</div>
+
+	<!-- Sign In -->
+	<div class="container__form container--signin">
+		<form action="/ingreso" class="form" method="post" id="form2">
+			<h2 class="form__title">Registro</h2>
+			<input type="text" placeholder="Nombres" class="input" name="nombres"/>
+			<input type="text" placeholder="Apellidos" class="input" name="apellidos"/>
+			<input type="text" placeholder="Número de Carné" class="input" name="rut"/>
+			<input type="text" placeholder="Dirección" class="input" name="direccion"/>
+			{{!-- <input type="text" placeholder="Región" class="input" name="RegReg"/>
+			<input type="text" placeholder="Comuna" class="input" name="comReg"/> --}}
+			<input type="text" placeholder="Teléfono" class="input" name="telefono"/>
+			<input type="email" placeholder="Email" class="input" name="email"/>
+			<input type="text" placeholder="Nombre Usuario" class="input" name="usuario1"/>
+			{{!-- <input type="password" placeholder="PswReg" class="input" name="password" /> --}}
+			<button class="btn-in">Regístrate</button>
+		</form>
+	</div>
+
+	<!-- Overlay -->
+	<div class="container__overlay">
+		<div class="overlay">
+			<div class="overlay__panel overlay--left">
+				<button class="btn-in" id="signIn">Registrarse</button>
+			</div>
+			<div class="overlay__panel overlay--right">
+				<button class="btn-in" id="signUp">Ingresar</button>
+			</div>
+		</div>
+	</div>
 </div>
-
-<a href="https://dribbble.com/shots/3306190-Login-Registration-form" target="_blank" class="icon-link">
-  <img src="http://icons.iconarchive.com/icons/uiconstock/socialmedia/256/Dribbble-icon.png">
-</a>
-<a href="https://twitter.com/NikolayTalanov" target="_blank" class="icon-link icon-link--twitter">
-  <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png">
-</a>
-
+</main>
 {{/template}}
