@@ -1,0 +1,18 @@
+<table>
+    {{#each cart}}
+    <tr class="filaTabla">
+        <td>Código {{ this.id }}</td>
+        <td><img src="" alt="" id="fotoCarrito"></td>
+        <td>{{ this.nombre }}</td>
+        <td id="precioPdto_{{ this.id }}">$ {{ this.precio}}</td>
+        <td>
+            <div class="d-flex column justify-content-center" id="tarjeta-modificarCarro">
+                <button class="btnAddCarro" value={{ this.id }} id="btn-minusCart">-</button>
+                <p class="mb-0 mt-0 align-self:center" id="{{ this.id}}"> {{ this.cantidad }}</p>
+                <button class="btnAddCart" value={{ this.id }} id="btn-plusCart">+</button>
+        </td>
+        <td class="subtotalPdto_{{ this.id }}"> 1 </td>
+        <td><a></a><img src="./assets/img/trash-svgrepo-com.svg" alt=""></a></td>
+    </tr>
+    {{/each}}
+</table>

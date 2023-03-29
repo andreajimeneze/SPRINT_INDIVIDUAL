@@ -3,13 +3,13 @@
 <div class="container right-panel-active">
 	<!-- Sign Up -->
 	<div class="container__form container--signup">
-		<form action="/ingreso" method="post" class="form" id="form1">
+		<form action="/auth" method="post" class="form" id="form1">
 			<h2 class="form__title">Acceso usuario</h2>
 			<input type="text" placeholder="Usuario" class="input" name="usuario"/>
-			<input type="email" placeholder="Email" class="input" name="email"/>
+			{{!-- <input type="email" placeholder="Email" class="input" name="email"/> --}}
 			<input type="password" placeholder="Password" class="input" name="password" />
 			<a href="#" class="link">Olvidaste tu clave?</a>
-			<button class="btn btn-in">Ingresar</button>
+			<button class="btn btn-in" value="btn-access" type="submit" id="btn-in" name="btn-action">Ingresar</button>
 		</form>
 	</div>
 
@@ -27,7 +27,8 @@
 			<input type="email" placeholder="Email" class="input" name="email"/>
 			<input type="text" placeholder="Nombre Usuario" class="input" name="usuario1"/>
 			{{!-- <input type="password" placeholder="PswReg" class="input" name="password" /> --}}
-			<button class="btn-in">Regístrate</button>
+			<button class="btn btn-in" type="submit" value="btn-regist" id="" name="btn-action">Regístrate</button>
+			
 		</form>
 	</div>
 
@@ -35,13 +36,34 @@
 	<div class="container__overlay">
 		<div class="overlay">
 			<div class="overlay__panel overlay--left">
-				<button class="btn-in" id="signIn">Registrarse</button>
+				<button class="btn-in"  id="signIn">Registrarse</button>
 			</div>
 			<div class="overlay__panel overlay--right">
-				<button class="btn-in" id="signUp">Ingresar</button>
+				<button class="btn-in"  id="signUp">Ingresar</button>
 			</div>
 		</div>
 	</div>
 </div>
 </main>
 {{/template}}
+
+<script>
+	
+const signInBtn = document.getElementById("signIn");
+const signUpBtn = document.getElementById("signUp");
+const fistForm = document.getElementById("form1");
+const secondForm = document.getElementById("form2");
+const container = document.querySelector(".container");
+
+signInBtn.addEventListener("click", () => {
+	container.classList.remove("right-panel-active");
+});
+
+signUpBtn.addEventListener("click", () => {
+	container.classList.add("right-panel-active");
+});
+
+//document.getElementById("form1").addEventListener("submit", (e) => e.preventDefault());
+//document.getElementById("form2").addEventListener("submit", (e) => e.preventDefault());
+
+</script>

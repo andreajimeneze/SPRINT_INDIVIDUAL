@@ -1,22 +1,64 @@
 {{#each dataPdto }}
+
 <div class="row row-cols-2 row-cols-md-3 g-4 cardPdto">
-            <div class="col">
-            <div class="card h-100">
-                <img src="{{ img }}" class="card-img-top imgPdto" alt="...">
-                <div class="card-body">
+    <div class="col">
+        <div class="card h-100">
+            <img src="{{ img }}" class="card-img-top imgPdto" alt="...">
+            <div class="card-body">
                 <h5 class="card-title"> {{ nombre }}</h5>
                 <p class="card-text">Código: {{ id }}</p>
-                <p class="card-text">Precio $: {{ precio}}</p>
+                <p class="card-text">Precio: $ {{ precio}}</p>
+            </div>
+            <div class="d-flex column justify-content-center" class="tarjeta-modificar">
+                <button class="btn btn-info bton-card" value="{{ id }}" id="btn-minus">-</button>
+                <p class="mb-0 mt-2 align-self:center cantProd" id="{{ id }}" name="cantProd">1</p>
+                <button class="btn btn-info bton-card" value="{{ id }}" id="btn-plus">+</button>
+            </div>
+            <form action="/tienda" method="get">
+                <div class="agregarCarro" class="d-flex">
+                    <input type="hidden" name="pdtoId" value="{{ id }}">
+                    <button class="btn btn-primary" value="{{ id }}" name="btnAdd" id="btn-add">Agregar</button>
                 </div>
-                <div class="d-flex column justify-content-center" class="tarjeta-modificar">
-                <button class="btn btn-info bton-card" value="{{ id }}" id="btn-card">-</button>
-                <p class="mb-0 mt-2 align-self:center" id="{{ id }}" >1</p>
-                <button class="btn btn-info bton-card" value="{{ id }}" id="btn-card">+</button>
-            </div>
-            <div class="agregarCarro" class="d-flex">
-                <button class="btn btn-primary" value= "{{ id }}" key=nada id="btnAdd_{{ id }}">Agregar</button>
-            </div>
-            </div>
-            </div>
+            </form>
         </div>
+    </div>
+</div>
+
 {{/each}}
+
+<script>
+    let btnMin = document.querySelectorAll("#btn-minus");
+    let cantProd = document.querySelectorAll(".cantProd");
+    let btnPlus = document.querySelectorAll("#btn-plus");
+    let btnAdd = document.querySelectorAll("#btn-add");
+    let compra = [];
+
+    // Disminuye la cantidad de productos en la card.
+    btnMin.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            let cantPdto = parseInt(cantProd[index].textContent)
+            if (cantPdto > 1) {
+                cantPdto--;
+                cantProd[index].textContent = cantPdto;
+            }
+        })
+    })
+    // Aumenta la cantidad de productos en la card.
+    btnPlus.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            let cantPdto = parseInt(cantProd[index].textContent)
+            if (cantPdto >= 1) {
+                cantPdto++;
+                cantProd[index].textContent = cantPdto;
+            }
+        })
+    })
+
+// Función para agregar a arreglo compras
+// btnAdd.forEach((btn, index) => {
+  //  btn.addEventListener("click", () => {
+  //      compra.push(dataPdto[index])
+    //    console.log(compra)
+   // })
+
+</script>
