@@ -11,12 +11,15 @@
 			<a href="#" class="link">Olvidaste tu clave?</a>
 			<button class="btn btn-in" value="btn-access" type="submit" id="btn-in" name="btn-action">Ingresar</button>
 		</form>
+		{{#if error }}
+		<p>{{ error }}</p>
+		{{/if}}
 	</div>
 
 	<!-- Sign In -->
 	<div class="container__form container--signin">
 		<form action="/ingreso" class="form" method="post" id="form2">
-			<h2 class="form__title">Registro</h2>
+			{{!-- <h2 class="form__title">Registro</h2> --}}
 			<input type="text" placeholder="Nombres" class="input" name="nombres"/>
 			<input type="text" placeholder="Apellidos" class="input" name="apellidos"/>
 			<input type="text" placeholder="Número de Carné" class="input" name="rut"/>
@@ -26,7 +29,7 @@
 			<input type="text" placeholder="Teléfono" class="input" name="telefono"/>
 			<input type="email" placeholder="Email" class="input" name="email"/>
 			<input type="text" placeholder="Nombre Usuario" class="input" name="usuario1"/>
-			{{!-- <input type="password" placeholder="PswReg" class="input" name="password" /> --}}
+			<input type="password" placeholder="Password" class="input" name="pass" />
 			<button class="btn btn-in" type="submit" value="btn-regist" id="" name="btn-action">Regístrate</button>
 			
 		</form>

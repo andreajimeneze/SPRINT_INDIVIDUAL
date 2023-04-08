@@ -1,18 +1,110 @@
-<table>
-    {{#each cart}}
-    <tr class="filaTabla">
-        <td>Código {{ this.id }}</td>
-        <td><img src="" alt="" id="fotoCarrito"></td>
-        <td>{{ this.nombre }}</td>
-        <td id="precioPdto_{{ this.id }}">$ {{ this.precio}}</td>
-        <td>
-            <div class="d-flex column justify-content-center" id="tarjeta-modificarCarro">
-                <button class="btnAddCarro" value={{ this.id }} id="btn-minusCart">-</button>
-                <p class="mb-0 mt-0 align-self:center" id="{{ this.id}}"> {{ this.cantidad }}</p>
-                <button class="btnAddCart" value={{ this.id }} id="btn-plusCart">+</button>
-        </td>
-        <td class="subtotalPdto_{{ this.id }}"> 1 </td>
-        <td><a></a><img src="./assets/img/trash-svgrepo-com.svg" alt=""></a></td>
-    </tr>
-    {{/each}}
+{{#> template}}
+
+<h4 id="cartTitle">Canasta de compras</h4>
+<table class="canasta">
+    <thead>
+        <tr id="headTitleCart">
+            <th>ID</th>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each products }}
+
+        <tr class="filaTabla">
+            <td> {{ this.id }}</td>
+            <td><img src="{{this.foto}}" alt="" id="fotoCarrito"></td>
+            <td>{{ this.nombre }}</td>
+            <td id="precioPdto_{{ this.id }}">{{ this.precio}}</td>
+            {{this.cant}}
+            <td id="cantPdto">
+                {{!-- <form action="/cart/decrease" method="put" class="canastaCant"> --}}
+                    <input type="hidden" name="id" value="{{this.id}}">
+                    <input type="hidden" name="nombre" value="{{this.nombre}}">
+                    <input type="hidden" name="precio" value="{{this.precio}}">
+                    <input type="hidden" name="cantProd" value="-1">
+                    {{!-- <p class="mb-0 mt-2 align-self:center cantProdDisplay" id="{{ id }}">{{this.cant}}</p> --}}
+                    <button class="btn btn-info bton-card" id="btn-minus" name="btnMinus" value="{{ id }}">-</button>
+                    {{!--
+                </form> --}}
+
+                {{!-- <form action="/cart/increase" method="post" class="canastaCant"> --}}
+                    <input type="hidden" name="id" value="{{this.id}}">
+                    <input type="hidden" name="nombre" value="{{this.nombre}}">
+                    <input type="hidden" name="precio" value="{{this.precio}}">
+                    <input type="hidden" name="cantProd" value="1">
+                    <p class="mb-0 mt-2 align-self:center cantProdDisplay" id="cant_{{ id }}">1</p>
+                    <button class="btn btn-info bton-card" id="btn-plus" name="btnAdd" value="{{ id }}">+</button>
+                    {{!--
+                </form> --}}
+            </td>
+            <td class="subtotalPdto_{{ this.id }}">{{this.precio}} </td>
+            <td>
+                {{!-- <form action="/cart/remove" method="post"> --}}
+                    <input type="hidden" name="product[id]" value="{{this.id}}">
+                    <input type="hidden" name="product[name]" value="{{this.nombre}}">
+                    <input type="hidden" name="product[price]" value="{{this.precio}}">
+                    <a><img type="hidden" src="./assets/img/trash-svgrepo-com.svg" alt=""></a>
+                    {{!--
+                </form> --}}
+
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">Total:</td>
+            <td>{{total}}</td>
+            <td>
+                <form action="/cart/clear" method="post">
+                    <button class="btn btn-primary">Vaciar</button>
+                </form>
+                <button class="btn btn-primary" onclick="window.location.href='/tienda'">Volver a comprar</button>
+    </tfoot>
+
 </table>
+<script>
+    const btnAdd = document.querySelectorAll("#btn-plus");
+    const btnMinus = document.querySelectorAll("#btn-minus");
+    // const cantProd = document.querySelector("#cant");
+
+    btnAdd.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            // Obtener el elemento "cantProdDisplay" correspondiente al botón "Agregar"
+            let cantProd = btn.parentNode.querySelector(".cantProdDisplay");
+
+            let cantActual = parseInt(cantProd.textContent);
+            if (cantActual > 0) {
+                let newCant = cantActual + 1;
+                cantProd.textContent = newCant.toString();
+                console.log(newCant);
+                console.log(cantProd);
+                console.log(cantActual);
+            }
+        });
+    }),
+
+        btnMinus.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                // Obtener el elemento "cantProdDisplay" correspondiente al botón "Agregar"
+                let cantProd = btn.parentNode.querySelector(".cantProdDisplay");
+
+                let cantActual = parseInt(cantProd.textContent);
+                if (cantActual > 1) {
+                    let newCant = cantActual - 1;
+                    cantProd.textContent = newCant.toString();
+                    console.log(newCant);
+                    console.log(cantProd);
+                    console.log(cantActual);
+                }
+            });
+        });
+</script>
+
+{{/template}}

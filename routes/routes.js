@@ -1,8 +1,10 @@
 import express from "express";
 import fs from "fs";
-import productos from "../index.js";
 import connection from "../conect.js";
 import session from "express-session";
+import { Producto } from "../utils/Class/Producto.js";
+import { Usuario } from "../utils/Class/Usuario.js";
+import { Canasta } from "../utils/Class/Canasta.js";
 const router = express.Router();
 
 router.use(express.json());
@@ -12,17 +14,11 @@ router.get("/", (req, res) => {
   res.render("index")
 })
 
-router.get("/tienda", (req, res) => {
-  let dataPdto = productos.productos.map(d => {
-    return {
-      id: d.id,
-      nombre: d.nombre,
-      precio: d.precio,
-      img: d.foto
-    }
-  })
+router.get("/tienda", async (req, res) => {
+  const pdto = new Producto()
+  const productos = await pdto.getProducts()
 
-  res.render("tienda", { dataPdto })
+  res.render("tienda", { productos })
 })
 
 router.get("/contacto", (req, res) => {
@@ -33,106 +29,88 @@ router.get("/ingreso", (req, res) => {
   res.render("ingreso")
 })
 
-router.get('/', function(req, res) {
-	// Render login template
-	response.sendFile(path.join(__dirname + '/ingreso.hbs'));
+router.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname + '/ingreso.hbs'));
 });
 
-router.post('/auth', function(request, response) {
-	let username = request.body.usuario;
-	let password = request.body.password;
-	if (username && password) {
-		
-		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
-			
-			if (error) throw error;
-			if (results.length > 0) {
-				request.session.loggedin = true;
-				request.session.username = username;
-				response.send('Acceso exitoso');
-			} else {
-				response.send('Clave y/o usuario incorrecto');
-			}			
-			response.end();
-		});
-	} else {
-		response.send('Por favor, ingrese usuario y clave');
-		response.end();
-	}
-});
+router.get('/cart', (req, res) => {
+  res.render("cart");
+})
 
-connection.query(`SELECT * from accounts`,function (error, results, fields) {
-  if(error)
-  throw error;
-  results.forEach(result => {
-  });
+router.post('/auth', async (req, res) => {
+  let username = req.body.usuario;
+  let password = req.body.password;
 
-});
+  let user = new Usuario();
+
+  const usuario = await user.getUsuario(username, password)
+
+  if (usuario.success) {
+    req.session.loggedin = true;
+    req.session.username = usuario.usuario;
+    res.redirect('/cart');
+  } else {
+    res.redirect('/ingreso')
+  }
+}
+);
+
 
 router.post("/ingreso", (req, res) => {
-  connection.query(`INSERT INTO registro (nombres, apellidos, rut, direccion, telefono, email, usuario ) VALUES ("${req.body.nombres}", "${req.body.apellidos}", "${req.body.rut}", "${req.body.direccion}", "${req.body.telefono}", "${req.body.email}", "${req.body.usuario1}")`, function (error, results, fields) {
-    if(error)
-    throw error;
-      console.log(results);
-      res.redirect("/ingreso")
-  });
+  const { nombres, apellidos, rut, direccion, telefono, email, usuario1, pass } = req.body;
+
+  const user = new Usuario();
+  user.setUsuario(nombres, apellidos, rut, direccion, telefono, email, usuario1, pass)
+
+  res.redirect("/ingreso")
 });
 
+
 // router.get("/cart", (req, res) => {
-// res.render("cart");
+//   res.render("cart");
 // })
 
-// router.get('/tienda', (req, res) => {
-//   const productId = req.query.productId;
-//   const product = getProductById(productId);
-
-//   if (product) {
-//     const cart = req.session.cart || {};
-//     const cartProduct = cart[productId];
-
-//     if (cartProduct) {
-//       // Si el producto ya está en el carrito, incrementa su cantidad
-//       let cantProd = parseInt(req.query.cantProd)
-//       cartProduct.cantProd += product.cantProd;
-//     } else {
-//       // Si el producto no está en el carrito, agrégalo con una cantidad inicial de 1
-//       cart[productId] = {
-//         id: productId,
-//         name: product.nombre,
-//         price: product.precio,
-//         quantity: cantProd
-//       };
-//     }
-
-//     req.session.cart = cart;
-//   }
-
-//   res.redirect('/cart');
-// });
+router.get("/cart", (req, res) => {
+  const cart = req.session.cart || new Canasta();
+  res.render("cart", { products: cart.items, total: cart.total });
+});
 
 
+router.post("/cart", async (req, res) => {
+  const pdto = req.body.btnAdd;
+  const cant = 1;
+  console.log(pdto)
+  const cart = req.session.cart ||new Canasta();
+  const newProduct = new Producto()
+  await cart.addPdto(pdto, cant);
+  const pdtoAgreg = await newProduct.getProductById(pdto)
+  
+  console.log(`Pdto ${ pdtoAgreg.nombre } se agregó exitosamente`)
+ 
+  res.render("cart", { products: cart.items, total: cart.total })
+  
+})
 
-// router.get("/tienda", (req, res) => {
-//   let addPdto = req.query.btnAdd;
-//  console.log(addPdto)
-//   if (addPdto) {
-//     let prod = req.query.pdtoId;
-//     let cart = req.session.cart || {};
-//     if (prod) {
-//       if (cart[prod]) {
-//         cart[prod].cantProd++;
-//       } else {
-//         cart[prod] = {
-//           id: prod,
-//           nombre: prod.nombre,
-//           precio: prod.precio,
-//           cantProd: prod.cantidad
-//         };
-//       }
-//       req.session.cart = cart;
-//     }
-//   }
-//   res.redirect("/cart");
-// });
+// router.get("/cart/decrease", (req, res) => {
+//   res.render("cart");
+// })
+
+// router.put("/cart/drecrease", (req, res) => {
+//   const prodId = req.body.btnMinus
+//   const cart =  req.session.cart || new Canasta()
+//   // const pdto = new Producto()
+//   // const pdtoMinus = pdto.getProductById(prodId)
+//   const remove = cart.reduceCant(prodId)
+//   console.log(remove)
+//   res.render("cart");
+// })
+
+// router.post("/cart/increase", (req, res) => {
+//   const prodId = req.body.btnAdd
+//   const cart = new Canasta()
+//   const add = cart.addCant(prodId)
+//   console.log(add)
+//   res.render("cart");
+// })
 
 export default router;

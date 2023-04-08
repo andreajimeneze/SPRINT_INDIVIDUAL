@@ -1,10 +1,12 @@
-import mysql from "mysql";
+import pg from "pg";
+const { Pool } = pg;
 
-const connection = mysql.createConnection({
+const pool = new Pool({
 	host     : 'localhost',
-	user     : 'root',
+	user     : 'postgres',
 	password : '1234',
-	database : 'nodelogin'
-});
+	port	 : 5432,
+	database : 'pezmosaico'
+})
 
-export default connection;
+export default pool;

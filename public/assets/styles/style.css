@@ -392,3 +392,45 @@ button.btnAddCarro {
   .bd-mode-toggle {
     z-index: 1500;
   }
+
+  /*cart */
+  .canasta{
+    margin: 10rem 2.5rem;
+    width: 90%;
+  }
+
+  #cantPdto {
+    display: flex;
+    align-items: center;
+  }
+  
+  .canastaCant {
+    display: flex;
+  }
+  
+  .canastaCant button {
+    margin-left: 5px;
+  }
+
+  #cantPdto {
+  display: flex;
+  align-items: center;
+}
+
+.canastaCant {
+  display: flex;
+}
+
+.canastaCant button {
+  margin-left: 5px;
+}
+
+.headTitleCart {
+    display: flex;
+    justify-content: space-between;
+    padding: 0% 3rem;
+}
+  
+#cartTitle {
+  text-align: center;
+}
