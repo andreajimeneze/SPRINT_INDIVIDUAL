@@ -1,0 +1,131 @@
+.offcanvas.offcanvas-end.show {
+    width: 50%;
+  }
+  
+  .contenedor-Cart {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    justify-items: center;
+    align-items: initial;
+    text-align: center;
+  }
+  
+  div.cart-notification {
+    border-radius: 50%;
+    background-color: blue;
+    color: antiquewhite;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    display: none;
+  }
+  
+  table {
+    margin-bottom: 2vw;
+    border: solid 1px grey;
+  }
+  
+  table td {
+    padding: 2vw 0.5vw;
+  }
+  
+  .datosProductosAComprar {
+    width: 100%;
+  }
+  
+  .filaTabla tr {
+    padding: 2vw;
+  }
+  
+  .offcanvas-footer {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5vw;
+  }
+  
+  .preciosCarrito {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1vw;
+  }
+  
+  button.btnAddCanasta {
+    border: solid 1px gray;
+    border-radius: 10%;
+    text-size-adjust: initial;
+  }
+  
+  p#cantCanasta.mb-0.mt-2.align-self\:center {
+    margin-left: 10px !important;
+    margin-right: 10px;
+  }
+
+  #img-cart {
+    height: 80px;
+    object-fit: cover;
+  }
+  
+  .trash-btn {
+    width: 40px; 
+    height: 40px; 
+    background-image: url('../img/trash-svgrepo-com.svg');
+    background-size: cover;
+    background-color: white;
+    background-repeat: no-repeat;
+    border: none; 
+    cursor: pointer;
+  }
+  
+  button.btnAddCarro {
+    height: 3vh;
+    padding: 0vw 0.5vw;
+    border: solid 1px gray;
+    border-radius: 10%;
+    margin: 0vw 1vw;
+  }
+  
+  .cart {
+    margin-top: 1rem;
+    padding: 0.5rem 2rem;
+    width: 90%;
+    height: auto;
+  }
+  
+  #cantPdto {
+    display: flex;
+    align-items: center;
+  }
+  
+  .canastaCant {
+    display: flex;
+  }
+  
+  .canastaCant button {
+    margin-left: 5px;
+  }
+  
+  #cantPdto {
+    display: flex;
+    align-items: center;
+  }
+  
+  .canastaCant button {
+    margin-left: 5px;
+  }
+  
+  .headTitleCart {
+    display: flex;
+    justify-content: space-between;
+    padding: 0% 3rem;
+  }
+  
+  #cart-title {
+    text-align: center;
+  }
+  
+  .cartTable {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10rem;
+  }

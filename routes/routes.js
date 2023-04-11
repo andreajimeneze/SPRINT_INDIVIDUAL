@@ -6,6 +6,7 @@ import { Producto } from "../utils/Class/Producto.js";
 import { Usuario } from "../utils/Class/Usuario.js";
 import { Canasta } from "../utils/Class/Canasta.js";
 const router = express.Router();
+const cart = new Canasta();
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -65,11 +66,6 @@ router.post("/ingreso", (req, res) => {
   res.redirect("/ingreso")
 });
 
-
-// router.get("/cart", (req, res) => {
-//   res.render("cart");
-// })
-
 router.get("/cart", (req, res) => {
   const cart = req.session.cart || new Canasta();
   res.render("cart", { products: cart.items, total: cart.total });
@@ -77,40 +73,26 @@ router.get("/cart", (req, res) => {
 
 
 router.post("/cart", async (req, res) => {
-  const pdto = req.body.btnAdd;
-  const cant = 1;
-  console.log(pdto)
-  const cart = req.session.cart ||new Canasta();
-  const newProduct = new Producto()
-  await cart.addPdto(pdto, cant);
-  const pdtoAgreg = await newProduct.getProductById(pdto)
+  const pdtoId = parseInt(req.body.btnAdd);
   
-  console.log(`Pdto ${ pdtoAgreg.nombre } se agregó exitosamente`)
- 
-  res.render("cart", { products: cart.items, total: cart.total })
-  
+  const producto = new Producto()
+  const prod = await producto.getProductById(pdtoId);
+  await cart.addPdto(prod, 1);
+  req.session.cart = cart;
+  const canasta = cart.items;
+  res.render("cart", { products: cart.items, total: cart.total, canasta: canasta });
+});
+
+router.delete("/cart", (req, res) => {
+  const vaciar = parseInt(req.body.vaciar);
+  cart.vaciarCarro()
+  res.render("cart");
 })
 
-// router.get("/cart/decrease", (req, res) => {
-//   res.render("cart");
-// })
-
-// router.put("/cart/drecrease", (req, res) => {
-//   const prodId = req.body.btnMinus
-//   const cart =  req.session.cart || new Canasta()
-//   // const pdto = new Producto()
-//   // const pdtoMinus = pdto.getProductById(prodId)
-//   const remove = cart.reduceCant(prodId)
-//   console.log(remove)
-//   res.render("cart");
-// })
-
-// router.post("/cart/increase", (req, res) => {
-//   const prodId = req.body.btnAdd
-//   const cart = new Canasta()
-//   const add = cart.addCant(prodId)
-//   console.log(add)
-//   res.render("cart");
-// })
+router.delete("/cart", (req, res) => {
+  const trash = parseInt(req.body.trash);
+  cart.deletePdto(trash)
+  res.render("cart");
+})
 
 export default router;
