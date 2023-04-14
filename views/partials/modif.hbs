@@ -1,0 +1,31 @@
+  <table class="table table-striped" id="tablaPdtos">
+    <thead>
+      <tr>
+        <td>Id</td>
+        <td>Nombre</td>
+        <td>Precio</td>
+        <td>Imagen</td>
+        <td>Stock</td>
+        <td>Editar</td>
+        <td>Eliminar</td>
+      </tr>
+    </thead>
+    {{#each prod }}
+    <tbody id="filasPdtos">
+      <tr>
+        <th>{{ id }}</th>
+        <th><img src="{{ imagen }}" alt=""></th>
+        <th>{{ nombre }}</th>
+        <th>{{ precio }}</th>
+         <th>{{ existencia }}</th>
+         <form action="/adm/{{ id }}?_method=PUT" method="post">
+        <th><button value="{{ id }}" onclick="window.location.href='/modpdto/form'">Editar</button></th>
+        </form>
+        <form action="/adm/{{ id }}?_method=DELETE" method="post">
+          <th><button value={{ id }} id="delete" name="btnDelete">Eliminar</button></th>
+        </form>
+      </tr>
+    </tbody>
+    {{/each}}
+
+  </table>

@@ -87,8 +87,8 @@
   
   .cart {
     margin-top: 1rem;
-    padding: 0.5rem 2rem;
-    width: 90%;
+    padding: 0.5rem 4rem;
+    width: 100%;
     height: auto;
   }
   
@@ -127,5 +127,6 @@
   .cartTable {
     display: flex;
     flex-direction: column;
-    padding-top: 10rem;
+    padding-top: 8rem;
+    width: 100%;
   }

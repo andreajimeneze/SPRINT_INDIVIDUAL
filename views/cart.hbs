@@ -1,67 +1,65 @@
 {{#> template}}
 
+<main>
+    <div class="cartTable">
+        <h4 id="cart-title">Canasta de compras</h4>
+        <table class="cart">
+            <thead>
+                <tr id="headTitleCart">
+                    <th>ID</th>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
 
-<div class="cartTable">
-    <h4 id="cart-title">Canasta de compras</h4>
-    <table class="cart">
-        <thead>
-            <tr id="headTitleCart">
-                <th>ID</th>
-                <th>Imagen</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Subtotal</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-    
-        {{#each canasta }}
-        <tbody>
-            <tr class="table-row">
-                <td> {{ id }}</td>
-                <td><img src="{{foto}}" alt="" id="img-cart"></td>
-                <td>{{ nombre }}</td>
-                <td id="precioPdto_{{ id }}">{{ precio}}</td>
-                {{cant}}
-                <td id="cantPdto">
+            {{#each canasta }}
+            <tbody>
+                <tr class="table-row">
+                    <td> {{ id }}</td>
+                    <td><img src="{{foto}}" alt="" id="img-cart"></td>
+                    <td>{{ nombre }}</td>
+                    <td id="precioPdto_{{ id }}">{{ precio}}</td>
+                    {{cant}}
+                    <td id="cantPdto">
 
-                    <button class="btn btn-info bton-card" id="btn-minus" name="btnMinus" value="{{ id }}">-</button>
-                    <form action="/cart" method="put" class="canastaCant"></form>
-                    <p class="mb-0 mt-2 align-self:center cantProdDisplay" id="cant_{{ id }}" name="cantProd">1</p>
-                    </form>
-                    <button class="btn btn-info bton-card" id="btn-plus" name="btnAdd" value="{{ id }}">+</button>
+                        <button class="btn btn-info bton-card" id="btn-minus" name="btnMinus"
+                            value="{{ id }}">-</button>
+                        <form action="/cart" method="put" class="canastaCant"></form>
+                        <p class="mb-0 mt-2 align-self:center cantProdDisplay" id="cant_{{ id }}" name="cantProd">1</p>
+                        </form>
+                        <button class="btn btn-info bton-card" id="btn-plus" name="btnAdd" value="{{ id }}">+</button>
+                    </td>
+                    <td class="subtotalPdto_{{ id }}">{{precio}} </td>
+                    <td>
+                        <form action="/cart" method="delete">
+                            <input type="hidden" name="product[id]" id="{{id}}">
+                            <button class="trash-btn"></button>
+                        </form>
+
+                    </td>
+                </tr>
+            </tbody>
 
 
-                </td>
-                <td class="subtotalPdto_{{ id }}">{{precio}} </td>
-                <td>
-                    <form action="/cart" method="delete">
-                        <input type="hidden" name="product[id]" id="{{id}}">
-                        <button class="trash-btn"></button>
-                        {{!-- <img src="./assets/img/trash-svgrepo-com.svg" alt="" id="img-trash" name="trash" value="{{ id }}"> --}}
-                    </form>
-
-                </td>
-            </tr>
-        </tbody>
-       
-    
-        <tfoot>
-            <tr>
-                <td colspan="4">Total:</td>
-                <td>{{precio}}</td>
-             {{/each}}
-                <td>
-                    <form action="/cart" method="delete">
-                        <button class="btn btn-primary" name="vaciar">Vaciar</button>
-                    </form>
-                    <button class="btn btn-primary" onclick="window.location.href='/tienda'">Volver a comprar</button>
-        </tfoot>
-
-    </table>
-</div>
-
+            <tfoot>
+                <tr>
+                    <td colspan="4">Total:</td>
+                    <td>{{precio}}</td>
+                    {{/each}}
+                    <td>
+                        <form action="/cart" method="delete">
+                            <button class="btn btn-primary" name="vaciar">Vaciar</button>
+                        </form>
+            </tfoot>
+        </table>
+        <button class="btn btn-primary" onclick="window.location.href='/tienda'">Volver a
+            comprar</button>
+    </div>
+</main>
 <script>
     const btnAdd = document.querySelectorAll("#btn-plus");
     const btnMinus = document.querySelectorAll("#btn-minus");

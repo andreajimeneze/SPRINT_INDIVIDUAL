@@ -3,6 +3,7 @@
 @import url("card.css");
 @import url("cart.css");
 @import url("footer.css");
+@import url("headerAdm.css");
 
 
 
@@ -11,16 +12,30 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-body {
-  position: relative;
-  height: 100vh;
+* {
+  box-sizing: border-box;
+}
+
+HTML, body {
+  /* position: relative; */
+  height: 100%;
   width: 100%;
 }
+
 main {
+  width: 100%;
   padding: 1vw;
   display: flex;
   justify-content: end;
   align-items: flex-start;
+  /* height: 100%; */
+  /* height: calc(100% - 110px); */
+  /* overflow-y: auto; */
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
 }
 
 @media screen and (max-width: 992px) {
@@ -84,13 +99,13 @@ main {
 }
 
 /* Index */
-.indexMain {
+/* .indexMain {
   background-image: url(https://cdn.create.vista.com/api/media/medium/461309878/stock-photo-abstract-geometric-background-poly-pattern?token=);
   background-attachment: fixed;
-}
+} */
 
 .homeText {
-  padding-top: 12rem;
+  padding-top: 8rem;
   padding-left: 2rem;
   padding-right: 8rem;
   width: 100%;
@@ -107,8 +122,7 @@ main {
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* height: 100%; */
-  padding-top: 14rem;
+  padding-top: 8rem;
   padding-right: 2rem;
   position: relative;
 }
@@ -128,4 +142,39 @@ main {
 
 .carousel-control-next {
   margin-right: 3rem;
+}
+
+/* MODIF.HBS*/
+#filasPdtos th img {
+  width: 50px;
+}
+
+/*FORM ADDPDTO.HBS*/
+.form-addPdto {
+  width: 100%;
+  margin-top: 2rem;
+ margin-left: 220px;
+
+}
+
+.formBody input {
+display: flex;
+flex-direction: row;
+border: 1px solid grey;
+width: 350px;
+}
+
+/* FORM MODPDTO - MODIFICAR*/
+#imgModif {
+  width: 50px;
+}
+
+.tablaPdtos {
+  width: 50%;
+}
+
+.body-adm {
+  width: calc(100% - 220px);
+  right: 0;
+  margin-left: 220px;
 }

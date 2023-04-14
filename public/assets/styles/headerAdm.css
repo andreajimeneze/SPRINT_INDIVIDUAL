@@ -1,0 +1,38 @@
+
+.container-menu {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    width: 220px;
+    height: 100vh;
+    left: 0;
+    top: 0;
+}
+
+.cont-menu {
+    width: 220px;
+    max-width: 220px;
+    height: 100vh;
+    background: #1c1c1c;
+    position: relative;
+    padding-top: 25px;
+}
+
+.cont-menu nav a {
+    display: block;
+    text-decoration: none;
+    padding: 20px;
+    color: #c7c7c7;
+    border-left: 5px solid transparent;
+    transition: all 400ms ease;
+}
+
+.cont-menu nav a:hover {
+    border-left: 5px solid #c7c7c7;
+    background: #1f1f1f;
+}
+
+.logoAdm {
+    width: 100px;
+    margin-top: 40px;
+    margin-left: 60px;
+}

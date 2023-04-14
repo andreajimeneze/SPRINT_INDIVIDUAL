@@ -1,51 +1,83 @@
 footer {
+    height: 160px;
     width: 100%;
-    height: 60%;
+    /* position: relative; */
     /* position: absolute; */
+    position: relative;
     bottom: 0;
     left: 0;
     padding: 2rem 8%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+    background-color: aliceblue;
+    margin-top: auto;
+}
+
+.container-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    padding-top: 20px;
 }
 
 .logo-footer {
-    height: 80px;
-    margin-bottom: 1rem;
+    height: 90px;
+    margin-bottom: 0.5rem;
 }
 
-.container-social,
-.footer-menu {
+.container-social {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-items: start;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    line-height: 0.2;
+}
+
+/* .footer-menu li {
+    text-align: left;
+} */
+
+.social-footer h6 {
+    text-align: center;
 }
 
 .social-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
     border: solid 1px #1f1919;
     background-image: url(../img/facebook-svgrepo-com.svg);
     background-position: center;
-    background-size: 40px;
+    background-size: 30px;
     background-repeat: no-repeat;
     margin: 1rem;
 }
 
 .social-icon:hover:nth-of-type(1) {
     background-color: rgb(101, 151, 237);
-    filter:brightness(1);
+    filter: brightness(1);
 }
 
 .social-icon:hover:nth-of-type(2) {
     background-color: rgb(239, 130, 230);
-    filter:drop-shadow(1);
+    filter: drop-shadow(1);
 }
+
 .social-icon:nth-of-type(2) {
     background-image: url(../img/instagram-svgrepo-com.svg);
 }
@@ -64,6 +96,7 @@ footer {
     margin: 1rem 1.5rem;
     cursor: pointer;
     opacity: 0.6;
+    text-align: left;
 }
 
 .menu-item:hover {
@@ -71,6 +104,11 @@ footer {
 }
 
 .copyright {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     opacity: 0.3;
     text-align: center;
+    width: 30%;
+    margin-top: 1rem;
 }

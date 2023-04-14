@@ -1,31 +1,33 @@
 header {
-    position: fixed;
-    background-color: aliceblue;
-    z-index: 1000;
-    left: 0;
-    right: 0;
-  }
-  
-  span.navbar-toggler-icon {
-    border-color: rgb(52, 52, 197);
-    border-style: solid;
-    border-width: 1.5px 0;
-    display: inline-block;
-    height: 1rem;
-    width: 1rem;
-    padding: 1px;
-  }
-  
-  a.nav-link {
-    padding-right: 10vh !important;
-    padding-left: 10vh !important;
-  }
-  
-  a.nav-link:hover {
-    color: rgb(4, 4, 121);
-    font-weight: bold;
-  }
-  
-  img.imgCarro {
-    height: 5px !important;
-  }
+  position: fixed;
+  background-color: aliceblue;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100px;
+}
+
+span.navbar-toggler-icon {
+  border-color: rgb(52, 52, 197);
+  border-style: solid;
+  border-width: 1.5px 0;
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  padding: 1px;
+}
+
+a.nav-link {
+  padding-right: 10vh !important;
+  padding-left: 10vh !important;
+}
+
+a.nav-link:hover {
+  color: rgb(4, 4, 121);
+  font-weight: bold;
+}
+
+img.imgCarro {
+  height: 5px !important;
+}
