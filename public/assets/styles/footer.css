@@ -1,18 +1,16 @@
 footer {
-    height: 160px;
+    height: 250px;
     width: 100%;
-    /* position: relative; */
-    /* position: absolute; */
     position: relative;
-    bottom: 0;
     left: 0;
-    padding: 2rem 8%;
+    padding: 2rem 5%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: aliceblue;
-    margin-top: auto;
+    background-color: rgb(22, 24, 25);
+    margin-top: 10px;
+    padding-bottom: 40px;
 }
 
 .container-footer {
@@ -48,12 +46,9 @@ footer {
     line-height: 0.2;
 }
 
-/* .footer-menu li {
-    text-align: left;
-} */
-
 .social-footer h6 {
     text-align: center;
+    color:antiquewhite;
 }
 
 .social-icon {
@@ -84,11 +79,17 @@ footer {
 
 .social-icon:nth-of-type(3) {
     background-image: url(../img/twitter-svgrepo-com.svg);
+    
+}
+
+.social-icon:hover:nth-of-type(3) {
+    background-color: rgb(32, 80, 138);
+    filter: drop-shadow(1);
 }
 
 .footer-menu {
     list-style-type: none;
-    color: rgb(68, 64, 64);
+    color: antiquewhite;
     font-size: 14px;
 }
 
@@ -111,4 +112,5 @@ footer {
     text-align: center;
     width: 30%;
     margin-top: 1rem;
+    color: antiquewhite;
 }

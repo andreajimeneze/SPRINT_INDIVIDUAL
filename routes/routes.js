@@ -1,7 +1,7 @@
 import express from "express";
-import fs from "fs";
-import connection from "../conect.js";
-import session from "express-session";
+// import fs from "fs";
+// import connection from "../conect.js";
+// import session from "express-session";
 import { Producto } from "../utils/Class/Producto.js";
 import { Usuario } from "../utils/Class/Usuario.js";
 import { Canasta } from "../utils/Class/Canasta.js";
@@ -24,10 +24,12 @@ router.get("/tienda", async (req, res) => {
   res.render("tienda", { productos })
 })
 
+// VISTA CONTACTO
 router.get("/contacto", (req, res) => {
   res.render("contacto")
 })
 
+// VISTA INGRESO
 router.get("/ingreso", (req, res) => {
   res.render("ingreso")
 })
@@ -36,29 +38,12 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/ingreso.hbs'));
 });
 
+//VISTA CANASTA
 router.get('/cart', (req, res) => {
   res.render("cart");
 })
 
 // ACCEDER A SESIÓN CON USUARIO Y PASSWORD
-// router.post('/auth', async (req, res) => {
-//   const { usuario, password } = req.body;
-//   if (!usuario || !password) {
-//     return res.send('Debe completar los campos requeridos');
-//   }
-//   const userN = new Usuario();
-//   const resultado = await userN.getUsuario(usuario, password);
-//   if (!resultado.success) {
-//     return res.send(resultado.message);
-//   }
-//   req.session.user = usuario;
-//   if (usuario === 'root') {
-//     return res.redirect('/adm');
-//   } else {
-//     return res.redirect('/tienda');
-//   }
-// });
-
 router.post('/auth', async (req, res) => {
   let username = req.body.usuario;
   let password = req.body.password;
@@ -119,7 +104,7 @@ router.delete("/cart", (req, res) => {
   res.render("cart");
 })
 
-/*MANTENEDOR -----------------------------------------------------------------*/
+/*-----------------------------------M A N T E N E D O R ---------------------------------------*/
 
 // AGREGAR NUEVO PRODUCTO DESDE MANTENEDOR
 router.post("/adm", async (req, res) => {
@@ -139,6 +124,14 @@ router.get("/delete", async (req, res) => {
   res.render("admin", { prod })
 })
 
+// OBTENER PRODUCTOS PARA MANTENEDOR MODIFICAR
+router.get("/modif", async (req, res) => {
+  const pdto = new Producto()
+  const prod = await pdto.getProducts()
+
+  res.render("modifPdto", { prod })
+})
+
 // ELIMINAR PRODUCTO DESDE MANTENEDOR
 router.delete("/adm/:id", async (req, res) => {
   const pdtoEliminar = parseInt(req.params.id);
@@ -147,12 +140,23 @@ router.delete("/adm/:id", async (req, res) => {
   res.redirect("../tienda")
 })
 
-// MODIFICAR PRODUCTO DESDE MANTENEDOR
-router.put("/adm/:id", async (req, res) => {
-
+//MODIFICAR PRODUCTO DESDE MANTENEDOR
+router.put("/modpdto/:id", async (req, res) => {
+  console.log(req.body)
+  const id = parseInt(req.params.id)
+  const name = req.body.name
+  const prize = parseInt(req.body.prize)
+  const link = req.body.link
+  const stock = parseInt(req.body.stock)
+  
+  console.log(id)
+  console.log(name)
+  console.log(prize)
+  console.log(link)
+  console.log(stock)
   let pdto = new Producto()
-  await pdto.modifPdto()
-  res.redirect("../tienda");
+  await pdto.modifPdto(name, prize, link, stock, id)
+  res.redirect("/sesionadm");
 })
 
 // ACCEDER A MODIFICARPDTO.HBS
@@ -173,9 +177,8 @@ router.get("/sesionadm", (req, res) => {
   res.render("sesionAdm")
 })
 
-router.get("/add", (req, res) => {
-res.render("addPdto")
+router.get("/page", (req, res) => {
+  res.render("page1")
 })
 
-router.get("")
 export default router;

@@ -1,35 +1,38 @@
-  <table class="table table-striped" id="tablaPdtos">
-    <thead>
-      <tr>
-        <td>Id</td>
-        <td>Nombre</td>
-        <td>Precio</td>
-        <td>Imagen</td>
-        <td>Link</td>
-        <td>Stock</td>
-        <td>Editar</td>
-      </tr>
-    </thead>
-    {{#each prod }}
-    <tbody class="rowPdtoMod">
-      <tr>
-        <th>{{ id }}</th>
-               <th>
-          <input type="text" name="name" value="{{ nombre }}">
-          </th>
-        <th>
-          <input type="text" name="prize" value="{{ precio }}">
-          </th>
-          <th>
-            <img src="{{ imagen }}" id="imgModif">
-          </th>
-          <th>
-          <input type="text" name="link" value="{{ imagen }}">
-          </th>
-         <th>
-          <input type="text" name="stock" value="{{ existencia }}">
-          </th>
-         <form action="/modpdto/{{ id }}?_method=PUT" method="post">
-        <th><button value="{{ id }}">Editar</button></th>
-        </form>
-        {{/each}}
+<table class="table table-striped" id="tablaPdtos">
+  <thead>
+    <tr>
+      <td>Id</td>
+      <td>Nombre</td>
+      <td>Precio</td>
+      <td>Imagen</td>
+      <td>Link</td>
+      <td>Stock</td>
+      <td>Editar</td>
+    </tr>
+  </thead>
+  {{#each prod }}
+  <tbody class="rowPdtoMod">
+    <form action="/modpdto/{{ id }}?_method=PUT" method="post"> 
+    <tr>
+      <th>{{ id }}</th>
+      <th>
+        <input type="text" name="name" value="{{ nombre }}" class="inputModName">
+      </th>
+      <th>
+        <input type="text" name="prize" value="{{ precio }}"" class=" inputMod">
+      </th>
+      <th>
+        <img src="{{ imagen }}" id="imgModif">
+      </th>
+      <th>
+        <input type="text" name="link" value="{{ imagen }}" class="inputModLink">
+      </th>
+      <th>
+        <input type="text" name="stock" value="{{ existencia }}"" class=" inputMod">
+      </th>
+      
+        <th><button value="{{ id }}" class="btn btn-secondary" name="btnEdit">Editar</button></th>
+      </form>
+    </tr>
+  </tbody>
+  {{/each}}

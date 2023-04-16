@@ -102,7 +102,7 @@ export class Producto {
 
     async modifPdto(nombre, precio, imagen, existencia, id) {
         try {
-            const cons = await pool.query("UPDATE producto SET nombre = $1 precio = $2 imagen = $3 existencia =$4 WHERE id = $5 RETURNING *", [nombre, precio, imagen, existencia, id])
+            const cons = await pool.query("UPDATE producto SET nombre = $1, precio = $2, imagen = $3, existencia = $4 WHERE id = $5 RETURNING *", [nombre, precio, imagen, existencia, id])
             console.table(cons.rows[0]);
         } catch (e) {
             console.log(e)

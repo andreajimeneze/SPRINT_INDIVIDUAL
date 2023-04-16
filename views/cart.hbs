@@ -51,7 +51,7 @@
                     <td>{{precio}}</td>
                     {{/each}}
                     <td>
-                        <form action="/cart" method="delete">
+                        <form action="/cart/?_method=DELETE" method="post">
                             <button class="btn btn-primary" name="vaciar">Vaciar</button>
                         </form>
             </tfoot>

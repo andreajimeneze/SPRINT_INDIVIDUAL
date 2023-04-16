@@ -27,7 +27,7 @@ main.ingreso {
 	background-repeat: no-repeat;
 	background-size: cover;
 	display: grid;
-	height: 110vh;
+	height: 50px;
 	place-items: center;
 }
 
@@ -56,7 +56,7 @@ main.ingreso {
 	overflow: hidden;
 	position: absolute;
 	width: 100%;
-	margin-top: 10rem;
+	/* margin-top: 1rem; */
 }
 
 .container__form {

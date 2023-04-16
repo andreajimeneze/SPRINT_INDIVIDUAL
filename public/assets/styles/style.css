@@ -4,6 +4,7 @@
 @import url("cart.css");
 @import url("footer.css");
 @import url("headerAdm.css");
+@import url("index.css");
 
 
 
@@ -17,7 +18,6 @@
 }
 
 HTML, body {
-  /* position: relative; */
   height: 100%;
   width: 100%;
 }
@@ -26,12 +26,8 @@ main {
   width: 100%;
   padding: 1vw;
   display: flex;
-  justify-content: end;
-  align-items: flex-start;
-  /* height: 100%; */
-  /* height: calc(100% - 110px); */
-  /* overflow-y: auto; */
   min-height: 100vh;
+  background-color: rgb(252, 243, 232);
 }
 
 .content {
@@ -98,14 +94,8 @@ main {
   margin-bottom: 25px;
 }
 
-/* Index */
-/* .indexMain {
-  background-image: url(https://cdn.create.vista.com/api/media/medium/461309878/stock-photo-abstract-geometric-background-poly-pattern?token=);
-  background-attachment: fixed;
-} */
-
 .homeText {
-  padding-top: 8rem;
+  padding-top: 12rem;
   padding-left: 2rem;
   padding-right: 8rem;
   width: 100%;
@@ -122,7 +112,7 @@ main {
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-top: 8rem;
+  padding-top: 12rem;
   padding-right: 2rem;
   position: relative;
 }
@@ -178,3 +168,29 @@ width: 350px;
   right: 0;
   margin-left: 220px;
 }
+
+input {
+  background-color: #fff;
+	border: none;
+	padding: 0.5rem 0.9rem;
+	margin: 0.5rem 0;
+	width: 100%;
+}
+
+input.inputMod {
+  background-color: #fff;
+	border: none;
+	padding: 0.5rem 0.9rem ;
+	margin: 0.5rem 0;
+	width: 70px;
+}
+
+input.inputModName {
+width: 150px;
+}
+
+input.inputModLink {
+  width: 300px;
+  }
+
+  
