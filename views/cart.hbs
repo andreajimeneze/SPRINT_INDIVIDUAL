@@ -4,7 +4,7 @@
     <div class="cartTable">
         <h4 id="cart-title">Canasta de compras</h4>
         <table class="cart">
-            <thead>
+            <thead class="thead-cart">
                 <tr id="headTitleCart">
                     <th>ID</th>
                     <th>Imagen</th>
@@ -18,6 +18,7 @@
 
             {{#each canasta }}
             <tbody>
+
                 <tr class="table-row">
                     <td> {{ id }}</td>
                     <td><img src="{{foto}}" alt="" id="img-cart"></td>
@@ -25,39 +26,34 @@
                     <td id="precioPdto_{{ id }}">{{ precio}}</td>
                     {{cant}}
                     <td id="cantPdto">
-
-                        <button class="btn btn-info bton-card" id="btn-minus" name="btnMinus"
-                            value="{{ id }}">-</button>
-                        <form action="/cart" method="put" class="canastaCant"></form>
-                        <p class="mb-0 mt-2 align-self:center cantProdDisplay" id="cant_{{ id }}" name="cantProd">1</p>
-                        </form>
+                        <button class="btn btn-info bton-card" id="btn-minus" name="btnMinus" value="{{ id }}">-</button>
+                        <p class="mb-0 mt-2 align-self:center cantProdDisplay" id="cant_{{ id }}" name="cantProd">{{ cant }}</p>
                         <button class="btn btn-info bton-card" id="btn-plus" name="btnAdd" value="{{ id }}">+</button>
                     </td>
-                    <td class="subtotalPdto_{{ id }}">{{precio}} </td>
+                    <td class="subtotalPdto_{{ id }}">{{precio}}</td>
                     <td>
-                        <form action="/cart" method="delete">
-                            <input type="hidden" name="product[id]" id="{{id}}">
-                            <button class="trash-btn"></button>
+                        <form action="/cart/{{ id}}?_method=DELETE" method="post">
+                            <input type="hidden" name="id">
+                            <button class="trash-btn" id="{{id}}"></button>
                         </form>
-
                     </td>
                 </tr>
             </tbody>
-
+            {{/each}}
 
             <tfoot>
                 <tr>
                     <td colspan="4">Total:</td>
                     <td>{{precio}}</td>
-                    {{/each}}
-                    <td>
-                        <form action="/cart/?_method=DELETE" method="post">
-                            <button class="btn btn-primary" name="vaciar">Vaciar</button>
-                        </form>
             </tfoot>
+
         </table>
-        <button class="btn btn-primary" onclick="window.location.href='/tienda'">Volver a
-            comprar</button>
+
+        <form action="/cart/?_method=DELETE" method="post">
+            <button class="btn btn-primary" name="vaciar">Vaciar</button>
+        </form>
+
+        <button class="btn btn-primary" onclick="window.location.href='/tienda'">Volver a comprar</button>
     </div>
 </main>
 <script>

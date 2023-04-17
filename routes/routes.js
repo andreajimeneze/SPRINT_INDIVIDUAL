@@ -5,6 +5,7 @@ import express from "express";
 import { Producto } from "../utils/Class/Producto.js";
 import { Usuario } from "../utils/Class/Usuario.js";
 import { Canasta } from "../utils/Class/Canasta.js";
+import { formatCL, capFirstMay } from "../helpers/helpers.js";
 import methodOverride from "method-override";
 const router = express.Router();
 const cart = new Canasta();
@@ -38,11 +39,6 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/ingreso.hbs'));
 });
 
-//VISTA CANASTA
-router.get('/cart', (req, res) => {
-  res.render("cart");
-})
-
 // ACCEDER A SESIÓN CON USUARIO Y PASSWORD
 router.post('/auth', async (req, res) => {
   let username = req.body.usuario;
@@ -55,12 +51,15 @@ router.post('/auth', async (req, res) => {
   if (usuario.success) {
     req.session.loggedin = true;
     req.session.username = usuario.usuario;
-    res.redirect('/cart'); }
-    else if(username == "root" && password == "1234"){
-      res.redirect("/sesionadm")
-    } else { res.redirect('/ingreso')
-    console.log("contraseña no es correcta")}
-  } 
+    res.redirect('/cart');
+  }
+  else if (username == "root" && password == "1234") {
+    res.redirect("/sesionadm")
+  } else {
+    res.redirect('/ingreso')
+    console.log("contraseña no es correcta")
+  }
+}
 );
 
 // REGISTRAR NUEVO USUARIO
@@ -92,16 +91,19 @@ router.post("/cart", async (req, res) => {
 
 // VACIAR CANASTA
 router.delete("/cart", (req, res) => {
-  const vaciar = parseInt(req.body.vaciar);
+  // const vaciar = parseInt(req.body.vaciar);
   cart.vaciarCarro()
+  console.log(cart)
   res.render("cart");
 })
 
 // ELIMINAR UN PRODUCTO DE LA CANASTA
-router.delete("/cart", (req, res) => {
-  const trash = parseInt(req.body.trash);
-  cart.deletePdto(trash)
-  res.render("cart");
+router.delete("/cart/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  cart.deletePdtoCart(id)
+  const canasta = cart.items;
+
+  res.render("cart", { canasta });
 })
 
 /*-----------------------------------M A N T E N E D O R ---------------------------------------*/
@@ -142,18 +144,12 @@ router.delete("/adm/:id", async (req, res) => {
 
 //MODIFICAR PRODUCTO DESDE MANTENEDOR
 router.put("/modpdto/:id", async (req, res) => {
-  console.log(req.body)
   const id = parseInt(req.params.id)
   const name = req.body.name
   const prize = parseInt(req.body.prize)
   const link = req.body.link
   const stock = parseInt(req.body.stock)
-  
-  console.log(id)
-  console.log(name)
-  console.log(prize)
-  console.log(link)
-  console.log(stock)
+
   let pdto = new Producto()
   await pdto.modifPdto(name, prize, link, stock, id)
   res.redirect("/sesionadm");
@@ -162,7 +158,7 @@ router.put("/modpdto/:id", async (req, res) => {
 // ACCEDER A MODIFICARPDTO.HBS
 router.get("/modpdto", (req, res) => {
   res.render("modificarPdto")
-} )
+})
 
 // CARGAR PRODUCTOS EN MANTENEDOR
 router.get("/modpdto/form", async (req, res) => {
@@ -174,11 +170,9 @@ router.get("/modpdto/form", async (req, res) => {
 
 // SESIÓN ADMIN --- SE INGRESA CON USERNAME Y PASSWORD
 router.get("/sesionadm", (req, res) => {
-  res.render("sesionAdm")
+  res.render("sesionadm")
 })
 
-router.get("/page", (req, res) => {
-  res.render("page1")
-})
+
 
 export default router;

@@ -67,7 +67,7 @@
         <div class="left-box">
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id nesciunt ipsa consequatur assumenda eaque
                 quis aliquid nihil dolorum molestiae necessitatibus possimus aperiam unde, sint ad, vel cumque! Quae,
-                fugit sit? 
+                fugit sit?
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id nesciunt ipsa consequatur assumenda eaque
                 quis aliquid nihil dolorum molestiae necessitatibus possimus aperiam unde, sint ad, vel cumque! Quae,
                 fugit sit?</p>
@@ -78,10 +78,7 @@
             <div class="right-box-left">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit suscipit est facere sint
                     recusandae natus, illum quos aspernatur sed laboriosam in dolorem facilis voluptate dolor enim
-                    laborum ad mollitia commodi!
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit suscipit est facere sint
-                    recusandae natus, illum quos aspernatur sed laboriosam in dolorem facilis voluptate dolor enim
-                    laborum ad mollitia commodi!</p>
+                    laborum ad mollitia commodi. </p>
             </div>
             <div class="right-box-right">
                 <img src="../assets/img/trabajando_mosaico.jpg" alt="">
@@ -89,3 +86,141 @@
         </div>
     </div>
 </div>
+
+<!-- Swiper -->
+<div class="body-slide">
+    <div class="container-slide">
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="../../assets/img/trabajando_mosaico.jpg" alt="" class="slide-img">
+                    <div>
+                        <div class="card-title">
+                            <h6>Producto 1</h6>
+                        </div>
+                        <div class="card-text">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse, molestiae libero!
+                                Provident accusamus, repellendus beatae, voluptas obcaecati.</p>
+                        </div>
+                    </div>
+                    <div class="card-link">
+                        <a href="#">Cómpralo ahora!</a>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <img src="../../assets/img/Kit-de-posavasos-de-mosaico-redondo-de-bamb-Diy-Material-de-decoraci-n-creativo-hecho-a.jpg_Q90.jpg_.webp"
+                        alt="" class="slide-img">
+                    <div>
+                        <div class="card-title">
+                            <h6>Producto 2</h6>
+                        </div>
+                        <div class="card-text">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse, molestiae libero!
+                                Provident accusamus, repellendus beatae, voluptas obcaecati.</p>
+                        </div>
+                    </div>
+                    <div class="card-link">
+                        <a href="#">Cómpralo ahora!</a>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <img src="../../assets/img/2fbaf4208a06cb94ca1c5c96717e54f8.jpg" alt="" class="slide-img">
+                    <div>
+                        <div class="card-title">
+                            <h6>Producto 3</h6>
+                        </div>
+                        <div class="card-text">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse, molestiae libero!
+                                Provident accusamus, repellendus beatae, voluptas obcaecati.</p>
+                        </div>
+                    </div>
+                    <div class="card-link">
+                        <a href="#">Cómpralo ahora!</a>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <img src="../../assets/img/2fbaf4208a06cb94ca1c5c96717e54f8.jpg" alt="" class="slide-img">
+                    <div>
+                        <div class="card-title">
+                            <h6>Producto 4</h6>
+                        </div>
+                        <div class="card-text">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse, molestiae libero!
+                                Provident accusamus, repellendus beatae, voluptas obcaecati.</p>
+                        </div>
+                    </div>
+                    <div class="card-link">
+                        <a href="#">Cómpralo ahora!</a>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <img src="../../assets/img/4160088_03.jpg" alt="" class="slide-img">
+                    <div>
+                        <div class="card-title">
+                            <h6>Producto 5</h6>
+                        </div>
+                        <div class="card-text">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse, molestiae libero!
+                                Provident accusamus, repellendus beatae, voluptas obcaecati.</p>
+                        </div>
+                    </div>
+                    <div class="card-link">
+                        <a href="#">Cómpralo ahora!</a>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <img src="../../assets/img/91NE3TwFouL.__AC_SX300_SY300_QL70_ML2_.jpg" alt="" class="slide-img">
+                    <div>
+                        <div class="card-title">
+                            <h6>Producto 6</h6>
+                        </div>
+                        <div class="card-text">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse, molestiae libero!
+                                Provident accusamus, repellendus beatae, voluptas obcaecati.</p>
+                        </div>
+                    </div>
+                    <div class="card-link">
+                        <a href="#">Cómpralo ahora!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        loop: true,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+
+        slidesPerView: 1,
+        spaceBetween: 10,
+
+        breakpoint: {
+            620: {
+                slidesPerview: 1,
+                spaceBetween: 20
+            },
+            680: {
+                slidesPerview: 2,
+                spaceBetween: 40
+            },
+            920: {
+                slidesPerview: 3,
+                spaceBetween: 40
+            }
+        }
+    });
+    swiper.on('reachEnd', function () {
+    setTimeout(function() {
+      swiper.slideTo(0, 1000, true);
+    }, 2000);
+  });
+</script>

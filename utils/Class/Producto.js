@@ -1,6 +1,7 @@
 import pool from "../../conect.js";
 // import { Canasta } from "../Class/Canasta.js";
 
+
 export class Producto {
     constructor(id, nombre, precio, foto, existencia) {
         this.id = id;
