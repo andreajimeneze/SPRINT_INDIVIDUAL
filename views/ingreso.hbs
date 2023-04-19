@@ -1,72 +1,104 @@
 {{#> template}}
 <main class="ingreso">
-<div class="container right-panel-active">
-	<!-- Sign Up -->
-	<div class="container__form container--signup">
-		<form action="/auth" method="post" class="form" id="form1">
-			<h2 class="form__title">Acceso usuario</h2>
-			<input type="text" placeholder="Usuario" class="input" name="usuario"/>
-			{{!-- <input type="email" placeholder="Email" class="input" name="email"/> --}}
-			<input type="password" placeholder="Password" class="input" name="password" />
-			<a href="#" class="link">Olvidaste tu clave?</a>
-			<button class="btn btn-in" value="btn-access" type="submit" id="btn-in" name="btn-action">Ingresar</button>
-		</form>
-		{{#if error }}
-		<p>{{ error }}</p>
-		{{/if}}
-	</div>
+	<div class="container right-panel-active">
+		<!-- Sign Up -->
+		<div class="container__form container--signup">
+			{{#if msjError2 }}
+				<div class="error-registro">
+					<span>{{ msjError2 }}</span>
+				</div>
+				{{/if}}
+				{{#if msjError3 }}
+				<div class="error-registro">
+					<span>{{ msjError3 }}</span>
+				</div>
+				{{/if}}
+			<form action="/auth" method="post" class="form" id="form1">
+				<h2 class="form__title">Acceso usuario</h2>
+				{{#if msjError }}
+				<div class="error-ingreso">
+					<span>{{ msjError }}</span>
+				</div>
+				{{/if}}
+				<input type="text" placeholder="Usuario" class="input" name="usuario" />
+				{{!-- <input type="email" placeholder="Email" class="input" name="email" /> --}}
+				<input type="password" placeholder="Password" class="input" name="password" />
+				<a href="#" class="link">Olvidaste tu clave?</a>
+				<button class="btn btn-in" value="btn-access" type="submit" id="btn-in"
+					name="btn-action">Ingresar</button>
+			</form>
+		</div>
 
-	<!-- Sign In -->
-	<div class="container__form container--signin">
-		<form action="/ingreso" class="form" method="post" id="form2">
-			{{!-- <h2 class="form__title">Registro</h2> --}}
-			<input type="text" placeholder="Nombres" class="input" name="nombres"/>
-			<input type="text" placeholder="Apellidos" class="input" name="apellidos"/>
-			<input type="text" placeholder="Número de Carné" class="input" name="rut"/>
-			<input type="text" placeholder="Dirección" class="input" name="direccion"/>
-			{{!-- <input type="text" placeholder="Región" class="input" name="RegReg"/>
-			<input type="text" placeholder="Comuna" class="input" name="comReg"/> --}}
-			<input type="text" placeholder="Teléfono" class="input" name="telefono"/>
-			<input type="email" placeholder="Email" class="input" name="email"/>
-			<input type="text" placeholder="Nombre Usuario" class="input" name="usuario1"/>
-			<input type="password" placeholder="Password" class="input" name="pass" />
-			<button class="btn btn-in" type="submit" value="btn-regist" id="" name="btn-action">Regístrate</button>
-			
-		</form>
-	</div>
+		<!-- Sign In -->
+		<div class="container__form container--signin">
 
-	<!-- Overlay -->
-	<div class="container__overlay">
-		<div class="overlay">
-			<div class="overlay__panel overlay--left">
-				<button class="btn-in"  id="signIn">Registrarse</button>
-			</div>
-			<div class="overlay__panel overlay--right">
-				<button class="btn-in"  id="signUp">Ingresar</button>
+			<form action="/ingreso" class="form" method="post" id="form2">
+
+				{{!-- <h2 class="form__title">Registro</h2> --}}
+				<input type="text" placeholder="Nombres" class="input" name="nombres" />
+				<input type="text" placeholder="Apellidos" class="input" name="apellidos" />
+				<input type="text" placeholder="Número de Carné sin puntos" class="input" name="rut" />
+				<input type="text" placeholder="Dirección" class="input" name="direccion" />
+				{{!-- <input type="text" placeholder="Región" class="input" name="RegReg" />
+				<input type="text" placeholder="Comuna" class="input" name="comReg" /> --}}
+				<input type="text" placeholder="Teléfono" class="input" name="telefono" />
+				<input type="email" placeholder="Email" class="input" name="email" />
+				<input type="text" placeholder="Nombre Usuario" class="input" name="usuario1" />
+				<input type="password" placeholder="Password" class="input" name="pass" />
+				<button class="btn btn-in" type="submit" value="btn-regist" id="" name="btn-action">Regístrate</button>
+
+			</form>
+
+		</div>
+
+		<!-- Overlay -->
+		<div class="container__overlay">
+			<div class="overlay">
+				<div class="overlay__panel overlay--left">
+					<button class="btn-in" id="signIn">Registrarse</button>
+				</div>
+
+				<div class="overlay__panel overlay--right">
+					<button class="btn-in" id="signUp">Ingresar</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </main>
 {{/template}}
 
 <script>
-	
-const signInBtn = document.getElementById("signIn");
-const signUpBtn = document.getElementById("signUp");
-const fistForm = document.getElementById("form1");
-const secondForm = document.getElementById("form2");
-const container = document.querySelector(".container");
 
-signInBtn.addEventListener("click", () => {
-	container.classList.remove("right-panel-active");
-});
+	const signInBtn = document.getElementById("signIn");
+	const signUpBtn = document.getElementById("signUp");
+	const fistForm = document.getElementById("form1");
+	const secondForm = document.getElementById("form2");
+	const container = document.querySelector(".container");
 
-signUpBtn.addEventListener("click", () => {
-	container.classList.add("right-panel-active");
-});
+	signInBtn.addEventListener("click", () => {
+		container.classList.remove("right-panel-active");
+	});
+
+	signUpBtn.addEventListener("click", () => {
+		container.classList.add("right-panel-active");
+	});
 
 //document.getElementById("form1").addEventListener("submit", (e) => e.preventDefault());
 //document.getElementById("form2").addEventListener("submit", (e) => e.preventDefault());
 
+
+
+if(document.querySelector(".error-ingreso")) {
+const msjeFlash = document.querySelector(".error-ingreso");
+setTimeout(() => {
+	msjeFlash.classList.add("d-none");
+}, 3000)
+}
+
+if(document.querySelector(".error-registro")) {
+const msjeFlash = document.querySelector(".error-registro");
+setTimeout(() => {
+	msjeFlash.classList.add("d-none");
+}, 3000)
+}
 </script>

@@ -11,8 +11,9 @@ export class Canasta {
 
     if (productoExistente) {
       productoExistente.cant += cant;
+      productoExistente.subtotal = productoExistente.precio * productoExistente.cant;
     } else {
-      const producto = { ...pdto, cant };
+      const producto = { ...pdto, cant, subtotal: pdto.precio * cant };
       this.items.push(producto);
     }
   }
@@ -37,25 +38,31 @@ export class Canasta {
     console.log(this.items)
   }
 
-  // calcSubtPdto() {
-       
-  //  }
-  // }
+  calcSubtotalPdto(precio, cant) {
+    let subtotal = 0;
+    for (let i = 0; i < this.items.length; i++) {
 
-  // calcSubtotal() {
+      subtotal += this.items[i].precio * this.items[i].cant;
+    }
+    console.log(subtotal)
+    return subtotal;
+  }
 
-  // }
+  // CALCULAR TOTAL CON IMPUESTOS (IVA)
+  calcTotal(subtotal) {
+    const impuestos = subtotal * 0.18;
+    return subtotal + impuestos;
+  }
 
-  // calcImpuesto() {
-
-  // }
-
-  // calcEnvio() {
-
-  // }
-
-  // calcTotal() {
-
-  // }
-
+  // CALCULAR COSTOS DE ENVÍO
+  calcEnvio(total) {
+    let envio;
+    if (total <= 50000) {
+      envio = 3500;
+      return envio
+    } else if (total > 50000) {
+      envio = 9990;
+      return envio
+    }
+  }
 }

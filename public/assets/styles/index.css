@@ -18,7 +18,8 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 70px;
+    /* margin-top: 70px; */
+    padding-top: 12vh;
     top: 0;
 }
 
@@ -67,12 +68,14 @@ justify-content: center;
   .left-col {
     width: 100%;
     max-width: 32%;
+    height: 4vh;
   }
   
   .left-box {
     background-color: #eee;
     padding: 20px;
     margin-bottom: 20px;
+    height: 4vh;
   }
   
   .right-col {
@@ -109,11 +112,12 @@ justify-content: center;
       align-items: center;
       position: relative;
       flex-wrap: wrap;
+      padding-bottom: 5vh;
     }
 
     .container-slide {
-      width: 90%;
-      padding: 10px 35px;
+      width: 94%;
+      padding: 10px 17px;
     }
     .container-slide .swiper-container {
       width: 100%;
@@ -164,3 +168,88 @@ justify-content: center;
     .swiper-button-prev {
       left: 10px !important;
     }
+
+  /* INTENTO DE RESPONSIVIDAD*/
+
+  @media screen and (max-width: 540px ) {
+    .contenedor-index {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .link-img img {
+      width: 130px;
+      height: 130px;
+      border-radius: 130px;
+  }
+
+  h2 {
+    font-size: 16px;
+    padding: 0px, 4px;
+  }
+
+  .left-box {
+    height: 35vh;
+  }
+  
+  .body-slide {
+    padding-top: 4vh;
+  }
+
+  .cont-recuadros {
+    padding: 30px 20px;
+    margin: 0% 0%;
+}
+    
+  .left-box, .right-box {
+    width: 90vw;
+  }
+
+  .left-box, .left-col {
+    /* height: 32vh; */
+    height: 35vh;
+  }
+
+  .right-box-right img {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+  }
+
+  @media screen and (max-width: 992px ) { 
+
+  .container-slide {
+    width: 85% !important;
+    padding: 10px 24px !important;
+  }
+
+  .swiper-button-next {
+    right: 30px !important;
+  }
+
+  .swiper-button-prev {
+    left: 30px !important;
+  }
+}
+
+@media screen and (max-width: 1280px ) {
+  .container-slide {
+    width: 85% !important;
+    padding: 10px 20px !important;
+  }
+}
+
+@media screen and (max-width: 1024px ) { 
+.cont-recuadros {
+  padding: 70px 20px;
+}
+
+.left-box {
+  height: 57.5vh;
+}
+
+.body-slide {
+  padding-top: 4vh;
+}
+}

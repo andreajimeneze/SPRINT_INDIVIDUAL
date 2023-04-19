@@ -1,24 +1,45 @@
 import express from "express";
-// import fs from "fs";
-// import connection from "../conect.js";
-// import session from "express-session";
+import flash from "express-flash";
+import session from "express-session";
+import cookieParser from "cookie-parser";
 import { Producto } from "../utils/Class/Producto.js";
 import { Usuario } from "../utils/Class/Usuario.js";
 import { Canasta } from "../utils/Class/Canasta.js";
 import { formatCL, capFirstMay } from "../helpers/helpers.js";
 import methodOverride from "method-override";
-const router = express.Router();
-const cart = new Canasta();
+import CryptoJS from "crypto-js";
+import dotenv from 'dotenv';
 
+// Variables globales
+const router = express.Router();
+const secreto = "secreto";
+const cart = new Canasta();
+dotenv.config();
+
+// Métodos de Middlewares
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 router.use(methodOverride("_method"));
+router.use(cookieParser(secreto));
+router.use(session({
+  secret: secreto,
+  resave: true,
+  saveUninitialized: false,
+  maxAge: 60000
+}))
+router.use(flash({
+  flashMessageOptions: {
+    timeout: 5000
+  }
+}))
 
-router.get("/", (req, res) => {
+
+// VISTA INDEX
+router.get("/", (_req, res) => {
   res.render("index")
 })
 // CARGAR TIENDA CON PRODUCTOS
-router.get("/tienda", async (req, res) => {
+router.get("/tienda", async (_req, res) => {
   const pdto = new Producto()
   const productos = await pdto.getProducts()
 
@@ -26,50 +47,56 @@ router.get("/tienda", async (req, res) => {
 })
 
 // VISTA CONTACTO
-router.get("/contacto", (req, res) => {
+router.get("/contacto", (_req, res) => {
   res.render("contacto")
 })
 
-// VISTA INGRESO
-router.get("/ingreso", (req, res) => {
-  res.render("ingreso")
-})
-
-router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/ingreso.hbs'));
+// VISTA INGRESO CON MENSAJE ERROR #IF
+router.get('/ingreso', (req, res) => {
+  const msjError = req.flash("error");
+  const msjError2 = req.flash("error2");
+  const msjeError3 = req.flash("error3")
+  res.render("ingreso", { msjError, msjError2, msjeError3 })
 });
+
+// router.get('/', (_req, res) => {
+//   res.sendFile(path.join(__dirname + '/ingreso.hbs'));
+// });
 
 // ACCEDER A SESIÓN CON USUARIO Y PASSWORD
 router.post('/auth', async (req, res) => {
   let username = req.body.usuario;
   let password = req.body.password;
-
+  
   let user = new Usuario();
-
   const usuario = await user.getUsuario(username, password)
 
   if (usuario.success) {
-    req.session.loggedin = true;
-    req.session.username = usuario.usuario;
-    res.redirect('/cart');
-  }
-  else if (username == "root" && password == "1234") {
-    res.redirect("/sesionadm")
+    if (username == process.env.ADM_USUARIO) {
+      res.redirect('/sesionadm');
+    } else {
+      res.redirect('/tienda');
+    }
   } else {
-    res.redirect('/ingreso')
-    console.log("contraseña no es correcta")
+    req.flash('error', 'Usuario y/o contraseña incorrectas');
+    res.redirect("ingreso");
   }
 }
 );
 
 // REGISTRAR NUEVO USUARIO
-router.post("/ingreso", (req, res) => {
+router.post("/ingreso", async (req, res) => {
   const { nombres, apellidos, rut, direccion, telefono, email, usuario1, pass } = req.body;
 
-  const user = new Usuario();
-  user.setUsuario(nombres, apellidos, rut, direccion, telefono, email, usuario1, pass)
-
-  res.redirect("/ingreso")
+    const user = new Usuario();
+    
+    const newUsuario = await user.setUsuario(nombres, apellidos, rut, direccion, telefono, email, usuario1, pass)
+      if(newUsuario == true) {
+      res.redirect("ingreso")
+    } else {
+      req.flash('error2', 'rut o nombre de usuario ya existen.');
+      res.redirect("ingreso")
+    }
 });
 
 router.get("/cart", (req, res) => {
@@ -86,11 +113,12 @@ router.post("/cart", async (req, res) => {
   await cart.addPdto(prod, 1);
   req.session.cart = cart;
   const canasta = cart.items;
+  console.log(canasta)
   res.render("cart", { products: cart.items, total: cart.total, canasta: canasta });
 });
 
 // VACIAR CANASTA
-router.delete("/cart", (req, res) => {
+router.delete("/cart", (_req, res) => {
   // const vaciar = parseInt(req.body.vaciar);
   cart.vaciarCarro()
   console.log(cart)
@@ -106,6 +134,18 @@ router.delete("/cart/:id", (req, res) => {
   res.render("cart", { canasta });
 })
 
+router.post("/cart/subtotal", (req, res) => {
+  const prize = req.body.prize;
+  console.log(prize)
+  const cant = req.body.cantProd;
+  console.log(cant)
+  const subtotal = cart.calcSubtotalPdto(prize, cant)
+  res.render("cart", { subtotal })
+})
+
+
+
+
 /*-----------------------------------M A N T E N E D O R ---------------------------------------*/
 
 // AGREGAR NUEVO PRODUCTO DESDE MANTENEDOR
@@ -119,7 +159,7 @@ router.post("/adm", async (req, res) => {
 
 
 // OBTENER PRODUCTOS PARA MANTENEDOR ELIMINAR
-router.get("/delete", async (req, res) => {
+router.get("/delete", async (_req, res) => {
   const pdto = new Producto()
   const prod = await pdto.getProducts()
 
@@ -127,7 +167,7 @@ router.get("/delete", async (req, res) => {
 })
 
 // OBTENER PRODUCTOS PARA MANTENEDOR MODIFICAR
-router.get("/modif", async (req, res) => {
+router.get("/modif", async (_req, res) => {
   const pdto = new Producto()
   const prod = await pdto.getProducts()
 
@@ -156,12 +196,12 @@ router.put("/modpdto/:id", async (req, res) => {
 })
 
 // ACCEDER A MODIFICARPDTO.HBS
-router.get("/modpdto", (req, res) => {
+router.get("/modpdto", (_req, res) => {
   res.render("modificarPdto")
 })
 
 // CARGAR PRODUCTOS EN MANTENEDOR
-router.get("/modpdto/form", async (req, res) => {
+router.get("/modpdto/form", async (_req, res) => {
   const pdto = new Producto()
   const prod = await pdto.getProducts()
 
@@ -169,7 +209,7 @@ router.get("/modpdto/form", async (req, res) => {
 })
 
 // SESIÓN ADMIN --- SE INGRESA CON USERNAME Y PASSWORD
-router.get("/sesionadm", (req, res) => {
+router.get("/sesionadm", (_req, res) => {
   res.render("sesionadm")
 })
 

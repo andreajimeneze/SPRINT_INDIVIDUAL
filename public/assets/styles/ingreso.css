@@ -215,3 +215,15 @@ main.ingreso {
 		z-index: 5;
 	}
 }
+
+.error-ingreso {
+	display: flex;
+	justify-content: center;
+	color: red;
+}
+
+.error-registro {
+	display: flex;
+	justify-content: center;
+	color: blue;
+}

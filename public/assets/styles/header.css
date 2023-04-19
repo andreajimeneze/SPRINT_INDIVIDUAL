@@ -87,3 +87,22 @@ form.formSearch {
 .btnSearch:hover {
   background-color: rgb(74, 96, 109)
 }
+
+@media screen and (max-width: 540px ) {
+  .formSearch input.inputSearch {
+    width: 300px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .btnSearch {
+    height: 30px;
+  }
+}
+
+@media screen and (max-width: 1024px ) { 
+a.nav-link {
+  padding-right: 9vh !important;
+  padding-left: 9vh !important;
+}
+}

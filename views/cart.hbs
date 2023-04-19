@@ -23,14 +23,17 @@
                     <td> {{ id }}</td>
                     <td><img src="{{foto}}" alt="" id="img-cart"></td>
                     <td>{{ nombre }}</td>
-                    <td id="precioPdto_{{ id }}">{{ precio}}</td>
-                    {{cant}}
-                    <td id="cantPdto">
-                        <button class="btn btn-info bton-card" id="btn-minus" name="btnMinus" value="{{ id }}">-</button>
-                        <p class="mb-0 mt-2 align-self:center cantProdDisplay" id="cant_{{ id }}" name="cantProd">{{ cant }}</p>
-                        <button class="btn btn-info bton-card" id="btn-plus" name="btnAdd" value="{{ id }}">+</button>
-                    </td>
-                    <td class="subtotalPdto_{{ id }}">{{precio}}</td>
+                    <form action="/cart/subtotal" method="post">
+                        <td id="precioPdto_{{ id }}" name="prize">{{ precio}}</td>
+                        <td id="cantPdto">
+                            <button class="btn btn-info bton-card" id="btn-minus" name="btnMinus"
+                                value="{{ id }}">-</button>
+                                <input type="hidden" name="cantProd" value="{{ cant }}" id="cant_{{ id }}">
+                            <p class="mb-0 mt-2 align-self:center cantProdDisplay" id="cant_{{ id }}">{{ cant }}</p>
+                            <button class="btn btn-info bton-card" id="btn-plus" name="btnAdd" value="{{ id }}">+</button>
+                        </td>
+                        <td class="subtotalPdto_{{ id }}">{{ subtotal }}</td>
+                    </form>
                     <td>
                         <form action="/cart/{{ id}}?_method=DELETE" method="post">
                             <input type="hidden" name="id">

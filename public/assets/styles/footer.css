@@ -52,13 +52,13 @@ footer {
 }
 
 .social-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 30px;
+    width: 45px;
+    height: 45px;
+    border-radius: 45px;
     border: solid 1px #1f1919;
     background-image: url(../img/facebook-svgrepo-com.svg);
     background-position: center;
-    background-size: 30px;
+    background-size: 45px;
     background-repeat: no-repeat;
     margin: 1rem;
 }
@@ -113,4 +113,25 @@ footer {
     width: 30%;
     margin-top: 1rem;
     color: antiquewhite;
+}
+
+
+/*INTENTO DE RESPONSIVIDAD*/
+@media screen and (max-width: 540px ) { 
+.copyright {
+    padding-right: 40px;
+    font-size: 12px;
+}
+.social-footer h6 {
+    font-size: 12px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background-size: 40px;
+    margin: 0.5rem;
+}
+
 }

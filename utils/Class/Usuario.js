@@ -1,5 +1,9 @@
 import pool from "../../conect.js";
 import CryptoJS from "crypto-js";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 
 export class Usuario {
     constructor(usuario, password) {
@@ -17,10 +21,16 @@ export class Usuario {
         try {
             const resul = await pool.query(`INSERT INTO registrousuario (nombres, apellidos, rut, direccion, telefono, email, usuario, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`, [nombres, apellidos, rut, direccion, telefono, email, usuario, CryptoJS.SHA256(password).toString()])
             console.log(`Usuario ${resul.rows[0].usuario} registrado con éxito`)
-        }
-        catch (e) {
-            throw e;
-        }
+            return true;
+        } catch (e) {
+            if (e.constraint === 'unique_usuario') {
+                console.log("usuario ya existe")
+                return false;
+            } else if (e.constraint === "unique_rut") {
+                console.log("usuario ya está registrado")
+                return false;
+            }
+        } 
     }
 
     async getUsuario(usuario, password) {
@@ -41,12 +51,4 @@ export class Usuario {
         }
     }
 
-    async login() {
-        try {
-          return { success: true };
-        } catch (err) {
-          return { success: false, message: 'Ocurrió un error durante la autenticación' };
-        }
-      }
-    }
-
+}

@@ -1,6 +1,6 @@
--- Active: 1677694539002@@127.0.0.1@3306@nodelogin
+-- Active: 1680181159627@@127.0.0.1@5432@pezmosaico
 CREATE DATABASE IF NOT EXISTS `nodelogin` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `nodelogin`;
+USE `pezmosaico`;
 
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -33,3 +33,9 @@ ALTER TABLE `registro` MODIFY `telefono` varchar(50) NOT NULL;
 SELECT * FROM `registro`;
 
 DELETE FROM `registro` WHERE id = 1;
+
+ALTER TABLE registrousuario ADD CONSTRAINT unique_usuario UNIQUE (usuario);
+
+ALTER TABLE registrousuario ADD CONSTRAINT unique_usuario UNIQUE (rut);
+
+ALTER TABLE registrousuario ADD CONSTRAINT unique_rut UNIQUE (rut);

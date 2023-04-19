@@ -2,7 +2,7 @@
 export function calcularSubtotal(productos) {
     let subtotal = 0;
     for (let i = 0; i < productos.length; i++) {
-      subtotal += productos[i].precio;
+      subtotal += productos[i].precio * productos[i].cant;
     }
     return subtotal;
   }

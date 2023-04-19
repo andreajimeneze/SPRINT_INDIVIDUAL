@@ -92,7 +92,7 @@
     height: 40px; 
     background-image: url('../img/trash-svgrepo-com.svg');
     background-size: cover;
-    /* background-color: white; */
+  background-color: rgb(252, 243, 232);
     background-repeat: no-repeat;
     border: none; 
     cursor: pointer;
