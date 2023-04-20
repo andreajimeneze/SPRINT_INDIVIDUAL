@@ -153,3 +153,9 @@
     padding-top: 1rem;
     width: 100%;
   }
+
+  .botones-cart {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }

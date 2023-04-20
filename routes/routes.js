@@ -59,15 +59,11 @@ router.get('/ingreso', (req, res) => {
   res.render("ingreso", { msjError, msjError2, msjeError3 })
 });
 
-// router.get('/', (_req, res) => {
-//   res.sendFile(path.join(__dirname + '/ingreso.hbs'));
-// });
-
 // ACCEDER A SESIÓN CON USUARIO Y PASSWORD
 router.post('/auth', async (req, res) => {
   let username = req.body.usuario;
   let password = req.body.password;
-  
+
   let user = new Usuario();
   const usuario = await user.getUsuario(username, password)
 
@@ -88,20 +84,21 @@ router.post('/auth', async (req, res) => {
 router.post("/ingreso", async (req, res) => {
   const { nombres, apellidos, rut, direccion, telefono, email, usuario1, pass } = req.body;
 
-    const user = new Usuario();
-    
-    const newUsuario = await user.setUsuario(nombres, apellidos, rut, direccion, telefono, email, usuario1, pass)
-      if(newUsuario == true) {
-      res.redirect("ingreso")
-    } else {
-      req.flash('error2', 'rut o nombre de usuario ya existen.');
-      res.redirect("ingreso")
-    }
+  const user = new Usuario();
+
+  const newUsuario = await user.setUsuario(nombres, apellidos, rut, direccion, telefono, email, usuario1, pass)
+  if (newUsuario == true) {
+    res.redirect("ingreso")
+  } else {
+    req.flash('error2', 'rut o nombre de usuario ya existen.');
+    res.redirect("ingreso")
+  }
 });
 
 router.get("/cart", (req, res) => {
   const cart = req.session.cart || new Canasta();
-  res.render("cart", { products: cart.items, total: cart.total });
+  const canasta = cart.items;
+  res.render("cart", { products: cart.items, total: cart.total, canasta: canasta, total: cart.calcTotalPdto() });
 });
 
 // AGREGAR PRODUCTOS A LA CANASTA
@@ -113,15 +110,24 @@ router.post("/cart", async (req, res) => {
   await cart.addPdto(prod, 1);
   req.session.cart = cart;
   const canasta = cart.items;
-  console.log(canasta)
-  res.render("cart", { products: cart.items, total: cart.total, canasta: canasta });
+  res.render("cart", { products: cart.items, total: cart.total, canasta: canasta, total: cart.calcTotalPdto()  });
 });
+
+// ACTUALIZAR CANTIDAD PDTOS EN CANASTA (MÉTODO CLASS CANASTA CALCULA SUBTOTALES). ASIMISMO SE EJECUTA EL MÉTODO CALCULAR TOTALES AL RENDERIZAR LA PÁGINA CART.
+router.post('/cart/updateCant', (req, res) => {
+  const pdtoId = parseInt(req.body.addOne);
+  const prodId = parseInt(req.body.btnMinus)
+  cart.agregarCant(pdtoId);
+  cart.eliminarCant(prodId)
+  req.session.cart = cart;
+  const canasta = cart.items;
+  res.render('cart', { products: cart.items, subtotal: cart.subtotal, canasta: canasta, total: cart.calcTotalPdto() });
+});
+
 
 // VACIAR CANASTA
 router.delete("/cart", (_req, res) => {
-  // const vaciar = parseInt(req.body.vaciar);
   cart.vaciarCarro()
-  console.log(cart)
   res.render("cart");
 })
 
