@@ -1,161 +1,174 @@
 .offcanvas.offcanvas-end.show {
-    width: 50%;
-  }
-  
-  .contenedor-Cart {
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap;
-    justify-items: center;
-    align-items: initial;
-    text-align: center;
-  }
-  
-  div.cart-notification {
-    border-radius: 50%;
-    background-color: blue;
-    color: antiquewhite;
-    height: 30px;
-    width: 30px;
-    position: absolute;
-    display: none;
-  }
-  
-  table {
-    margin-bottom: 2vw;
-    border: solid 1px grey;
-  }
-  
-  .thead-cart th {
-    padding-left: 1rem;
-    justify-content: center;
-  }
+  width: 50%;
+}
 
-  .thead-cart th:nth-of-type(2) {
-    justify-self: center;
-  }
+.contenedor-Cart {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  justify-items: center;
+  align-items: initial;
+  text-align: center;
+}
 
-  .thead-cart th:nth-of-type(3) {
-    padding-left: 2.5rem;
-  }
+div.cart-notification {
+  border-radius: 50%;
+  background-color: blue;
+  color: antiquewhite;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  display: none;
+}
 
-  .thead-cart th:nth-of-type(5) {
-    padding-left: 3rem;
-  }
+table {
+  margin-bottom: 2vw;
+  border: solid 1px grey;
+}
 
-  .thead-cart th:nth-of-type(6) {
-    padding-left: 0rem;
-  }
+.thead-cart th {
+  padding-left: 1rem;
+  justify-content: center;
+}
 
-  table td {
-    padding: 2vw 1.4vw;
-  }
-  
-  .datosProductosAComprar {
-    width: 100%;
-  }
-  
-  .filaTabla tr {
-    padding: 2vw;
-  }
-  
-  .offcanvas-footer {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 5vw;
-  }
-  
-  .preciosCarrito {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 1vw;
-  }
-  
-  button.btnAddCanasta {
-    border: solid 1px gray;
-    border-radius: 10%;
-    text-size-adjust: initial;
-  }
-  
-  p#cantCanasta.mb-0.mt-2.align-self\:center {
-    margin-left: 10px !important;
-    margin-right: 10px;
-  }
+.thead-cart th:nth-of-type(2) {
+  justify-self: center;
+}
 
-  #img-cart {
-    height: 80px;
-    object-fit: cover;
-  }
-  
-  .trash-btn {
-    width: 40px; 
-    height: 40px; 
-    background-image: url('../img/trash-svgrepo-com.svg');
-    background-size: cover;
-  background-color: rgb(252, 243, 232);
-    background-repeat: no-repeat;
-    border: none; 
-    cursor: pointer;
-  }
-  
-  button.btnAddCarro {
-    height: 3vh;
-    padding: 0vw 0.5vw;
-    border: solid 1px gray;
-    border-radius: 10%;
-    margin: 0vw 1vw;
-  }
-  
-  .cart {
-    margin-top: 1rem;
-    padding: 0.5rem 4rem;
-    width: 100%;
-    height: auto;
-    border: 2px solid rgb(88, 87, 87);
-  }
-  
-  #cantPdto {
-    display: flex;
-    align-items: center;
-  }
-  
-  .canastaCant {
-    display: flex;
-  }
-  
-  .canastaCant button {
-    margin-left: 5px;
-  }
-  
-  #cantPdto {
-    display: flex;
-    align-items: center;
-  }
-  
-  .canastaCant button {
-    margin-left: 5px;
-  }
-  
-  .headTitleCart {
-    display: flex;
-    justify-content: space-around;
-    padding: 0% 3rem;
-    padding-left: 1rem !important;
-  }
-  
-  #cart-title {
-    text-align: center;
-  }
-  
-  .cartTable {
-    display: flex;
-    flex-direction: column;
-    padding-top: 1rem;
-    width: 100%;
-  }
+.thead-cart th:nth-of-type(3) {
+  padding-left: 2.5rem;
+}
 
-  .botones-cart {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
+.thead-cart th:nth-of-type(5) {
+  padding-left: 3rem;
+}
+
+.thead-cart th:nth-of-type(6) {
+  padding-left: 0rem;
+}
+
+table td {
+  padding: 2vw 1.4vw;
+}
+
+.datosProductosAComprar {
+  width: 100%;
+}
+
+.filaTabla tr {
+  padding: 2vw;
+}
+
+.offcanvas-footer {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 5vw;
+}
+
+.preciosCarrito {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1vw;
+}
+
+button.btnAddCanasta {
+  border: solid 1px gray;
+  border-radius: 10%;
+  text-size-adjust: initial;
+}
+
+p#cantCanasta.mb-0.mt-2.align-self\:center {
+  margin-left: 10px !important;
+  margin-right: 10px;
+}
+
+#img-cart {
+  height: 80px;
+  object-fit: cover;
+}
+
+.trash-btn {
+  width: 40px;
+  height: 40px;
+  background-image: url("../img/trash-svgrepo-com.svg");
+  background-size: cover;
+  /* background-color: rgb(252, 243, 232); */
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+}
+
+button.btnAddCarro {
+  height: 3vh;
+  padding: 0vw 0.5vw;
+  border: solid 1px gray;
+  border-radius: 10%;
+  margin: 0vw 1vw;
+}
+
+.cart {
+  margin-top: 1rem;
+  padding: 0.5rem 4rem;
+  width: 100%;
+  height: auto;
+  border: 2px solid rgb(88, 87, 87);
+}
+
+#cantPdto {
+  display: flex;
+  align-items: center;
+}
+
+.canastaCant {
+  display: flex;
+}
+
+.canastaCant button {
+  margin-left: 5px;
+}
+
+#cantPdto {
+  display: flex;
+  align-items: center;
+}
+
+.canastaCant button {
+  margin-left: 5px;
+}
+
+.headTitleCart {
+  display: flex;
+  justify-content: space-around;
+  padding: 0% 3rem;
+  padding-left: 1rem !important;
+}
+
+#cart-title {
+  text-align: center;
+}
+
+.cartTable {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+  width: 100%;
+}
+
+.botones-cart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-top: 40px;
+}
+
+.total-cart span,
+.link-tienda {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 15px;
+}
+
+.total-cart span {
+  font-size: 18px;
+  font-weight: bold;
+}

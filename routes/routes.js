@@ -5,15 +5,18 @@ import cookieParser from "cookie-parser";
 import { Producto } from "../utils/Class/Producto.js";
 import { Usuario } from "../utils/Class/Usuario.js";
 import { Canasta } from "../utils/Class/Canasta.js";
+import { Categoria } from "../utils/Class/Categoria.js";
 import { formatCL, capFirstMay } from "../helpers/helpers.js";
 import methodOverride from "method-override";
-import CryptoJS from "crypto-js";
+// import CryptoJS from "crypto-js";
 import dotenv from 'dotenv';
 
 // Variables globales
 const router = express.Router();
 const secreto = "secreto";
 const cart = new Canasta();
+const pdto = new Producto();
+const user = new Usuario();
 dotenv.config();
 
 // Métodos de Middlewares
@@ -38,12 +41,19 @@ router.use(flash({
 router.get("/", (_req, res) => {
   res.render("index")
 })
-// CARGAR TIENDA CON PRODUCTOS
+// CARGAR TIENDA CON PRODUCTOS (JOIN CON TABLA CATEGORÍA)
 router.get("/tienda", async (_req, res) => {
-  const pdto = new Producto()
-  const productos = await pdto.getProducts()
+  const productos = await pdto.getProductsByCategory()
 
   res.render("tienda", { productos })
+})
+
+// VISTA PRODUCTOS POR CATEGORÍA
+router.get("/productos", async (req, res) => {
+  const cat_id = parseInt(req.query.categoria);
+  const prod = await pdto.getProductByCategory(cat_id);
+
+  res.render("tienda", { prod: prod })
 })
 
 // VISTA CONTACTO
@@ -64,7 +74,7 @@ router.post('/auth', async (req, res) => {
   let username = req.body.usuario;
   let password = req.body.password;
 
-  let user = new Usuario();
+  // let user = new Usuario();
   const usuario = await user.getUsuario(username, password)
 
   if (usuario.success) {
@@ -83,9 +93,7 @@ router.post('/auth', async (req, res) => {
 // REGISTRAR NUEVO USUARIO
 router.post("/ingreso", async (req, res) => {
   const { nombres, apellidos, rut, direccion, telefono, email, usuario1, pass } = req.body;
-
-  const user = new Usuario();
-
+  // const user = new Usuario();
   const newUsuario = await user.setUsuario(nombres, apellidos, rut, direccion, telefono, email, usuario1, pass)
   if (newUsuario == true) {
     res.redirect("ingreso")
@@ -95,22 +103,21 @@ router.post("/ingreso", async (req, res) => {
   }
 });
 
+// VISTA DE LA CANASTA RENDERIZADA
 router.get("/cart", (req, res) => {
-  const cart = req.session.cart || new Canasta();
+  req.session.cart = cart;
   const canasta = cart.items;
-  res.render("cart", { products: cart.items, total: cart.total, canasta: canasta, total: cart.calcTotalPdto() });
+  res.render("cart", { products: cart.items, subtotal: formatCL(cart.subtotal), canasta: canasta, total: formatCL(cart.calcTotalPdto()) });
 });
 
 // AGREGAR PRODUCTOS A LA CANASTA
 router.post("/cart", async (req, res) => {
   const pdtoId = parseInt(req.body.btnAdd);
-
-  const producto = new Producto()
-  const prod = await producto.getProductById(pdtoId);
+  const prod = await pdto.getProductById(pdtoId);
   await cart.addPdto(prod, 1);
   req.session.cart = cart;
   const canasta = cart.items;
-  res.render("cart", { products: cart.items, total: cart.total, canasta: canasta, total: cart.calcTotalPdto()  });
+  res.render("cart", { products: cart.items, subtotal: formatCL(cart.subtotal), canasta: canasta, total: formatCL(cart.calcTotalPdto()) });
 });
 
 // ACTUALIZAR CANTIDAD PDTOS EN CANASTA (MÉTODO CLASS CANASTA CALCULA SUBTOTALES). ASIMISMO SE EJECUTA EL MÉTODO CALCULAR TOTALES AL RENDERIZAR LA PÁGINA CART.
@@ -121,9 +128,8 @@ router.post('/cart/updateCant', (req, res) => {
   cart.eliminarCant(prodId)
   req.session.cart = cart;
   const canasta = cart.items;
-  res.render('cart', { products: cart.items, subtotal: cart.subtotal, canasta: canasta, total: cart.calcTotalPdto() });
+  res.render('cart', { products: cart.items, subtotal: formatCL(cart.subtotal), canasta: canasta, total: formatCL(cart.calcTotalPdto()) });
 });
-
 
 // VACIAR CANASTA
 router.delete("/cart", (_req, res) => {
@@ -135,30 +141,32 @@ router.delete("/cart", (_req, res) => {
 router.delete("/cart/:id", (req, res) => {
   const id = parseInt(req.params.id);
   cart.deletePdtoCart(id)
+  req.session.cart = cart;
   const canasta = cart.items;
-
-  res.render("cart", { canasta });
+  res.render("cart", { products: cart.items, subtotal: formatCL(cart.subtotal), canasta: canasta, total: formatCL(cart.calcTotalPdto()) });
 })
 
 router.post("/cart/subtotal", (req, res) => {
   const prize = req.body.prize;
-  console.log(prize)
   const cant = req.body.cantProd;
-  console.log(cant)
   const subtotal = cart.calcSubtotalPdto(prize, cant)
-  res.render("cart", { subtotal })
+  res.render("cart", { subtotal: formatCL(subtotal) })
 })
 
 
+/*--------------------------------M A N T E N E D O R ---------------------------------------*/
 
-
-/*-----------------------------------M A N T E N E D O R ---------------------------------------*/
+// DEFINIR CATEGORÍAS SELECT MANTENEDOR AGREGAR PRODUCTO
+router.get("/sesionadm", async (req, res) => {
+  const cat = new Categoria();
+  const categorias = await cat.getCategoria()
+  res.render("sesionadm", { categorias: categorias })
+})
 
 // AGREGAR NUEVO PRODUCTO DESDE MANTENEDOR
 router.post("/adm", async (req, res) => {
-  const { namePdto, prizePdto, imgPdto, cantPdto } = req.body;
-  let pdto = new Producto()
-  await pdto.addPdto(namePdto, parseInt(prizePdto), imgPdto, parseInt(cantPdto))
+  const { namePdto, prizePdto, imgPdto, cantPdto, categ } = req.body;
+  await pdto.addPdto(namePdto, parseInt(prizePdto), imgPdto, parseInt(cantPdto), parseInt(categ))
 
   res.redirect("tienda");
 })
@@ -166,16 +174,15 @@ router.post("/adm", async (req, res) => {
 
 // OBTENER PRODUCTOS PARA MANTENEDOR ELIMINAR
 router.get("/delete", async (_req, res) => {
-  const pdto = new Producto()
-  const prod = await pdto.getProducts()
+  const prod = await pdto.getProductsByCategory()
 
   res.render("admin", { prod })
 })
 
 // OBTENER PRODUCTOS PARA MANTENEDOR MODIFICAR
 router.get("/modif", async (_req, res) => {
-  const pdto = new Producto()
-  const prod = await pdto.getProducts()
+
+  const prod = await pdto.getProductsByCategory()
 
   res.render("modifPdto", { prod })
 })
@@ -183,21 +190,25 @@ router.get("/modif", async (_req, res) => {
 // ELIMINAR PRODUCTO DESDE MANTENEDOR
 router.delete("/adm/:id", async (req, res) => {
   const pdtoEliminar = parseInt(req.params.id);
-  let pdto = new Producto()
+
   await pdto.deletePdto(pdtoEliminar)
   res.redirect("../tienda")
 })
 
 //MODIFICAR PRODUCTO DESDE MANTENEDOR
 router.put("/modpdto/:id", async (req, res) => {
-  const id = parseInt(req.params.id)
-  const name = req.body.name
-  const prize = parseInt(req.body.prize)
-  const link = req.body.link
-  const stock = parseInt(req.body.stock)
+  const id = parseInt(req.params.id);
+  const name = req.body.name;
+  const prize = parseInt(req.body.prize);
+  const link = req.body.link;
+  const stock = parseInt(req.body.stock);
+  const categoria = req.body.categoria;
+  const cat = new Categoria()
+  const categEnc = await cat.getCategoria()
+  const cat_id = categEnc.find(item => item.id == id)
 
-  let pdto = new Producto()
-  await pdto.modifPdto(name, prize, link, stock, id)
+
+  await pdto.modifPdto(name, prize, link, stock, cat_id, id)
   res.redirect("/sesionadm");
 })
 
@@ -208,7 +219,7 @@ router.get("/modpdto", (_req, res) => {
 
 // CARGAR PRODUCTOS EN MANTENEDOR
 router.get("/modpdto/form", async (_req, res) => {
-  const pdto = new Producto()
+
   const prod = await pdto.getProducts()
 
   res.render("modificarPdto", { prod })

@@ -17,7 +17,8 @@
   box-sizing: border-box;
 }
 
-HTML, body {
+HTML,
+body {
   height: 100%;
   width: 100%;
 }
@@ -135,6 +136,11 @@ main {
 }
 
 /* MODIF.HBS*/
+
+.table.table-striped {
+  width: 70% !important;
+}
+
 #filasPdtos th img {
   width: 50px;
 }
@@ -143,15 +149,25 @@ main {
 .form-addPdto {
   width: 100%;
   margin-top: 2rem;
- margin-left: 220px;
+  margin-left: 220px;
+}
 
+.formBody-select {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+
+select#select-cat {
+  width: 350px;
+  height: 30px;
 }
 
 .formBody input {
-display: flex;
-flex-direction: row;
-border: 1px solid grey;
-width: 350px;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid grey;
+  width: 350px;
 }
 
 /* FORM MODPDTO - MODIFICAR*/
@@ -171,26 +187,24 @@ width: 350px;
 
 input {
   background-color: #fff;
-	border: none;
-	padding: 0.5rem 0.9rem;
-	margin: 0.5rem 0;
-	width: 100%;
+  border: none;
+  padding: 0.5rem 0.9rem;
+  margin: 0.5rem 0;
+  width: 100%;
 }
 
 input.inputMod {
   background-color: #fff;
-	border: none;
-	padding: 0.5rem 0.9rem ;
-	margin: 0.5rem 0;
-	width: 70px;
+  border: none;
+  padding: 0.5rem 0.9rem;
+  margin: 0.5rem 0;
+  width: 70px;
 }
 
 input.inputModName {
-width: 150px;
+  width: 150px;
 }
 
 input.inputModLink {
   width: 300px;
-  }
-
-  
+}

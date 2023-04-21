@@ -6,6 +6,7 @@
       <td>Precio</td>
       <td>Imagen</td>
       <td>Link</td>
+      <td>Categoría</td>
       <td>Stock</td>
       <td>Editar</td>
     </tr>
@@ -19,7 +20,7 @@
         <input type="text" name="name" value="{{ nombre }}" class="inputModName">
       </th>
       <th>
-        <input type="text" name="prize" value="{{ precio }}"" class=" inputMod">
+        <input type="text" name="prize" value="{{ precio }}" class="inputMod">
       </th>
       <th>
         <img src="{{ imagen }}" id="imgModif">
@@ -28,7 +29,11 @@
         <input type="text" name="link" value="{{ imagen }}" class="inputModLink">
       </th>
       <th>
-        <input type="text" name="stock" value="{{ existencia }}"" class=" inputMod">
+        <input type="hidden" name="categoria" id="{{ id }}" value="{{ categoria_id }}" class="inputModName">
+        <input type="text" name="categoria" id="{{ id }}" value="{{ categoria }}" class="inputModName">
+      </th>
+      <th>
+        <input type="text" name="stock" value="{{ existencia }}" class=" inputMod">
       </th>
       
         <th><button value="{{ id }}" class="btn btn-secondary" name="btnEdit">Editar</button></th>

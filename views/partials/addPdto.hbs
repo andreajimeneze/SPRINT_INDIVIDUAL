@@ -5,9 +5,10 @@
     <input class="form-control-sm rounded" type="text" name="namePdto">
   </div>
   <div class="formBody">
-    <label class="form-label h6 fw-bold" for="nombre">Imagen</label>
+    <label class="form-label h6 fw-bold" for="nombre">Imagen (Ingrese Link)</label>
     <input class="form-control-sm rounded" type="text" name="imgPdto">
   </div>
+
   <div class="formBody">
     <label class="form-label h6 fw-bold" for="precio">Precio</label>
     <input class="form-control-sm rounded" type="text" name="prizePdto">
@@ -15,6 +16,15 @@
   <div class="formBody">
     <label class="form-label h6 fw-bold" for="cantPdto">Cant Disponible</label>
     <input class="form-control-sm rounded" type="text" name="cantPdto">
+  </div>
+  <div class="formBody-select">
+    <label class="form-label h6 fw-bold" for="categ">Categoría</label>
+    <select id="select-cat" name="categ">
+      <option value="categoria">Categoría</option>
+      {{#each categorias }}
+      <option  value="{{ id }}" id="{{ id }}">{{ categoria }}</option>
+      {{/each }}
+    </select>
   </div>
   <button class="btn btn-primary" type="submit">Agregar</button>
 </form>

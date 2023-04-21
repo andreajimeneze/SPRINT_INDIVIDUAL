@@ -1,3 +1,4 @@
+{{#if productos}}
 {{#each productos }}
 
 <div class="row row-cols-2 row-cols-md-3 g-4 cardPdto">
@@ -7,17 +8,11 @@
             <div class="card-body">
                 <h5 class="card-title"> {{ nombre }}</h5>
                 <p class="card-text">Código: {{ id }}</p>
-                <p class="card-text">Precio: $ {{ precio}}</p>
+                <P class="card-text">Categoría: {{ categoria }}</P>
+                <p class="card-prize">Precio: $ {{ precio}}</p>
             </div>
             <form action="/cart" method="post">
-            {{!-- <div class="d-flex column justify-content-center" class="tarjeta-modificar">
-                <button class="btn btn-info bton-card" value="{{ id }}" id="btn-minus">-</button>
-                <input class="cantProd" type="hidden" name="cantProd" value=1>
-                 {{!-- <input type="text" class="mb-0 mt-2 align-self:center cantProd" id="{{ id }}" name="cantProdDisplay" value=1 min="1" max="10" readonly> --}}
-                {{!-- <p class="mb-0 mt-2 align-self:center cantProdDisplay" id="{{ id }}">1</p>
-                <button class="btn btn-info bton-card" value="{{ id }}" id="btn-plus">+</button>
-            </div> --}}
-            
+
                 <div class="agregarCarro" class="d-flex">
                     <input type="hidden" name="pdtoId" value="{{ id }}">
                     <button class="btn btn-primary" value="{{ id }}" name="btnAdd" id="btn-add">Agregar</button>
@@ -26,39 +21,39 @@
         </div>
     </div>
 </div>
-
 {{/each}}
+{{/if}}
 
-<script>
-    let btnMin = document.querySelectorAll("#btn-minus");
-    let cantProd = document.querySelectorAll(".cantProd");
-    let cantProdDisplay = document.querySelectorAll(".cantProdDisplay");
-    let btnPlus = document.querySelectorAll("#btn-plus");
-    let btnAdd = document.querySelectorAll("#btn-add");
-   
+{{#if prod}}
+{{#each prod}}
+<div class="contenedor-prodCat">
+    <div class="row row-cols-2 row-cols-md-3 g-4 cardPdto">
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ foto }}" class="card-img-top imgPdto" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title"> {{ nombre }}</h5>
+                    <p class="card-text">Código: {{ id }}</p>
+                    <P class="card-text">Categoría: {{ categoria_id }}</P>
+                    <p class="card-prize">Precio: $ {{ precio}}</p>
+                </div>
+                <form action="/cart" method="post">
 
-    // Disminuye la cantidad de productos en la card.
-    btnMin.forEach((btn, index) => {
-        btn.addEventListener("click", () => {
-            let cantPdto = parseInt(cantProd[index].value)
-            if (cantPdto > 1) {
-                cantPdto--;
-                cantProd[index].value = cantPdto;
-                cantProdDisplay[index].textContent = cantPdto;
-            }
-        })
-    })
-    // Aumenta la cantidad de productos en la card.
-    btnPlus.forEach((btn, index) => {
-        btn.addEventListener("click", () => {
-            let cantPdto = parseInt(cantProd.value)
-            if (cantPdto >= 1) {
-                cantPdto++;
-                cantProd[index].value = cantPdto;
-                cantProdDisplay[index].textContent = cantPdto;
-            }
-        })
-    })
-
-
-</script>
+                    <div class="agregarCarro" class="d-flex">
+                        <input type="hidden" name="pdtoId" value="{{ id }}">
+                        <button class="btn btn-primary" value="{{ id }}" name="btnAdd" id="btn-add">Agregar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}
+{{/if}}
+{{#if prod }}
+<div class="cont-link-tiendaCat">
+<div class="link-tiendaCat">
+    <a href='/tienda'>Ver todos los productos</a>
+</div>
+</div>
+{{/if}}

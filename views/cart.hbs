@@ -27,7 +27,6 @@
                         <td id="cantPdto">
                             <button class="btn btn-info bton-card" id="btn-minus" name="btnMinus"
                                 value="{{ id }}">-</button>
-                            <input type="hidden" name="valueId" value="{{ id }}" id="cant_{{ id }}">
                             <p class="mb-0 mt-2 align-self:center cantProdDisplay" id="cant_{{ id }}">{{ cant }}</p>
                             <button class="btn btn-info bton-card" id="btn-plus" name="addOne"
                                 value="{{ id }}">+</button>
@@ -42,21 +41,25 @@
                     </td>
                 </tr>
             </tbody>
-              {{/each}}
-            
-                <tfoot>
-                    <tr>
-                        <td colspan="4">Total: {{ total }}</td>
-                        {{!-- <td>{{precio}}</td> --}}
-            </tfoot>          
-        </table>
+            {{/each}}
+    </table>
+            {{!-- <tfoot> --}}
+                {{!-- <tr class="cont-total-cart"> --}}
+                    <div class="total-cart" >
+                    <span colspan="4" class="total-cart">Total: {{ total }}</span>
+                    </div>
+            {{!-- </tfoot> --}}
+    
+
         <div class="botones-cart">
             <form action="/cart/?_method=DELETE" method="post">
                 <button class="btn btn-primary" name="vaciar">Vaciar</button>
             </form>
             <button class="btn btn-primary" name="comprar">COMPRAR</button>
         </div>
-        <a class="link-tienda" href='/tienda'>Volver a comprar</a>
+        <div class="link-tienda">
+        <a href='/tienda'>Volver a comprar</a>
+        </div>
     </div>
 </main>
 {{!--
