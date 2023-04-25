@@ -162,13 +162,13 @@ button.btnAddCarro {
 }
 
 .total-cart span,
-.link-tienda {
+.link-tienda, .tNet-cart span, .iva-cart span, .tBruto-cart span, .envio-cart span {
   display: flex;
   justify-content: flex-end;
   padding-right: 15px;
 }
 
-.total-cart span {
+.total-cart {
   font-size: 18px;
   font-weight: bold;
 }

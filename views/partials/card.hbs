@@ -12,7 +12,6 @@
                 <p class="card-prize">Precio: $ {{ precio}}</p>
             </div>
             <form action="/cart" method="post">
-
                 <div class="agregarCarro" class="d-flex">
                     <input type="hidden" name="pdtoId" value="{{ id }}">
                     <button class="btn btn-primary" value="{{ id }}" name="btnAdd" id="btn-add">Agregar</button>
@@ -37,8 +36,7 @@
                     <P class="card-text">Categoría: {{ categoria_id }}</P>
                     <p class="card-prize">Precio: $ {{ precio}}</p>
                 </div>
-                <form action="/cart" method="post">
-
+                <form action=`/cart/${id}` method="post">
                     <div class="agregarCarro" class="d-flex">
                         <input type="hidden" name="pdtoId" value="{{ id }}">
                         <button class="btn btn-primary" value="{{ id }}" name="btnAdd" id="btn-add">Agregar</button>

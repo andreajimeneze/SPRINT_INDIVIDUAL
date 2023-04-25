@@ -1,13 +1,15 @@
-// import pool from "../../conect.js";
-// import { Producto } from "../Class/Producto.js";
 
 export class Canasta {
   constructor() {
     this.items = [];
     this.total = 0;
+    this.subtotal = 0;
+    this.iva = 0;
+    this.envio = 0;
   }
 
-  async addPdto(pdto, cant) {
+  // MÉTODO PARA AGREGAR PRODUCTOS AL CARRO DE COMPRAS
+  addPdto(pdto, cant) {
     const productoExistente = this.items.find(item => item.id === pdto.id);
 
     if (productoExistente) {
@@ -19,12 +21,7 @@ export class Canasta {
     }
   }
 
-  // OTRA FORMA DE ELIMINAR PRODUCTO DE CARRO
-  // deletePdtoCart(id) {
-  //   const pdtosCarro = this.items.filter(item => item.id !== id)
-
-  //   this.items = pdtosCarro;
-  // }
+  // SE UTILIZA PARA AUMENTAR EN 1 LA CANTIDAD DE UN PRODUCTO
   agregarCant(id) {
     const itemIndex = this.items.findIndex(item => item.id === id);
     const itemPdto = this.items.find(item => item.id == id)
@@ -34,6 +31,7 @@ export class Canasta {
     }
   }
 
+  // SE UTILIZA PARA DISMINUIR EN 1 LA CANTIDAD DE UN PRODUCTO
   eliminarCant(id) {
     const itemIndex = this.items.findIndex(item => item.id === id);
     const itemPdto = this.items.find(item => item.id == id)
@@ -43,10 +41,11 @@ export class Canasta {
         itemPdto.subtotal = itemPdto.cant * itemPdto.precio;
 
       }
-      this.calcTotalPdto(1)
+      this.calcTotal(1)
     }
   }
 
+  // SE UTILIZA PARA ELIMINAR EL PRODUCTO SELECCIONADO EN EL CARRO DE COMPRAS
   deletePdtoCart(id) {
     const index = this.items.findIndex(items => items.id == id)
 
@@ -55,36 +54,49 @@ export class Canasta {
 
   }
 
+  // SE UTILIZA PARA VACIAR EL CARRO DE COMPRAS
   vaciarCarro() {
     this.items = [];
-    console.log(this.items)
   }
 
-  calcTotalPdto(subtotal) {
-    let total = 0;
-    for (let i = 0; i < this.items.length; i++) {
-
-      total += this.items[i].subtotal;
-    }
-    console.log(total)
-    return total;
+// CALCULAR SUBTOTAL
+calcTotal() {
+  let totalBruto = 0;
+  for (let i = 0; i < this.items.length; i++) {
+    totalBruto += this.items[i].precio * this.items[i].cant;
   }
+  return totalBruto;
+}
 
-  // CALCULAR TOTAL CON IMPUESTOS (IVA)
-  // calcTotal(subtotal) {
-  //   const impuestos = subtotal * 0.18;
-  //   return subtotal + impuestos;
-  // }
+// CALCULAR TOTAL CON IMPUESTOS Y ENVÍO
+calcTotalFinal() {
+  const totalBruto = this.calcTotal();
+  const impuestos = this.calcImpuesto(totalBruto);
+  const totalNeto = totalBruto - impuestos;
+  const envio = this.calcEnvio(totalBruto);
+  const totalFinal = parseInt(totalBruto) + parseInt(envio);
+  return totalFinal;
+}
+
+// CALCULAR IVA
+  calcImpuesto(totalBruto) {
+    const impuestos = totalBruto * 0.19;
+    console.log(impuestos)
+    return impuestos;
+  }
 
   // CALCULAR COSTOS DE ENVÍO
-  //   calcEnvio(total) {
-  //     let envio;
-  //     if (total <= 50000) {
-  //       envio = 3500;
-  //       return envio
-  //     } else if (total > 50000) {
-  //       envio = 9990;
-  //       return envio
-  //     }
-  //   }
+    calcEnvio(totalBruto) {
+      let envio;
+      if (totalBruto <= 50000) {
+        envio = 3500;
+        return envio;
+      } else if (totalBruto > 50000) {
+        envio = 9990;
+        return envio;
+      } else {
+        envio = 0;
+        return envio;
+      }
+    }
 }

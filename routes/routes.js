@@ -8,7 +8,7 @@ import { Canasta } from "../utils/Class/Canasta.js";
 import { Categoria } from "../utils/Class/Categoria.js";
 import { formatCL, capFirstMay } from "../helpers/helpers.js";
 import methodOverride from "method-override";
-// import CryptoJS from "crypto-js";
+import CryptoJS from "crypto-js";
 import dotenv from 'dotenv';
 
 // Variables globales
@@ -22,7 +22,7 @@ dotenv.config();
 // Métodos de Middlewares
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
-router.use(methodOverride("_method"));
+router.use(methodOverride("_method", { methods: ["GET", "POST"] }));
 router.use(cookieParser(secreto));
 router.use(session({
   secret: secreto,
@@ -36,11 +36,13 @@ router.use(flash({
   }
 }))
 
+/* -------------------------- C A R G A   D E   P R O D U C T O S ------------------------------*/
 
 // VISTA INDEX
 router.get("/", (_req, res) => {
   res.render("index")
 })
+
 // CARGAR TIENDA CON PRODUCTOS (JOIN CON TABLA CATEGORÍA)
 router.get("/tienda", async (_req, res) => {
   const productos = await pdto.getProductsByCategory()
@@ -51,15 +53,20 @@ router.get("/tienda", async (_req, res) => {
 // VISTA PRODUCTOS POR CATEGORÍA
 router.get("/productos", async (req, res) => {
   const cat_id = parseInt(req.query.categoria);
+  
   const prod = await pdto.getProductByCategory(cat_id);
 
   res.render("tienda", { prod: prod })
 })
 
+/* ---------------------------------- C O N T A C T 0  -----------------------------------------*/
 // VISTA CONTACTO
 router.get("/contacto", (_req, res) => {
   res.render("contacto")
 })
+
+
+/* ------------------- I N G R E S O  Y  R E G I S T R O  D E  U S U A R I O --------------------*/
 
 // VISTA INGRESO CON MENSAJE ERROR #IF
 router.get('/ingreso', (req, res) => {
@@ -72,9 +79,8 @@ router.get('/ingreso', (req, res) => {
 // ACCEDER A SESIÓN CON USUARIO Y PASSWORD
 router.post('/auth', async (req, res) => {
   let username = req.body.usuario;
-  let password = req.body.password;
+  let password = CryptoJS.SHA256(req.body.password).toString();
 
-  // let user = new Usuario();
   const usuario = await user.getUsuario(username, password)
 
   if (usuario.success) {
@@ -93,7 +99,7 @@ router.post('/auth', async (req, res) => {
 // REGISTRAR NUEVO USUARIO
 router.post("/ingreso", async (req, res) => {
   const { nombres, apellidos, rut, direccion, telefono, email, usuario1, pass } = req.body;
-  // const user = new Usuario();
+
   const newUsuario = await user.setUsuario(nombres, apellidos, rut, direccion, telefono, email, usuario1, pass)
   if (newUsuario == true) {
     res.redirect("ingreso")
@@ -103,21 +109,36 @@ router.post("/ingreso", async (req, res) => {
   }
 });
 
-// VISTA DE LA CANASTA RENDERIZADA
+
+/*-----------------------------C A N A S T A   D E  C O M P R A S -------------------------------*/
+
+//VISTA RENDERIZADA DE LA CANASTA
 router.get("/cart", (req, res) => {
   req.session.cart = cart;
   const canasta = cart.items;
-  res.render("cart", { products: cart.items, subtotal: formatCL(cart.subtotal), canasta: canasta, total: formatCL(cart.calcTotalPdto()) });
+  const totalBruto = cart.calcTotal();
+  const iva = cart.calcImpuesto(parseInt(totalBruto));
+  const totalNeto = totalBruto - iva;
+  const envio = cart.calcEnvio(parseInt(totalBruto));
+  const totalFinal = totalBruto + envio;
+  res.render("cart", { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal) });
 });
 
 // AGREGAR PRODUCTOS A LA CANASTA
 router.post("/cart", async (req, res) => {
   const pdtoId = parseInt(req.body.btnAdd);
   const prod = await pdto.getProductById(pdtoId);
-  await cart.addPdto(prod, 1);
+  cart.addPdto(prod, 1);
   req.session.cart = cart;
   const canasta = cart.items;
-  res.render("cart", { products: cart.items, subtotal: formatCL(cart.subtotal), canasta: canasta, total: formatCL(cart.calcTotalPdto()) });
+  const totalBruto = cart.calcTotal();
+  const iva = cart.calcImpuesto(parseInt(totalBruto));
+  const totalNeto = totalBruto - iva;
+  const envio = cart.calcEnvio(parseInt(totalBruto));
+  const totalFinal = totalBruto + envio;
+  console.log(totalFinal)
+  res.render("cart", { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal) });
+  
 });
 
 // ACTUALIZAR CANTIDAD PDTOS EN CANASTA (MÉTODO CLASS CANASTA CALCULA SUBTOTALES). ASIMISMO SE EJECUTA EL MÉTODO CALCULAR TOTALES AL RENDERIZAR LA PÁGINA CART.
@@ -128,7 +149,13 @@ router.post('/cart/updateCant', (req, res) => {
   cart.eliminarCant(prodId)
   req.session.cart = cart;
   const canasta = cart.items;
-  res.render('cart', { products: cart.items, subtotal: formatCL(cart.subtotal), canasta: canasta, total: formatCL(cart.calcTotalPdto()) });
+  const totalBruto = cart.calcTotal();
+  const iva = cart.calcImpuesto(parseInt(totalBruto));
+  const totalNeto = totalBruto - iva;
+  const envio = cart.calcEnvio(parseInt(totalBruto));
+  const totalFinal = totalBruto + envio;
+  res.render("cart", { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal) });
+  
 });
 
 // VACIAR CANASTA
@@ -143,14 +170,13 @@ router.delete("/cart/:id", (req, res) => {
   cart.deletePdtoCart(id)
   req.session.cart = cart;
   const canasta = cart.items;
-  res.render("cart", { products: cart.items, subtotal: formatCL(cart.subtotal), canasta: canasta, total: formatCL(cart.calcTotalPdto()) });
-})
-
-router.post("/cart/subtotal", (req, res) => {
-  const prize = req.body.prize;
-  const cant = req.body.cantProd;
-  const subtotal = cart.calcSubtotalPdto(prize, cant)
-  res.render("cart", { subtotal: formatCL(subtotal) })
+  const totalBruto = cart.calcTotal();
+  const iva = cart.calcImpuesto(parseInt(totalBruto));
+  const totalNeto = totalBruto - iva;
+  const envio = cart.calcEnvio(parseInt(totalBruto));
+  const totalFinal = totalBruto + envio;
+  res.render("cart", { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal) });
+  
 })
 
 
@@ -166,9 +192,13 @@ router.get("/sesionadm", async (req, res) => {
 // AGREGAR NUEVO PRODUCTO DESDE MANTENEDOR
 router.post("/adm", async (req, res) => {
   const { namePdto, prizePdto, imgPdto, cantPdto, categ } = req.body;
-  await pdto.addPdto(namePdto, parseInt(prizePdto), imgPdto, parseInt(cantPdto), parseInt(categ))
+  try {
+    const data = await pdto.addPdto(namePdto, parseInt(prizePdto), imgPdto, parseInt(cantPdto), parseInt(categ))
 
-  res.redirect("tienda");
+    res.redirect("tienda");
+  } catch (e) {
+    res.render("error", { "error": "Problemas al Insertar registro" });
+  }
 })
 
 
@@ -189,10 +219,10 @@ router.get("/modif", async (_req, res) => {
 
 // ELIMINAR PRODUCTO DESDE MANTENEDOR
 router.delete("/adm/:id", async (req, res) => {
-  const pdtoEliminar = parseInt(req.params.id);
+  const id = parseInt(req.params.id);
 
-  await pdto.deletePdto(pdtoEliminar)
-  res.redirect("../tienda")
+  const data = await pdto.deletePdto(id)
+  res.redirect("/delete")
 })
 
 //MODIFICAR PRODUCTO DESDE MANTENEDOR

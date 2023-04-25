@@ -21,7 +21,8 @@
     "nodemon": "^2.0.22"
   },
   "scripts": {
-    "compile-sass": "node-sass --output-style compressed -o public/css src/scss"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

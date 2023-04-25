@@ -42,14 +42,22 @@
                 </tr>
             </tbody>
             {{/each}}
-    </table>
-            {{!-- <tfoot> --}}
-                {{!-- <tr class="cont-total-cart"> --}}
-                    <div class="total-cart" >
-                    <span colspan="4" class="total-cart">Total: {{ total }}</span>
-                    </div>
-            {{!-- </tfoot> --}}
-    
+        </table>
+        <div class="tNet-cart">
+            <span colspan="4" class="tNeto-cart">Total Neto: {{ totalNeto }}</span>
+        </div>
+        <div class="iva-cart">
+            <span colspan="4" class="iva-cart">IVA: {{ iva }}</span>
+        </div>
+        <div class="tBruto-cart">
+            <span colspan="4" class="tBruto-cart">Total Bruto: {{ totalBruto }}</span>
+        </div>
+        <div class="envio-cart">
+            <span colspan="4" class="envio-cart">Gasto Envío: {{ envio }}</span>
+        </div>
+        <div class="total-cart">
+            <span colspan="4" class="total-cart">Total Final: {{ totalFinal }}</span>
+        </div>
 
         <div class="botones-cart">
             <form action="/cart/?_method=DELETE" method="post">
@@ -58,44 +66,9 @@
             <button class="btn btn-primary" name="comprar">COMPRAR</button>
         </div>
         <div class="link-tienda">
-        <a href='/tienda'>Volver a comprar</a>
+            <a href='/tienda'>Volver a comprar</a>
         </div>
     </div>
 </main>
-{{!--
-<script>
-    const btnAdd = document.querySelectorAll("#btn-plus");
-    const btnMinus = document.querySelectorAll("#btn-minus");
-
-    btnAdd.forEach((btn) => {
-        btn.addEventListener("click", () => {
-            let cantProd = btn.parentNode.querySelector(".cantProdDisplay");
-
-            let cantActual = parseInt(cantProd.textContent);
-            if (cantActual > 0) {
-                let newCant = cantActual + 1;
-                cantProd.textContent = newCant.toString();
-                console.log(newCant);
-                console.log(cantProd);
-                console.log(cantActual);
-            }
-        });
-    }),
-
-        btnMinus.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                let cantProd = btn.parentNode.querySelector(".cantProdDisplay");
-
-                let cantActual = parseInt(cantProd.textContent);
-                if (cantActual > 1) {
-                    let newCant = cantActual - 1;
-                    cantProd.textContent = newCant.toString();
-                    console.log(newCant);
-                    console.log(cantProd);
-                    console.log(cantActual);
-                }
-            });
-        });
-</script> --}}
 
 {{/template}}

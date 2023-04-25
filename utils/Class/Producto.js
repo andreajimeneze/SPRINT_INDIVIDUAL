@@ -1,6 +1,3 @@
-import pool from "../../conect.js";
-
-
 export class Producto {
     constructor(id, nombre, precio, foto, existencia, categoria_id) {
         this.id = id;
@@ -11,37 +8,17 @@ export class Producto {
         this.categoria_id = categoria_id;
     }
 
-    // OBTIENE TODOS LOS PRODUCTOS DE LA TABLA PRODUCTOS
-    async getProducts() {
-        let dataPdto = [];
-        
-        try {
-            const consulta = await pool.query('SELECT * FROM producto');
 
-            consulta.rows.forEach(rows => {
-                dataPdto.push({
-                    id: rows.id,
-                    nombre: rows.nombre,
-                    precio: rows.precio,
-                    imagen: rows.imagen,
-                    existencia: rows.existencia,
-                    categoria_id: rows.categoria
-                });
-            })
-            return dataPdto;
-        } catch (e) {
-            throw e;
-        }
-    }
-
-    // OBTIENE TODOS LOS PRODUCTOS (NOMBRE, PRECIO, IMAGEN, EXISTENCIA) DE LA TABLA PRODUCTO Y NOMBRE DE LA CATEGORÍA A LA QUE PERTENECE (JOIN CON TABLA CATEGORÍA)
+    // OBTIENE TODOS LOS PRODUCTOS (NOMBRE, PRECIO, IMAGEN, EXISTENCIA) DE LA TABLA PRODUCTO Y NOMBRE DE LA CATEGORÍA A LA QUE PERTENECE (JOIN CON TABLA CATEGORÍA) 
+    //---- SE UTILIZA PARA MOSTRAR LAS CARDS DE PRODUCTOS ----
     async getProductsByCategory() {
         let dataPdto = [];
-        
-        try {
-            const consulta = await pool.query('SELECT p.id, p.nombre, p.precio, p.imagen, p.existencia, p.categoria_id, c.categoria FROM producto p JOIN categoria c ON p.categoria_id = c.id ORDER BY p.id');
 
-            consulta.rows.forEach(rows => {
+        try {
+            const resultado = await fetch("http://localhost:4000/API/v1/producto");
+            const data = await resultado.json();
+
+            data.forEach(rows => {
                 dataPdto.push({
                     id: rows.id,
                     nombre: rows.nombre,
@@ -52,6 +29,7 @@ export class Producto {
                     categoria: rows.categoria
                 });
             })
+
             return dataPdto;
         } catch (e) {
             throw e;
@@ -59,98 +37,122 @@ export class Producto {
     }
 
     // OBTIENE EL PRODUCTO  DE LA TABLA PRODUCTO POR SU ID
+    // SE UTILIZA PARA AGREGAR PRODUCTOS AL CARRO
     async getProductById(id) {
-
         try {
-            const consulta = await pool.query('SELECT * FROM producto WHERE id = $1', [id]);
-
-            const item = consulta.rows[0]
-
-            if (!item) {
-                throw error(`Producto ${id} no existe`)
+            const resultado = await fetch(`http://localhost:4000/API/v1/producto/${id}`);
+            const data = await resultado.json();
+            
+            const item = data[0]
+          
+            if (item) {
+                return new Producto(
+                    item.id,
+                    item.nombre,
+                    item.precio,
+                    item.imagen,
+                    item.existencia
+                );                
+            } else {
+                console.log(`Producto ${id} no existe`)
             }
-            return new Producto(
-                item.id,
-                item.nombre,
-                item.precio,
-                item.imagen,
-                item.existencia
-            );
-        } catch (e) {
-            throw e;
-        }
-    }
-
-    // OBTIENE PRODUCTO DE LA TABLA PRODUCTO POR SU NOMBRE
-    async getProductByName(name) {
-
-        try {
-            const consulta = await pool.query('SELECT * FROM producto WHERE nombre = $1', [name]);
-
-            const item = consulta.rows[0]
-
-            if (!item) {
-                throw error(`Producto ${name} no existe`)
-            }
-            return new Producto(
-                item.id,
-                item.nombre,
-                item.precio,
-                item.imagen,
-                item.existencia
-            );
         } catch (e) {
             throw e;
         }
     }
 
     // OBTIENE UN PRODUCTO (NOMBRE, CATEGORÍA_ID) CON EL NOMBRE DE LA CATEGORÍA EN BASE A LA ID DE LA CATEGORÍA (JOIN CON TABLA CATEGORÍA)
-    
-    async getProductByCategory(id) {
+    // SE UTILIZA PARA FILTRAR LOS PRODUCTOS POR CATEGORÍA
 
+    async getProductByCategory(categoria) {
+        const dataPdto = []
         try {
-            const consulta = await pool.query('SELECT p.*, c.categoria FROM producto p JOIN categoria c ON p.categoria_id = c.id WHERE c.id = $1', [id]);
-            // console.log(consulta.rows[0])
+            const resultado = await fetch("http://localhost:4000/API/v1/producto");
+            const data = await resultado.json();
 
-            const items = consulta.rows.map(row => new Producto(row.id, row.nombre, row.precio, row.imagen, row.existencia,  row.categoria));
-            return items;
+            const items = data.filter(e => e.categoria_id == categoria)
+
+            items.forEach(rows => {
+                dataPdto.push({
+                    id: rows.id,
+                    nombre: rows.nombre,
+                    precio: rows.precio,
+                    foto: rows.imagen,
+                    existencia: rows.existencia,
+                    categoria_id: rows.categoria
+                })
+            });
+
+            return dataPdto;
         } catch (e) {
             throw e;
         }
     }
 
-    // AGREGA PRODUCTO NUEVO 
-    async addPdto(nombre, precio, img, exist, categ) {
+    // AGREGA PRODUCTO NUEVO ----- SE UTILIZA PARA AGREGAR PRODUCTOS DESDE EL MANTENEDOR -----
+    async addPdto(nombre, precio, imagen, existencia, categoria_id) {
         const pdto = new Producto()
-        const bdpdtos = await pdto.getProducts()
+        const bdpdtos = await pdto.getProductsByCategory()
         let pdtoExist = bdpdtos.find((e) => e.nombre == nombre)
 
         if (!pdtoExist) {
-            const consulta = await pool.query("INSERT INTO producto (nombre, precio, imagen , existencia, categoria_id) VALUES ($1, $2, $3, $4, $5)", [nombre, precio, img, exist, categ]);
-            console.log(consulta.rows[0])
-            return consulta.rows[0]
+            const resultado = await fetch("http://localhost:4000/API/v1/producto", {
+                method: "POST",
+                body: JSON.stringify({ nombre, precio, imagen, existencia, categoria_id }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const datos = await fetch("http://localhost:4000/api/v1/producto");
+            const data = await datos.json();
+
+            return data
         } else {
             console.log("Producto ya existe en la Base de Datos")
             return null
         }
     }
 
-    // ELIMINAR PRODUCTO
+    // ELIMINAR PRODUCTO  ----- SE UTILIZA PARA ELIMINAR PRODUCTOS DESDE EL MANTENEDOR -----
     async deletePdto(id) {
         try {
-            const consulta = await pool.query("DELETE from producto WHERE id = $1 RETURNING *", [id])
-            console.log(consulta.rows[0])
+
+            const resultado = await fetch(`http://localhost:4000/API/v1/producto/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "aplication/json"
+                }
+            });
+
+            if (resultado.status === 200) {
+                const datos = await fetch("http://localhost:4000/api/v1/producto");
+                const data = await datos.json();
+
+                return data
+            }
 
         } catch (e) {
             throw e;
         }
     }
 
-    // MODIFICAR PRODUCTO
+    // MODIFICAR PRODUCTO  ----- SE UTILIZA PARA MODIFICAR LOS PRODUCTOS DESDE EL MANTENEDOR -----
     async modifPdto(nombre, precio, imagen, existencia, categ, id) {
         try {
-            const cons = await pool.query("UPDATE producto SET nombre = $1, precio = $2, imagen = $3, existencia = $4, categoria_id = $5 WHERE id = $6 RETURNING *", [nombre, precio, imagen, existencia, categ, id])
-            console.table(cons.rows[0]);
+            const resultado = await fetch(`http://localhost:4000/API/v1/producto/${id}`, {
+                method: "PATCH",
+                body: JSON.stringify({ nombre, precio, imagen, existencia, categ, id }),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "aplication/json"
+                }
+            });
+
+            const datos = await fetch("http://localhost:4000/api/v1/producto");
+            const data = await datos.json();
+
         } catch (e) {
             console.log(e)
         }

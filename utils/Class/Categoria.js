@@ -1,23 +1,22 @@
-import pool from "../../conect.js";
-
 export class Categoria {
     constructor(id, categoria) {
         this.id = id,
-        this.categoria = categoria
+            this.categoria = categoria
     }
 
     async getCategoria() {
-        let data = [];
+        let dataCat = [];
         try {
-            const consulta = await pool.query('SELECT * FROM categoria');
-
-            consulta.rows.forEach(rows => {
-                data.push({
+            const resultado = await fetch("http://localhost:4000/API/v1/categoria");
+            const data = await resultado.json();
+            
+            data.forEach(rows => {
+                dataCat.push({
                     id: rows.id,
                     categoria: rows.categoria
                 });
             })
-            return data;
+            return dataCat;
         } catch (e) {
             throw e;
         }
@@ -25,11 +24,12 @@ export class Categoria {
 
     async getCategoriaById(id) {
         try {
-            const consulta = await pool.query('SELECT * FROM categoria WHERE id = $1', [ id ]);
-            console.log(consulta.rows[0])
-            
-            } catch (e) {
+            const resultado = await fetch("http://localhost:4000/API/v1/categoria/:id");
+            const data = await resultado.json();
+            console.log(data)
+
+        } catch (e) {
             throw e;
         }
     }
-    }
+}
