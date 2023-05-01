@@ -8,36 +8,78 @@
       <td>Link</td>
       <td>Categoría</td>
       <td>Stock</td>
+      <td>Estado Actual</td>
+      <td>Estado</td>
       <td>Editar</td>
     </tr>
   </thead>
   {{#each prod }}
   <tbody class="rowPdtoMod">
-    <form action="/modpdto/{{ id }}?_method=PUT" method="post"> 
-    <tr>
-      <th>{{ id }}</th>
-      <th>
-        <input type="text" name="name" value="{{ nombre }}" class="inputModName">
-      </th>
-      <th>
-        <input type="text" name="prize" value="{{ precio }}" class="inputMod">
-      </th>
-      <th>
-        <img src="{{ imagen }}" id="imgModif">
-      </th>
-      <th>
-        <input type="text" name="link" value="{{ imagen }}" class="inputModLink">
-      </th>
-      <th>
-        <input type="hidden" name="categoria" id="{{ id }}" value="{{ categoria_id }}" class="inputModName">
-        <input type="text" name="categoria" id="{{ id }}" value="{{ categoria }}" class="inputModName">
-      </th>
-      <th>
-        <input type="text" name="stock" value="{{ existencia }}" class=" inputMod">
-      </th>
-      
-        <th><button value="{{ id }}" class="btn btn-secondary" name="btnEdit">Editar</button></th>
-      </form>
+    <form action="/modpdto/{{ id }}?_method=PUT" method="post" class="form-modif">
+      <tr>
+        <th>{{ id }}</th>
+        <th>
+          <input type="text" name="name" value="{{ nombre }}" class="inputModName">
+        </th>
+        <th>
+          <input type="text" name="prize" value="{{ precio }}" class="inputMod">
+        </th>
+        <th>
+          <img src="{{ imagen }}" id="imgModif">
+        </th>
+        <th>
+          <textarea type="text" cols="30" rows="5" name="link" value="{{ imagen }}" class="inputModLink">{{ imagen }}</textarea>
+        </th>
+        <th>
+          <input type="hidden" name="categoria" id="{{ id }}" value="{{ categoria_id }}" class="inputModName">
+          <input type="text" name="categoria" id="{{ id }}" value="{{ categoria }}" class="inputModName">
+        </th>
+        <th>
+          <input type="text" name="stock" value="{{ existencia }}" class=" inputMod">
+        </th>
+        <th>
+          <input type="text" name="estado" value="{{ estadoDesc }}" class=" inputModName">
+        </th>
+        <th>
+          <select id="select-estado" name="categ">
+            <option value="estado">Estado</option>
+            {{#each estado }}
+            <option value="{{ id }}" id="estado-{{ id }}">{{ estado }}</option>
+            {{/each }}
+          </select>
+          
+        </th>
+        <th><button type="submit" value="{{ id }}" class="btn btn-secondary" name="btnEdit">Editar</button></th>
+    </form>
     </tr>
   </tbody>
   {{/each}}
+</table>
+
+<script>
+  const forms = document.querySelectorAll('.form-modif');
+
+  forms.forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      Swal.fire({
+        title: 'Estás seguro que quieres modificar este producto?',
+        icon: 'warning',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'No'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+          Swal.fire({
+            title: 'Producto modificado con éxito',
+            icon: 'success',
+            showCancelButton: false,
+            timer: 5000
+          });
+        }
+      });
+    });
+  });
+</script>

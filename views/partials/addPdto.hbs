@@ -22,9 +22,43 @@
     <select id="select-cat" name="categ">
       <option value="categoria">Categoría</option>
       {{#each categorias }}
-      <option  value="{{ id }}" id="{{ id }}">{{ categoria }}</option>
+      <option value="{{ id }}" id="{{ id }}">{{ categoria }}</option>
+      {{/each }}
+    </select>
+  </div>
+  <div class="formBody-select">
+    <label class="form-label h6 fw-bold" for="categ">Estado</label>
+    <select id="select-cat" name="estado">
+      <option value="categoria">Estado</option>
+      {{#each estado }}
+      <option value="{{ id }}" id="{{ id }}">{{ estado }}</option>
       {{/each }}
     </select>
   </div>
   <button class="btn btn-primary" type="submit">Agregar</button>
 </form>
+
+
+<script>
+  const form = document.querySelector('.form-addPdto');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: '¿Estás seguro de agregar este producto?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.submit();
+        Swal.fire({
+          title: 'Producto agregado exitosamente',
+          icon: 'success',
+          showCancelButton: false,
+          timer: 5000
+        });
+      }
+    });
+  });
+</script>

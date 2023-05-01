@@ -9,7 +9,8 @@
             </a>
         </div>
         <div class="div-text">
-            <p>Decoración Hogar</p>
+            <h4>Decoración Hogar</h4>
+            {{!-- <p>productos en esta categoría</p> --}}
         </div>
     </div>
     <div class="divcontainer">
@@ -20,7 +21,7 @@
             </a>
         </div>
         <div class="div-text">
-            <p>Menaje Hogar</p>
+            <h4>Menaje Hogar</h4>
         </div>
     </div>
     <div class="divcontainer">
@@ -30,7 +31,7 @@
             </a>
         </div>
         <div class="div-text">
-            <p>Mobiliario</p>
+            <h4>Mobiliario</h4>
         </div>
     </div>
     <div class="divcontainer">
@@ -40,31 +41,28 @@
             </a>
         </div>
         <div class="div-text">
-            <p>Misceláneo</p>
+            <h4>Misceláneo</h4>
         </div>
     </div>
-    
+
 
 </div>
 <div class="cont-recuadros">
-    <div class="left-col">
-        <div class="left-box">
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id nesciunt ipsa consequatur assumenda eaque
-                quis aliquid nihil dolorum molestiae necessitatibus possimus aperiam unde, sint ad, vel cumque! Quae,
-                fugit sit?
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id nesciunt ipsa consequatur assumenda eaque
-                quis aliquid nihil dolorum molestiae necessitatibus possimus aperiam unde, sint ad, vel cumque! Quae,
-                fugit sit? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id nesciunt ipsa consequatur assumenda eaque
-                quis aliquid nihil dolorum molestiae necessitatibus possimus aperiam unde, sint ad, vel cumque! Quae,
-                fugit sit?</p>
-        </div>
-    </div>
     <div class="right-col">
         <div class="right-box">
             <div class="right-box-left">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit suscipit est facere sint
-                    recusandae natus, illum quos aspernatur sed laboriosam in dolorem facilis voluptate dolor enim
-                    laborum ad mollitia commodi. </p>
+                <h3>Algo sobre la técnica...</h3>
+                <p>El mosaico es una técnica artesanal que consiste en la creación de una imagen o diseño a partir de la
+                    combinación de pequeñas piezas de diferentes materiales como vidrio, cerámica, piedra, metal, entre
+                    otros. Esta técnica puede ser utilizada para decorar paredes, pisos, techos y otros objetos
+                    decorativos.
+                    En la actualidad, el mosaico sigue siendo una técnica muy valorada y requerida por su belleza y
+                    versatilidad. Los artistas y artesanos utilizan esta técnica para crear obras de arte únicas y
+                    personalizadas, así como para decorar interiores y exteriores de edificios y hogares.
+
+                    El mosaico requiere de habilidad, paciencia y precisión para crear diseños complejos y detallados.
+                    Los materiales utilizados también pueden ser costosos y difíciles de manejar, lo que aumenta el
+                    valor y la apreciación de las obras de arte creadas con esta técnica.</p>
             </div>
             <div class="right-box-right">
                 <img src="../assets/img/trabajando_mosaico.jpg" alt="">
@@ -205,8 +203,8 @@
         }
     });
     swiper.on('reachEnd', function () {
-    setTimeout(function() {
-      swiper.slideTo(0, 1000, true);
-    }, 2000);
-  });
+        setTimeout(function () {
+            swiper.slideTo(0, 1000, true);
+        }, 2000);
+    });
 </script>

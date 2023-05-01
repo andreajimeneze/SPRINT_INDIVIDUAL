@@ -19,25 +19,35 @@
       <th>{{ precio }}</th>
       <th>{{ existencia }}</th>
       <th>{{ categoria }}</th>
-      {{!-- <form action="/adm/{{ id }}?_method=PUT" method="post"> --}}
-        {{!-- <th>
-          <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop{{ id }}">Editar</button> --}}
-          {{!-- <button value="{{ id }}" data-target="#modal{{ id }}" data-toggle="modal">Editar</button> --}}
-
-          {{!-- <button value="{{ id }}" onclick="window.location.href='/modpdto/form'">Editar</button> --}}
-        {{!-- </th> --}}
-      {{!-- </form> --}}
       <form action="/adm/{{ id }}?_method=DELETE" method="post">
-        <th><button value={{ id }} id="delete" name="btnDelete" class="btn btn-secondary">Eliminar</button></th>
+        {{!-- <th><button value={{ id }} id="delete" name="btnDelete" class="btn btn-secondary"
+            onclick="return confirm('Está seguro que desea eliminar el producto?')">Eliminar</button></th> --}}
+        <th><button id="delete" name="btnDelete" class="btn btn-secondary" onclick="confirmar(event, {{ id }})">Eliminar</button></th>
       </form>
     </tr>
   </tbody>
   {{/each}}
 </table>
 
-<div class="modal fade" id="staticBackdrop{{ id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<script>
+  function confirmar(event, id) { 
+    event.preventDefault();
+  Swal.fire({
+    title: 'Está seguro que desea eliminar el producto?',
+    icon: 'warning',
+    showConfirmButton: true,
+    showCancelButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location = '/adm/' + id + '?_method=DELETE';
+    }
+  })
+  }
+</script>
+{{!-- <div class="modal fade" id="staticBackdrop{{ id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
@@ -76,13 +86,13 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     // Obtener todos los botones con el atributo data-bs-toggle="modal"
     const editButtons = document.querySelectorAll('button[data-bs-toggle="modal"]');
 
     // Escuchar el evento click en cada botón editar
-    editButtons.forEach(function(button) {
-      button.addEventListener('click', function() {
+    editButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
         // Obtener el id del modal correspondiente al botón editar
         const modalId = button.getAttribute('data-bs-target');
         // Mostrar el modal
@@ -110,5 +120,4 @@
       });
     });
   });
-</script>
-
+</script> --}}

@@ -1,13 +1,11 @@
 header {
-  /* position: fixed; */
   background-color: rgb(22, 24, 25);
-  /* background-color: rgb(199, 248, 207); */
   z-index: 1000;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  height: 130px;
+  height: 280px;
 }
 
 span.navbar-toggler-icon {
@@ -24,7 +22,7 @@ a.nav-link {
   padding-right: 10vh !important;
   padding-left: 10vh !important;
   padding-top: 10px;
-  font-size: 16px;
+  font-size: 20px;
   color: antiquewhite;
   border-top: 2px solid transparent;
   border-top-width: fit-content;
@@ -44,13 +42,21 @@ a.nav-link:hover {
   width: fit-content;
 }
 
-img.imgCarro {
-  height: 5px !important;
-  background-color: rgb(22, 24, 25) transparent;
+.container-image {
+  display: flex;
+  justify-content: start !important;
+  padding-top: 30px;
 }
 
-img.imgCarro:hover {
-  color:rgb(29, 148, 150);
+
+img#imgCarrito {
+  height: 60px !important;
+  background-color: rgb(22, 24, 25) transparent;
+  padding-left: 50px;
+}
+
+img#imgCarrito:hover {
+  color: rgb(29, 148, 150);
 }
 
 nav.navSearch {
@@ -88,21 +94,113 @@ form.formSearch {
   background-color: rgb(74, 96, 109)
 }
 
-@media screen and (max-width: 540px ) {
-  .formSearch input.inputSearch {
-    width: 300px;
-    height: 30px;
+/*HEADER-BANNER*/
+.header-banner,
+.cinta-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  /* background-color: rgb(164, 154, 154); */
+  height: 100px;
+}
+
+.cinta-despacho,
+.cinta-garantia, .cinta-artesania {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(195, 202, 202);
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+}
+
+.cinta-despacho img {
+  width: 80px;
+}
+
+.cinta-garantia img {
+  width: 60px;
+}
+
+.cinta-despacho h4,
+.cinta-garantia h4, .cinta-artesania h4 {
+  padding-top: 35px;
+  padding-left: 10px;
+}
+
+
+
+/*RESPONSIVIDAD*/
+@media screen and (max-width: 540px) { 
+  /* a .nav-link {
+    padding-left: 14px !important;
+  } */
+
+  img#imgCarrito {
+    height: 40px !important;
+    background-color: rgba(22, 24, 25, 0.8) !important;
+  }
+
+  .cinta-despacho img {
+    width: 50px;
+  }
+  
+  .cinta-garantia img {
+    width: 30px;
+  }
+
+  .cinta-artesania img {
+    width: 45px;
+  }
+  
+  .cinta-despacho h4,
+  .cinta-garantia h4, .cinta-artesania h4 {
+    padding-top: 35px;
+    padding-left: 10px;
     font-size: 14px;
   }
+  
+}
 
-  .btnSearch {
-    height: 30px;
+@media screen and (max-width: 412px) {
+
+  .navbar-nav {
+    width: 45%;
+  }
+
+  a.nav-link {
+    padding-right: 1vh !important;
+    padding-left: 3vh !important;
+    padding-top: 10px;
+    width: 60%;
+    font-size: 22px !important;
+    z-index: 2000 !important;
+  }
+
+}
+
+@media screen and (max-width: 912px) {
+
+  .navbar-nav {
+    display: flex;
+    justify-content: end !important;
+    width: 50%;
+    background-color: rgba(22, 24, 25, 0.7);
+    z-index: 2000;
+    left: 0;
+    padding-top: 25px;
+  }
+
+  img#imgCarrito {
+    height: 50px !important;
+    background-color: rgba(22, 24, 25, 0.7) !important;
   }
 }
 
-@media screen and (max-width: 1024px ) { 
-a.nav-link {
-  padding-right: 9vh !important;
-  padding-left: 9vh !important;
-}
+@media screen and (max-width: 1024px) {
+  a.nav-link {
+    padding-right: 9vh !important;
+    padding-left: 9vh !important;
+  }
 }

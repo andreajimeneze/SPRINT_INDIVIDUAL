@@ -1,46 +1,55 @@
 {{#> template}}
 <main class="ingreso">
   <div class="container right-panel-active">
-    <!-- Sign Up -->
+
     <div class="container__form container--signup">
-      <form action="/contacto" method="post" class="form" id="form2">
+      <form class="form" id="form">
         <h2 class="form__title">Contáctanos</h2>
         <h6>Envíanos tus comentarios, sugerencias o reclamos y te responderemos a la brevedad</h6>
-        <input type="text" placeholder="Nombres" class="input" name="nombre" />
-        <input type="email" placeholder="Email" class="input" name="correo" />
+        <input type="text" placeholder="Nombres" class="input" name="nombre" required />
+        <input type="email" placeholder="Email" class="input" name="correo" required />
         <div class="mb-3">
           <label for="textarea" class="form-label">Comentarios</label>
-          <textarea class="form-control" id="textarea" rows="3"></textarea>
+          <textarea class="form-control" id="textarea" rows="3" name="mensaje" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <input type="submit" id="button" class="btn btn-primary" value="Enviar">
       </form>
     </div>
 
     <!-- Overlay -->
     <div class="overlay__panel overlay--right">
-      <button class="btn" id="signUp">Enviar</button>
+      <input type="submit" id="button" class="btn btn-primary" value="Enviar">
     </div>
   </div>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+  <script type="text/javascript">
+    emailjs.init('eP4NXFIJiWQZ1ATRh')
+  </script>
 </main>
-{{!-- <main>
-  <div class="container-contact">
-    <div class="row header" id="form-header">
-      <h2>CONTÁCTANOS &nbsp;</h2>
-      <h6>Envíanos tus comentarios, sugerencias o reclamos y te responderemos a la brevedad</h6>
-    </div>
-    <div class="mb-3">
-      <label for="input" class="form-label">Nombres</label>
-      <input type="text" for="input" class="form-control">
-      <label for="input" class="form-label">Apellidos</label>
-      <input type="text" for="input" class="form-control">
-      <label for="input" class="form-label">Email</label>
-      <input type="email" class="form-control" id="input-email" placeholder="name@example.com">
-    </div>
-    <div class="mb-3">
-      <label for="textarea" class="form-label">Comentarios</label>
-      <textarea class="form-control" id="textarea" rows="3"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Enviar</button>
-  </div>
-</main> --}}
+
+<script>
+  const btn = document.getElementById('button');
+
+  document.getElementById('form')
+    .addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      btn.value = 'Enviando...';
+
+      const serviceID = 'default_service';
+      const templateID = 'template_xfkjdy9';
+      const form = document.getElementById('form');
+
+      emailjs.sendForm(serviceID, templateID, this)
+          .then(() => {
+            btn.value = 'Enviar';
+            alert('Mensaje enviado exitosamente');
+          }, (err) => {
+            btn.value = 'Enviar';
+            alert(JSON.stringify(err));
+          });
+        form.reset();
+      });
+</script>
 {{/template}}

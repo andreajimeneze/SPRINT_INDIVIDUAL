@@ -55,12 +55,13 @@ main.ingreso {
 	max-width: var(--max-width);
 	overflow: hidden;
 	position: absolute;
-	width: 100%;
-	/* margin-top: 1rem; */
+	width: 95%;
+	
 }
 
 .container__form {
 	height: 100%;
+	width: 80%;
 	position: absolute;
 	top: 0;
 	transition: all 0.6s ease-in-out;
@@ -227,3 +228,22 @@ main.ingreso {
 	justify-content: center;
 	color: blue;
 }
+
+.logout {
+	display: flex;
+	justify-content: end;
+	font-size: 14px;
+}
+
+/*RESPONSIVIDAD*/
+@media (max-width: 767px) {
+	.container.right-panel-active {
+	  display: flex;
+	  flex-direction: column-reverse !important;
+	}
+  
+	.container__form {
+	  width: 100%;
+	}
+  }
+  

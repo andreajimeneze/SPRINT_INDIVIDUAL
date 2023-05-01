@@ -9,13 +9,13 @@ export class Producto {
     }
 
 
-    // OBTIENE TODOS LOS PRODUCTOS (NOMBRE, PRECIO, IMAGEN, EXISTENCIA) DE LA TABLA PRODUCTO Y NOMBRE DE LA CATEGORÍA A LA QUE PERTENECE (JOIN CON TABLA CATEGORÍA) 
+    // OBTIENE TODOS LOS PRODUCTOS (NOMBRE, PRECIO, IMAGEN, EXISTENCIA) DE LA TABLA PRODUCTO Y NOMBRE DE LA CATEGORÍA A LA QUE PERTENECE (JOIN CON TABLA CATEGORÍA) --- SÓLO SE MUESTRAN LOS PRODUCTOS DISPONIBLES, ES DECIR CON ID_ESTADO 1
     //---- SE UTILIZA PARA MOSTRAR LAS CARDS DE PRODUCTOS ----
     async getProductsByCategory() {
         let dataPdto = [];
 
         try {
-            const resultado = await fetch("http://localhost:4000/API/v1/producto");
+            const resultado = await fetch("http://localhost:4000/api/v1/producto");
             const data = await resultado.json();
 
             data.forEach(rows => {
@@ -26,25 +26,76 @@ export class Producto {
                     imagen: rows.imagen,
                     existencia: rows.existencia,
                     categoria_id: rows.categoria_id,
-                    categoria: rows.categoria
+                    categoria: rows.categoria,
+                    estado: rows.id_estado
                 });
             })
-
+            
             return dataPdto;
         } catch (e) {
             throw e;
         }
     }
 
-    // OBTIENE EL PRODUCTO  DE LA TABLA PRODUCTO POR SU ID
+    // OBTIENE TODOS LOS PRODUCTOS (NOMBRE, PRECIO, IMAGEN, EXISTENCIA, ESTADO) DE LA TABLA PRODUCTO Y NOMBRE DE LA CATEGORÍA A LA QUE PERTENECE (JOIN CON TABLA CATEGORÍA) --- SE MUESTRAN LOS PRODUCTOS DISPONIBLES Y NO DISPONIBLES, ES DECIR CON ID_ESTADO 1 Y 2.
+    //---- SE UTILIZA PARA MOSTRAR EN EL MANTENEDOR ----
+    async getPdtosEstado() {
+        let dataPdto = [];
+
+        try {
+            const resultado = await fetch("http://localhost:4000/api/v1/producto/estado");
+            const data = await resultado.json();
+
+            data.forEach(rows => {
+                dataPdto.push({
+                    id: rows.id,
+                    nombre: rows.nombre,
+                    precio: rows.precio,
+                    imagen: rows.imagen,
+                    existencia: rows.existencia,
+                    categoria_id: rows.categoria_id,
+                    categoria: rows.categoria,
+                    estado: rows.id_estado,
+                    estadoDesc: rows.descripcion
+                });
+            })
+            return dataPdto;
+        } catch (e) {
+            throw e;
+        }
+    }
+
+// OBTIENE TODOS LOS PRODUCTOS ORDENADOS POR PRECIO ASCENDENTE (ORDER BY)
+    async getPdtosByPrize(precio) {
+        try {
+            const resultado = await fetch("http://localhost:4000/api/v1/producto/prize")
+            const data = await resultado.json();
+            console.log(data)
+            if (data.length > 0) {
+                return data;
+            } else {
+                console.log("Producto no encontrado")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
+    // OBTIENE CANTIDAD DE PRODUCTOS POR CATEGORÍA
+    async getCantPdtoCateg() { 
+       const resultado = await fetch('http://localhost:4000/api/v1/producto/categ');
+        const data = await resultado.json();
+    }
+
+    // OBTIENE UN PRODUCTO  DE LA TABLA PRODUCTO POR SU ID
     // SE UTILIZA PARA AGREGAR PRODUCTOS AL CARRO
     async getProductById(id) {
         try {
-            const resultado = await fetch(`http://localhost:4000/API/v1/producto/${id}`);
+            const resultado = await fetch(`http://localhost:4000/api/v1/producto/${id}`);
             const data = await resultado.json();
-            
+
             const item = data[0]
-          
+
             if (item) {
                 return new Producto(
                     item.id,
@@ -52,7 +103,7 @@ export class Producto {
                     item.precio,
                     item.imagen,
                     item.existencia
-                );                
+                );
             } else {
                 console.log(`Producto ${id} no existe`)
             }
@@ -67,7 +118,7 @@ export class Producto {
     async getProductByCategory(categoria) {
         const dataPdto = []
         try {
-            const resultado = await fetch("http://localhost:4000/API/v1/producto");
+            const resultado = await fetch("http://localhost:4000/api/v1/producto");
             const data = await resultado.json();
 
             const items = data.filter(e => e.categoria_id == categoria)
@@ -96,7 +147,7 @@ export class Producto {
         let pdtoExist = bdpdtos.find((e) => e.nombre == nombre)
 
         if (!pdtoExist) {
-            const resultado = await fetch("http://localhost:4000/API/v1/producto", {
+            const resultado = await fetch("http://localhost:4000/api/v1/producto", {
                 method: "POST",
                 body: JSON.stringify({ nombre, precio, imagen, existencia, categoria_id }),
                 headers: {
@@ -118,7 +169,7 @@ export class Producto {
     async deletePdto(id) {
         try {
 
-            const resultado = await fetch(`http://localhost:4000/API/v1/producto/${id}`, {
+            const resultado = await fetch(`http://localhost:4000/api/v1/producto/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -139,17 +190,17 @@ export class Producto {
     }
 
     // MODIFICAR PRODUCTO  ----- SE UTILIZA PARA MODIFICAR LOS PRODUCTOS DESDE EL MANTENEDOR -----
-    async modifPdto(nombre, precio, imagen, existencia, categ, id) {
+    async modifPdto(nombre, precio, imagen, existencia, categ, estado, id) {
         try {
-            const resultado = await fetch(`http://localhost:4000/API/v1/producto/${id}`, {
+            const resultado = await fetch(`http://localhost:4000/api/v1/producto/${id}`, {
                 method: "PATCH",
-                body: JSON.stringify({ nombre, precio, imagen, existencia, categ, id }),
+                body: JSON.stringify({ nombre, precio, imagen, existencia, categ, estado, id }),
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "aplication/json"
                 }
             });
-
+            console.log(resultado)
             const datos = await fetch("http://localhost:4000/api/v1/producto");
             const data = await datos.json();
 

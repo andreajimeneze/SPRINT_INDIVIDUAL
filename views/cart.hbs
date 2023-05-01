@@ -63,7 +63,16 @@
             <form action="/cart/?_method=DELETE" method="post">
                 <button class="btn btn-primary" name="vaciar">Vaciar</button>
             </form>
-            <button class="btn btn-primary" name="comprar">COMPRAR</button>
+            
+            {{#each canasta}}
+            <input type="hidden" name="idPdto" value="{{ id }}"></input>
+            <input type="hidden" name="cantPdto" value="{{ cant }}"></input>
+            <input type="hidden" name="precioPdto" value="{{ precio }}"></input>
+            {{/each}}
+            <form action="/compra" method="post">
+            <input type="hidden" name="totalFinal" value="{{ totalFinal }}"></input>
+            <button class="btn btn-primary" value="{{ totalFinal }}" name="compras">COMPRAR</button>
+            </form>
         </div>
         <div class="link-tienda">
             <a href='/tienda'>Volver a comprar</a>

@@ -1,57 +1,119 @@
 {{#if productos}}
-{{#each productos }}
+<div class="contenedor-tienda">
+    <div class="formBody-select-card">
+        <label class="form-label h6 fw-bold" for="categ">Ordenar por:</label>
+        <select id="select-tienda" name="categ">
+            <option action="/tienda/minprecio" method="GET" name="minPrize">Precio menor a mayor</option>
+            <option action="/tienda/maxPrize" method="GET" name="maxPrize">Precio mayor a menor</option>
+            <option action="/tienda/nameA" method="GET" name="nameA">Nombre A a Z</option>
+            <option action="/tienda/nameZ" method="GET" name="nameZ">Nombre Z a A</option>
+        </select>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 g-4 contenedor">
 
-<div class="row row-cols-2 row-cols-md-3 g-4 cardPdto">
-    <div class="col">
-        <div class="card h-100">
-            <img src="{{ imagen }}" class="card-img-top imgPdto" alt="...">
-            <div class="card-body">
-                <h5 class="card-title"> {{ nombre }}</h5>
-                <p class="card-text">Código: {{ id }}</p>
-                <P class="card-text">Categoría: {{ categoria }}</P>
-                <p class="card-prize">Precio: $ {{ precio}}</p>
-            </div>
-            <form action="/cart" method="post">
-                <div class="agregarCarro" class="d-flex">
-                    <input type="hidden" name="pdtoId" value="{{ id }}">
-                    <button class="btn btn-primary" value="{{ id }}" name="btnAdd" id="btn-add">Agregar</button>
+        {{#each productos }}
+        <div class="row row-cols-1 row-cols-md-2 g-4 cardPdto">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ imagen }}" class="card-img-top imgPdto" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"> {{ nombre }}</h5>
+                        <p class="card-text">Código: {{ id }}</p>
+                        <P class="card-text">Categoría: {{ categoria }}</P>
+                        <p class="card-prize">Precio: $ {{ precio}}</p>
+                    </div>
+                    <form action="/cart" method="post">
+                        <div class="agregarCarro" class="d-flex">
+                            <input type="hidden" name="pdtoId" value="{{ id }}">
+                            <button class="btn btn-primary" value="{{ id }}" name="btnAdd" id="btn-add">Agregar</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
+        {{/each}}
     </div>
 </div>
-{{/each}}
 {{/if}}
 
 {{#if prod}}
-{{#each prod}}
-<div class="contenedor-prodCat">
-    <div class="row row-cols-2 row-cols-md-3 g-4 cardPdto">
-        <div class="col">
-            <div class="card h-100">
-                <img src="{{ foto }}" class="card-img-top imgPdto" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"> {{ nombre }}</h5>
-                    <p class="card-text">Código: {{ id }}</p>
-                    <P class="card-text">Categoría: {{ categoria_id }}</P>
-                    <p class="card-prize">Precio: $ {{ precio}}</p>
-                </div>
-                <form action=`/cart/${id}` method="post">
-                    <div class="agregarCarro" class="d-flex">
-                        <input type="hidden" name="pdtoId" value="{{ id }}">
-                        <button class="btn btn-primary" value="{{ id }}" name="btnAdd" id="btn-add">Agregar</button>
-                    </div>
-                </form>
-            </div>
+<div class="contenedor-tienda">
+<div class="contenedor-cat">
+    <div class="divcontainer">
+        <div class="div-img">
+            <a href="/productos?categoria=1" class="link-imgCat">
+                <img src="https://m.media-amazon.com/images/I/91NE3TwFouL.__AC_SX300_SY300_QL70_ML2_.jpg" alt="">
+            </a>
+        </div>
+        <div class="div-text">
+            <p>Decoración Hogar</p>
+        </div>
+    </div>
+    <div class="divcontainer">
+        <div class="div-img">
+            <a href="/productos?categoria=2" class="link-imgCat">
+                <img src="https://ae01.alicdn.com/kf/Scfd6410d3103440eb1a7891b62854c07N/Kit-de-posavasos-de-mosaico-redondo-de-bamb-Diy-Material-de-decoraci-n-creativo-hecho-a.jpg_Q90.jpg_.webp"
+                    alt="">
+            </a>
+        </div>
+        <div class="div-text">
+            <p>Menaje Hogar</p>
+        </div>
+    </div>
+    <div class="divcontainer">
+        <div class="div-img">
+            <a href="/productos?categoria=3" class="link-imgCat">
+                <img src="https://sodimac.scene7.com/is/image/SodimacCL/4160088_03?wid=1500&hei=1500&qlt=70" alt="">
+            </a>
+        </div>
+        <div class="div-text">
+            <p>Mobiliario</p>
+        </div>
+    </div>
+    <div class="divcontainer">
+        <div class="div-img">
+            <a href="/productos?categoria=4" class="link-imgCat">
+                <img src="https://i.pinimg.com/originals/2f/ba/f4/2fbaf4208a06cb94ca1c5c96717e54f8.jpg" alt="">
+            </a>
+        </div>
+        <div class="div-text">
+            <p>Misceláneo</p>
         </div>
     </div>
 </div>
-{{/each}}
-{{/if}}
-{{#if prod }}
-<div class="cont-link-tiendaCat">
-<div class="link-tiendaCat">
-    <a href='/tienda'>Ver todos los productos</a>
+    <div class="row row-cols-1 row-cols-md-2 g-4 contenedor">
+        {{#each prod}}
+        
+        <div class="row row-cols-1 row-cols-md-2 g-4 cardPdto">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ foto }}" class="card-img-top imgPdto" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"> {{ nombre }}</h5>
+                        <p class="card-text">Código: {{ id }}</p>
+                        <P class="card-text">Categoría: {{ categoria_id }}</P>
+                        <p class="card-prize">Precio: $ {{ precio}}</p>
+                    </div>
+                    <form action="/cart" method="post">
+                        <div class="agregarCarro" class="d-flex">
+                            <input type="hidden" name="pdtoId" value="{{ id }}">
+                            <button class="btn btn-primary" value="{{ id }}" name="btnAdd" id="btn-add">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+       
+        {{/each}}
+    </div>
+
+
+    {{!-- {{#if prod }} --}}
+    <div class="cont-link-tiendaCat">
+        <div class="link-tiendaCat">
+            <a href='/tienda'>Ver todos los productos</a>
+        </div>
+    </div>
+    {{/if}}
 </div>
-</div>
-{{/if}}
+{{!-- {{/if}} --}}

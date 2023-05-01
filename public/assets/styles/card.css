@@ -1,3 +1,25 @@
+.contenedor-tienda {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.formBody-select-card, .cont-link-tiendaCat {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  margin-top: 20px;
+  padding-right: 20px;
+}
+
+.formBody-select-card label {
+  padding-right: 10px;
+}
+.select-tienda {
+  width: 200px;
+  height: 30px;
+}
+
 .contenedor,
 .contenedor-prodCat {
   width: 100%;
@@ -21,11 +43,6 @@
   font-weight: bold;
 }
 
-/* .link-tiendaCat {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: end;
-  } */
 .card {
   border: solid 1px gray;
   border-radius: 3%;
@@ -106,3 +123,56 @@ div.agregarCarro {
   display: flex;
   justify-content: center;
 }
+
+/*LINK CATEGORÍAS DENTRO DE CADA CATEGORÍA SELECCIONADA*/
+.contenedor-cat {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: rgb(251, 225, 194);
+  margin-top: 76px;
+}
+.link-imgCat img{
+  width: 80px;
+  height: 80px;
+  border-radius: 80px;
+  background-position: center;
+  margin: 1rem;
+  box-shadow: 0px 1px 5px rgb(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 400ms ease;
+}
+
+.link-imgCat img:hover { 
+box-shadow: 2px 3px 12px rgb(0, 0, 0, 0.4);
+  transform: translateY(-1%);
+}
+
+
+/*Responsividad*/
+ @media screen and (max-width: 912px) {
+  .contenedor,
+.contenedor-prodCat {
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+}
+
+.card {
+  width: 100%;
+}
+.cardPdto {
+  width: 100%;
+  height: 100%;
+}
+
+.col {
+  width: 100%;
+}
+}
+
+/* @media screen and (max-width: 390px) {
+  .contenedor,
+.contenedor-prodCat {
+  width: 100%;
+  grid-template-columns: 1fr;
+} */

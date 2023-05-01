@@ -1,28 +1,53 @@
 <body>
-<header>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary navSearch">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"><img src="./assets/img/Logo_Pez_Mosaico.png" alt="Pez Mosaico" style="height:110px"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="/">Inicio</a>
-          <a class="nav-link" href="/tienda">Tienda</a>
-          <a class="nav-link" href="/nosotros">Nosotros</a>
-          <a class="nav-link" href="/contacto">Contacto</a>
-          <a class="nav-link" href="/ingreso">Ingreso</a>
-                  {{!-- <div class="contenedor-Cart"> --}}
-          <div class="cart-notification" value="">2</div>
-          <a class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" onclick="window.location.href='/cart'">
-          
-          <img src="./assets/img/shopping-bag-ui-svgrepo-com.svg" alt="" id="imgCarrito" height="30px">
-          </a>
-        {{!-- </div> --}}
+  <header>
+    <div class="header-banner">
+      <div class="cinta-info">
+        <div class="cinta-despacho">
+          <img src="../../assets/img/truck-svgrepo-com.svg" alt="" class="cinta-img">
+          <span>
+            <h4>Despacho 48 horas</h4>
+          </span>
         </div>
-
+        <div class="cinta-artesania">
+          <img src="../../assets/img/gift-svgrepo-com.svg" alt="" class="cinta-img">
+          <span>
+            <h4>Regala artesanía</h4>
+          </span>
+        </div>
+        <div class="cinta-garantia">
+          <img src="../../assets/img/warranty-svgrepo-com.svg" alt="" class="cinta-img">
+          <span>
+            <h4>Garantía de Satisfacción</h4>
+          </span>
+        </div>
       </div>
     </div>
-  </nav>
-</header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navSearch">
+      <div class="container-fluid">
+        <div class="container-image">
+          <a class="navbar-brand" href="#"><img src="./assets/img/Logo_Pez_Mosaico.png" alt="Pez Mosaico"
+              style="height:140px"></a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+            <a class="nav-link" href="/tienda">Tienda</a>
+            <a class="nav-link" href="/nosotros">Nosotros</a>
+            <a class="nav-link" href="/contacto">Contacto</a>
+            <a class="nav-link" href="/ingreso">Ingreso</a>
+              <div class="cart-notification" value="">1</div>
+              <a class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight" onclick="window.location.href='/cart'">
+
+                <img src="./assets/img/shopping-bag-ui-svgrepo-com.svg" alt="" id="imgCarrito" height="60px">
+              </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    {{> sesion }}
+  </header>

@@ -28,15 +28,20 @@
     justify-content: center;
 }
 
-.div-text p {
+.div-title h2 {
+  font-size: 42px !important;
+  font-family: 'Syne Tactile', cursive;
+}
+
+.div-text h4 {
     display: flex;
     justify-content: center;
 }
 
 .link-img img{
-    width: 150px;
-    height: 150px;
-    border-radius: 150px;
+    width: 180px;
+    height: 180px;
+    border-radius: 180px;
     background-position: center;
     margin: 1rem;
     box-shadow: 0px 1px 5px rgb(0, 0, 0, 0.2);
@@ -57,11 +62,10 @@ justify-content: center;
 /*RECUADROS DE TEXTO*/
 .cont-recuadros {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 100px;
+    margin-top: 40px;
     margin-bottom: 40px;
     padding: 0px 20px;
+    justify-content: center;
   }
   
   .left-col {
@@ -101,7 +105,7 @@ justify-content: center;
   
   .right-box-right img {
     width: 100%;
-    
+    height: 100%;
   }
   
   /*SLIDE*/
@@ -182,15 +186,26 @@ justify-content: center;
       border-radius: 130px;
   }
 
-  h2 {
-    font-size: 16px;
-    padding: 0px, 4px;
+  .div-title h2 {
+    font-size: 26px !important;
+    text-align: center;
+    padding-top: 20px;
   }
 
-  .left-box {
-    height: 35vh;
+  .right-box {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
+
+  .right-box-left,
+  .right-box-right {
+    flex-basis: 100%;
+    width: 100%;
+  }
+
+.right-box-left {
+  order: 1;
+}
   .body-slide {
     padding-top: 4vh;
   }
@@ -218,6 +233,11 @@ justify-content: center;
 
   @media screen and (max-width: 992px ) { 
 
+    .link-img img{
+      width: 150px;
+      height: 150px;
+      border-radius: 150px;
+  }
   .container-slide {
     width: 85% !important;
     padding: 10px 24px !important;
@@ -229,6 +249,12 @@ justify-content: center;
 
   .swiper-button-prev {
     left: 30px !important;
+  }
+
+  .div-title h2 {
+    font-size: 34px !important;
+    text-align: center;
+    padding: 12px;
   }
 }
 
