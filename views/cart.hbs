@@ -1,6 +1,7 @@
 {{#> template}}
 
 <main>
+    {{#if canasta }}
     <div class="cartTable">
         <h4 id="cart-title">Canasta de compras</h4>
         <table class="cart">
@@ -78,6 +79,9 @@
             <a href='/tienda'>Volver a comprar</a>
         </div>
     </div>
+    {{else}}
+    <h2>Su carro de compras está vacío</h2>
+    {{/if}}
 </main>
 
 {{/template}}

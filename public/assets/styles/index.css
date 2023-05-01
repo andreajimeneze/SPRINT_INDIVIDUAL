@@ -33,11 +33,14 @@
   font-family: 'Syne Tactile', cursive;
 }
 
-.div-text h4 {
+.div-text h4, .div-text p {
     display: flex;
     justify-content: center;
 }
 
+.div-text p {
+  font-weight: bold;
+}
 .link-img img{
     width: 180px;
     height: 180px;

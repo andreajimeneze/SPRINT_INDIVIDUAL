@@ -38,49 +38,26 @@
 
 {{#if prod}}
 <div class="contenedor-tienda">
-<div class="contenedor-cat">
+    <div class="contenedor-cat">
+    {{#each categ}}
     <div class="divcontainer">
         <div class="div-img">
-            <a href="/productos?categoria=1" class="link-imgCat">
-                <img src="https://m.media-amazon.com/images/I/91NE3TwFouL.__AC_SX300_SY300_QL70_ML2_.jpg" alt="">
+            <a href="/productos?categoria={{ id }}" class="link-imgCat">
+                <img src="{{ img }}" alt="">
             </a>
         </div>
         <div class="div-text">
-            <p>Decoración Hogar</p>
+            <h4>{{ categoria }}</h4>
+            {{#each ../cantidad}}
+            {{#if (eq categoria ../categoria)}}
+            <p id="{{@index}}">{{cantidad}} productos</p>
+          {{/if}}
+            {{/each }}
         </div>
     </div>
-    <div class="divcontainer">
-        <div class="div-img">
-            <a href="/productos?categoria=2" class="link-imgCat">
-                <img src="https://ae01.alicdn.com/kf/Scfd6410d3103440eb1a7891b62854c07N/Kit-de-posavasos-de-mosaico-redondo-de-bamb-Diy-Material-de-decoraci-n-creativo-hecho-a.jpg_Q90.jpg_.webp"
-                    alt="">
-            </a>
-        </div>
-        <div class="div-text">
-            <p>Menaje Hogar</p>
-        </div>
-    </div>
-    <div class="divcontainer">
-        <div class="div-img">
-            <a href="/productos?categoria=3" class="link-imgCat">
-                <img src="https://sodimac.scene7.com/is/image/SodimacCL/4160088_03?wid=1500&hei=1500&qlt=70" alt="">
-            </a>
-        </div>
-        <div class="div-text">
-            <p>Mobiliario</p>
-        </div>
-    </div>
-    <div class="divcontainer">
-        <div class="div-img">
-            <a href="/productos?categoria=4" class="link-imgCat">
-                <img src="https://i.pinimg.com/originals/2f/ba/f4/2fbaf4208a06cb94ca1c5c96717e54f8.jpg" alt="">
-            </a>
-        </div>
-        <div class="div-text">
-            <p>Misceláneo</p>
-        </div>
-    </div>
+    {{/each}}
 </div>
+
     <div class="row row-cols-1 row-cols-md-2 g-4 contenedor">
         {{#each prod}}
         

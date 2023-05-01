@@ -1,8 +1,8 @@
 import express from 'express';
 import { join } from "path";
-import { fileURLToPath } from 'url';
 import hbs from "hbs";
 import router from './routes/routes.js';
+import { eq } from "./helpers/helpers.js"; 
 
 // const __dirname = fileURLToPath(import.meta.url);
 
@@ -14,6 +14,8 @@ app.set("view engine", "hbs")
 
 // Middlewares
 hbs.registerPartials(join(app.get("views"), "partials"));
+hbs.registerHelper( 'eq', eq );
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use(router)

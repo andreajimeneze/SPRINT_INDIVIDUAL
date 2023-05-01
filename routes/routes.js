@@ -23,6 +23,7 @@ const router = express.Router();
 const cart = new Canasta();
 const pdto = new Producto();
 const user = new Usuario();
+const cat = new Categoria();
 
 
 // Métodos de Middlewares
@@ -50,25 +51,29 @@ router.use(flash({
 
 /* -------------------------- C A R G A   D E   P R O D U C T O S ------------------------------*/
 
-// VISTA INDEX
+// VISTA INDEX (LINK CATEGORÍAS CON GROUP BY)
 router.get("/", async (_req, res) => {
-  res.render("index")
+  const categ = await cat.getCategorias()
+  const cantCat = await pdto.getCantPdtoCateg();
+  
+  res.render("index", { categ, cantidad: cantCat })
 })
 
 // CARGAR TIENDA CON PRODUCTOS (JOIN CON TABLA CATEGORÍA)
 router.get("/tienda", async (_req, res) => {
-  const productos = await pdto.getProductsByCategory()
-
+  const productos = await pdto.getProductsByCategory();
+  
   res.render("tienda", { productos })
 })
 
-// VISTA PRODUCTOS POR CATEGORÍA --- EN INDEX
+// VISTA PRODUCTOS POR CATEGORÍA --- EN INDEX (LINK DE CATEGORÍAS CON GROUP BY)
 router.get("/productos", async (req, res) => {
   const cat_id = parseInt(req.query.categoria);
-
   const prod = await pdto.getProductByCategory(cat_id);
+  const categ = await cat.getCategorias()
+  const cantCat = await pdto.getCantPdtoCateg();
 
-  res.render("tienda", { prod: prod })
+  res.render("tienda", { prod: prod, categ, cantidad: cantCat })
 })
 
 // ORDER BY PRECIO EN TIENDA --- NO ESTÁ FUNCIONANDO
@@ -217,6 +222,9 @@ router.post("/cart", async (req, res) => {
 //   next();
 // });
 
+// router.get('/cart/updateCant', (req, res) => {
+//   res.render('cart/updateCant')
+// })
 // ACTUALIZAR CANTIDAD PDTOS EN CANASTA (MÉTODO CLASS CANASTA CALCULA SUBTOTALES). ASIMISMO SE EJECUTA EL MÉTODO CALCULAR TOTALES AL RENDERIZAR LA PÁGINA CART.
 router.post('/cart/updateCant', (req, res) => {
   const pdtoId = parseInt(req.body.addOne);

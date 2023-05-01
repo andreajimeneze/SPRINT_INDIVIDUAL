@@ -4,7 +4,7 @@ export class Categoria {
             this.categoria = categoria
     }
 
-    async getCategoria() {
+    async getCategorias() {
         let dataCat = [];
         try {
             const resultado = await fetch("http://localhost:4000/api/v1/categoria");
@@ -13,9 +13,11 @@ export class Categoria {
             data.forEach(rows => {
                 dataCat.push({
                     id: rows.id,
-                    categoria: rows.categoria
+                    categoria: rows.categoria,
+                    img: rows.imgcategoria
                 });
             })
+            console.log(dataCat)
             return dataCat;
         } catch (e) {
             throw e;

@@ -30,7 +30,7 @@ export class Producto {
                     estado: rows.id_estado
                 });
             })
-            
+
             return dataPdto;
         } catch (e) {
             throw e;
@@ -65,7 +65,7 @@ export class Producto {
         }
     }
 
-// OBTIENE TODOS LOS PRODUCTOS ORDENADOS POR PRECIO ASCENDENTE (ORDER BY)
+    // OBTIENE TODOS LOS PRODUCTOS ORDENADOS POR PRECIO ASCENDENTE (ORDER BY)
     async getPdtosByPrize(precio) {
         try {
             const resultado = await fetch("http://localhost:4000/api/v1/producto/prize")
@@ -82,9 +82,24 @@ export class Producto {
     };
 
     // OBTIENE CANTIDAD DE PRODUCTOS POR CATEGORÍA
-    async getCantPdtoCateg() { 
-       const resultado = await fetch('http://localhost:4000/api/v1/producto/categ');
-        const data = await resultado.json();
+    async getCantPdtoCateg() {
+        let dCantCat = [];
+        try {
+            const resultado = await fetch('http://localhost:4000/api/v1/producto/categ');
+            const data = await resultado.json();
+            console.log(data)
+
+            data.forEach((rows) => {
+                dCantCat.push({
+                    cantidad: rows.cantidad,
+                    categoria: rows.categoria
+                })
+            });
+            return dCantCat;
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
     // OBTIENE UN PRODUCTO  DE LA TABLA PRODUCTO POR SU ID

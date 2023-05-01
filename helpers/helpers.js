@@ -11,4 +11,6 @@ export const formatCL = function (num) {
     }).format(num);
 }
 
-// export default helpers;
+export const eq = function(a, b) {
+    return a === b
+}
