@@ -1,0 +1,55 @@
+<table class="table table-striped" id="tablaPdtos">
+  <thead>
+    <tr>
+      <td>Id</td>
+      <td>Nombre</td>
+      <td>Precio</td>
+      <td>Imagen</td>
+      <td>Stock</td>
+      <td>Categoría</td>
+       <td>Estado</td>
+      <td>Eliminar</td>
+    </tr>
+  </thead>
+  {{#each prod }}
+  <tbody id="filasPdtos">
+    <tr>
+      <th>{{ id }}</th>
+      <th><img src="{{ imagen }}" alt=""></th>
+      <th>{{ nombre }}</th>
+      <th>{{ precio }}</th>
+      <th>{{ existencia }}</th>
+      <th>{{ categoria }}</th>
+      <th>{{ estadoDesc }}</th>
+      <form action="/adm/{{ id }}?_method=DELETE" method="post">
+        <th><button id="delete" name="btnDelete" class="btn btn-secondary" onclick="confirmar(event, {{ id }})">Eliminar</button></th>
+      </form>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
+
+<script>
+  function confirmar(event, id) { 
+    event.preventDefault();
+  Swal.fire({
+    title: 'Está seguro que desea eliminar el producto?',
+    icon: 'warning',
+    showConfirmButton: true,
+    showCancelButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+       window.location = '/adm/' + id + '?_method=DELETE';Swal.fire({
+        title: 'Producto eliminado exitosamente',
+        icon: 'success',
+        showCancelButton: false,
+        showConfirmButton: false,
+        timer: 5000
+      });
+
+    }
+  })
+  }
+</script>

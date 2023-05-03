@@ -1,7 +1,7 @@
 import express from "express";
 import methodOverride from "method-override";
 import CryptoJS from "crypto-js";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 import flash from "express-flash";
 import session from "express-session";
 import cookieParser from "cookie-parser";
@@ -13,7 +13,7 @@ import { Categoria } from "../utils/Class/Categoria.js";
 import { Estado } from "../utils/Class/Estado.js";
 import { Compra } from "../utils/Class/Compra.js";
 import { formatCL, capFirstMay } from "../helpers/helpers.js";
-// import { validarToken } from "../utils/funciones.js";
+import { verificarTokenAdmin } from "../utils/funciones.js";
 
 dotenv.config();
 
@@ -31,7 +31,6 @@ let usuario;
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 router.use(methodOverride("_method", { methods: ["GET", "POST"] }));
-// router.use(morgan('dev'));
 router.use(cookieParser());
 router.use(session({
   secret: process.env.JWT_SECRET,
@@ -69,12 +68,12 @@ router.get("/tienda", async (req, res) => {
   res.render("tienda", { productos })
 })
 
-//TIENDA ORDENADA POR PRECIO
+//ORDER BY EN TIENDA
 router.get("/tienda/:num", async (req, res) => {
   const { num } = req.params
   const productos = await pdto.ordenarPor(num);
-  console.log(productos)
-  res.render("./tienda", { productos })
+
+  res.render("tienda", { productos })
 })
 
 // VISTA PRODUCTOS POR CATEGORÍA --- EN INDEX (LINK DE CATEGORÍAS CON GROUP BY)
@@ -83,19 +82,12 @@ router.get("/productos", async (req, res) => {
   const prod = await pdto.getProductByCategory(cat_id);
   const categ = await cat.getCategorias()
   const cantCat = await pdto.getCantPdtoCateg();
-  const est = new Estado();
-
+  
   res.render("tienda", { prod: prod, categ, cantidad: cantCat })
 })
 
-// ORDER BY PRECIO EN TIENDA --- NO ESTÁ FUNCIONANDO
-// router.get("/productos/minprecio", async (req, res) => {
-//   const minPrize = req.body.minPrize
-//   console.log(minPrize)
-//   const product = await pdto.getPdtosByPrize(minPrize)
-//   res.render("tienda", { product })
-// })
-/* ----------------------- C O N T A C T 0  Y  N O S O T R O S -------------------------*/
+
+/* --------------- C O N T A C T 0  Y  N O S O T R O S -----------------*/
 // VISTA CONTACTO
 router.get("/contacto", (_req, res) => {
   res.render("contacto")
@@ -107,14 +99,12 @@ router.get("/nosotros", (_req, res) => {
 })
 
 
-/* ------------------- I N G R E S O  Y  R E G I S T R O  D E  U S U A R I O --------------------*/
+/* ----------- I N G R E S O  Y  R E G I S T R O  D E  U S U A R I O -------------*/
 
 // VISTA INGRESO CON MENSAJE ERROR #IF
-router.get('/ingreso', (req, res) => {
+router.get("/ingreso", (req, res) => {
   const msjError = req.flash("error");
-  const msjError2 = req.flash("error2");
-  const msjeError3 = req.flash("error3")
-  res.render("ingreso", { msjError, msjError2, msjeError3 })
+  res.render("ingreso", { msjError })
 });
 
 // ACCEDER A SESIÓN CON USUARIO Y PASSWORD, EN CASO DE SER ADMINISTRADOR SE GUARDA TOKEN EN LA COOKIE Y SE REDIRECCIONA A SESIONADMIN. EN CASO DE SER SÓLO USUARIO, SE REDIRIGE A LA TIENDA Y EN CASO DE CONTRASEÑA SE QUEDA EN INGRESO
@@ -122,68 +112,74 @@ router.get('/ingreso', (req, res) => {
 router.post('/auth', async (req, res, next) => {
   const usuario = req.body.usuario;
   const password = CryptoJS.SHA256(req.body.password).toString();
+ 
   try {
     const resultado = await user.getUsuarios(usuario, password);
 
     if (resultado.success) {
       req.session.user = resultado.user;
-      userName = resultado.user.usuario;
       const userRol = resultado.user.rol_id;
+      const userName = resultado.user.nombres;
       console.log(userName)
-      if (userRol === 1) {
-        
-        res.cookie('token', resultado.token, { httpOnly: true });
-        res.redirect('/sesionadm');
-      } else {
+     
+      const token = jwt.sign({ user: resultado.user.id, userName: userName, rol_id: userRol }, process.env.JWT_SECRET);
+      res.cookie("token", token, { httpOnly: true });
+      console.log(token)
 
-        res.redirect('tienda')
+      if (userRol === 1) {     
+        res.redirect("sesionadm");
+      } else {
+        res.redirect("tienda");
       }
     } else {
-      req.flash('error', resultado.message);
-      res.redirect('/ingreso');
+      req.flash("error", resultado.message);
+      res.redirect("ingreso");
     }
   } catch (error) {
-    req.flash('error', 'Ocurrió un error en la base de datos');
-    res.redirect('/ingreso');
+    req.flash("error", "Ocurrió un error en la base de datos");
+    res.redirect("ingreso");
   }
 });
 
-// SE VERIFICA EL TOKEN Y EN EL CASO DEL ADMINISTRADOR SE DIRIGE A SESIONADM, EN CASO DE OTROS USUARIOS SE REDIRIGE A TIENDA
-router.get('/sesionadm', async (req, res) => {
-  // if(!verficarT(token)){
-  //   res.redirect
-  // }
-  const token = req.cookies.token;
 
-  if (!token) {
-    req.flash('error', 'No tienes permiso para acceder a esta página');
-    return res.redirect('/ingreso');
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-    if (err) {
-      req.flash('error', 'El token no es válido');
-      return res.redirect('/ingreso');
-    } else { 
-
-    let usuario = req.session.user;
-    
-
-    res.render('sesionadm', {
-      user: usuario.usuario,
-      message: 'Usuario administrador',
-    });
-  }
+router.get("/sesionadm", verificarTokenAdmin, async (req, res) => {
+  usuario = req.session.user;
+  res.render("sesionadm", {
+    user: usuario,
+    message: "Usuario administrador",
   });
-
 });
 
+router.get("/addPdto", verificarTokenAdmin, async (req, res) => {
+  usuario = req.session.user.nombres;
+  res.render("addPdto", {
+    user: usuario,
+    message: "Usuario administrador",
+  });
+});
+
+router.get("/eliminarPdto", verificarTokenAdmin, async (req, res) => {
+  usuario = req.session.user.nombres;
+  res.render("eliminarPdto", {
+    user: usuario,
+    message: "Usuario administrador",
+  });
+});
+
+router.get("/modifPdto", verificarTokenAdmin, async (req, res) => {
+  usuario = req.session.user.nombres;
+  
+  res.render("modifPdto", {
+    user: usuario,
+    message: "Usuario administrador",
+  });
+});
 
 // SE CIERRA LA SESIÓN DEL USUARIO
-router.get('/logout', (req, res) => {
+router.get("/logout", (req, res) => {
   req.session.destroy();
-  res.clearCookie('token');
-  res.redirect('/tienda');
+  res.clearCookie("token");
+  res.redirect("/tienda");
 });
 
 
@@ -198,7 +194,7 @@ router.post("/ingreso", async (req, res) => {
   if (newUsuario === true) {
     res.redirect("ingreso")
   } else {
-    req.flash('error2', 'rut o nombre de usuario ya existen.');
+    req.flash("error2", "rut o nombre de usuario ya existen.");
     res.redirect("ingreso")
   }
 });
@@ -237,7 +233,7 @@ router.post("/cart", async (req, res) => {
 
 
 // ACTUALIZAR CANTIDAD PDTOS EN CANASTA (MÉTODO CLASS CANASTA CALCULA SUBTOTALES). ASIMISMO SE EJECUTA EL MÉTODO CALCULAR TOTALES AL RENDERIZAR LA PÁGINA CART.
-router.post('/cart/updateCant', (req, res) => {
+router.post("/cart/updateCant", (req, res) => {
   const pdtoId = parseInt(req.body.addOne);
   const prodId = parseInt(req.body.btnMinus)
   cart.agregarCant(pdtoId);
@@ -305,28 +301,13 @@ router.get("/add", async(req, res) => {
     const categ = await cat.getCategorias();
     const estado = await est.getEstados();
   
-    res.render("addPdto", { categ: categ, estado: estado.dataEstado });
+    res.render("addPdto", { categ: categ, estado: estado });
   } catch (error) {
     console.error(error);
     res.status(500).send("Ha ocurrido un error");
-   
   }
   
 })
-// router.get("/mantenedor", async(req, res) => {
-//   try {
-//     const categ = await cat.getCategorias();
-//     const estado = await est.getEstados();
-//     console.log("no pasa nada222")
-//     res.render("addPdto", { categ: categ, estado: estado });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Ha ocurrido un error");
-//     console.log("qué pasa")
-//   }
-// })
-
-
 
 // AGREGAR NUEVO PRODUCTO DESDE MANTENEDOR
 router.post("/adm", async (req, res) => {
@@ -347,16 +328,6 @@ router.get("/delete", async (_req, res) => {
   res.render("eliminarPdto", { prod })
 })
 
-// OBTENER PRODUCTOS PARA MANTENEDOR MODIFICAR
-router.get("/modif", async (_req, res) => {
-
-  const prod = await pdto.getPdtosEstado()
-
-  const estado = await est.getEstados()
-
-  res.render("modifPdto", { prod, estado: estado })
-})
-
 // ELIMINAR PRODUCTO DESDE MANTENEDOR
 router.delete("/adm/:id", async (req, res) => {
   const id = parseInt(req.params.id);
@@ -365,46 +336,44 @@ router.delete("/adm/:id", async (req, res) => {
   res.redirect("/delete")
 })
 
-//MODIFICAR PRODUCTO DESDE MANTENEDOR
-router.put("/modpdto/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
-  const name = req.body.name;
-  const prize = parseInt(req.body.prize);
-  const link = req.body.link;
-  const stock = parseInt(req.body.stock);
-  const categoria = req.body.categoria;
-  const estado = req.body.estado;
+// OBTENER PRODUCTOS PARA MANTENEDOR MODIFICAR
+// router.get("/modif", async (_req, res) => {
 
-  const categEnc = await cat.getCategorias()
-  const cat_id = categEnc.find(item => item.id == id)
-
-
-  await pdto.modifPdto(name, prize, link, stock, cat_id, estado, id)
-  res.redirect("/sesionadm");
-})
-
-// ACCEDER A MODIFICARPDTO.HBS
-router.get("/modpdto", (_req, res) => {
-  res.render("modificarPdto")
-})
-
-// CARGAR PRODUCTOS EN MANTENEDOR
-router.get("/modpdto/form", async (_req, res) => {
-
-  const prod = await pdto.getProducts()
-
-  res.render("modificarPdto", { prod })
-})
-
-// SESIÓN ADMIN --- SE INGRESA CON USERNAME Y PASSWORD
-router.get("/sesionadm", (_req, res) => {
-  res.render("sesionadm")
-})
-
-// router.get("/otro", (req, res) => {
-//   res.render("otro")
+//   const prod = await pdto.getPdtosEstado()
+//   const categ = await cat.getCategorias();
+//   console.log(categ)
+//   const estados = await est.getEstados();
+//   console.log(estados)
+//   res.render("./modifPdto", { prod: prod, categ: categ, estado: estados })
 // })
+router.get("/modif", async (_req, res) => {
+  try {
+    const [prod, categ, estados] = await Promise.all([
+      pdto.getPdtosEstado(),
+      cat.getCategorias(),
+      est.getEstados(),
+    ]);
+  
+    res.render("modifPdto", { prod: prod, categ: categ, estados: estados });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error obteniendo los datos del servidor");
+  }
+});
 
 
+//MODIFICAR PRODUCTO DESDE MANTENEDOR
+router.patch("/modpdto/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const name = req.body.nombre;
+  const prize = parseInt(req.body.precio);
+  const link = req.body.imagen;
+  const stock = parseInt(req.body.existencia);
+  const categoria = parseInt(req.body.categoria_id);
+  const estado = parseInt(req.body.id_estado);
+
+  await pdto.modifPdto(name, prize, link, stock, categoria, estado, id)
+  res.redirect("/modif");
+})
 
 export default router;

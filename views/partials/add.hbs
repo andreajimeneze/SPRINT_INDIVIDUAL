@@ -20,7 +20,6 @@
  
   <div class="formBody-select">
     <label class="form-label h6 fw-bold" for="categoria">Categoría:</label>
-
     <select id="select-cat" name="categoria">
       <option value="categoria">Categoría</option>
        {{#each categ}}
@@ -60,6 +59,7 @@
           title: 'Producto agregado exitosamente',
           icon: 'success',
           showCancelButton: false,
+          showConfirmButton: false,
           timer: 5000
         });
       }

@@ -180,10 +180,11 @@ select#select-estadoMod  {
   display: flex;
   flex-direction: column;
   background-color: rgb(252, 243, 232) ;
-  width: 80%;
-  height: 100%;
+  width: 100%;
+  height:fit-content;
   padding-top: 2.5rem;
 }
+
 /* PÁGINA 404*/
 .nofound {
   background: url(../img/404.jpg);

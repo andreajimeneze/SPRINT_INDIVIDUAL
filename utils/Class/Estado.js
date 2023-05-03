@@ -16,7 +16,7 @@ export class Estado {
                     descripcion: rows.descripcion
                 });
             })
-            return { dataEstado };
+            return dataEstado;
         } catch (e) {
             throw e;
         }

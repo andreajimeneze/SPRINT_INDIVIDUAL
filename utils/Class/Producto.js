@@ -65,22 +65,6 @@ export class Producto {
         }
     }
 
-    // OBTIENE TODOS LOS PRODUCTOS ORDENADOS POR PRECIO ASCENDENTE (ORDER BY)
-    // async getPdtosByPrize(precio) {
-    //     try {
-    //         const resultado = await fetch("http://localhost:4000/api/v1/producto/prize")
-    //         const data = await resultado.json();
-    //         console.log(data)
-    //         if (data.length > 0) {
-    //             return data;
-    //         } else {
-    //             console.log("Producto no encontrado")
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // };
-
     async ordenarPor(opcion) {
         let resultado = '';
         let pdtoData = [];
@@ -111,7 +95,7 @@ export class Producto {
                 categoria: row.categoria
             })
         })
-        console.log(pdtoData)
+      
         return pdtoData
     }
 
@@ -123,8 +107,7 @@ export class Producto {
         try {
             const resultado = await fetch('http://localhost:4000/api/v1/producto/categ');
             const data = await resultado.json();
-            console.log(data)
-
+           
             data.forEach((rows) => {
                 dCantCat.push({
                     cantidad: rows.cantidad,
@@ -153,7 +136,10 @@ export class Producto {
                     item.nombre,
                     item.precio,
                     item.imagen,
-                    item.existencia
+                    item.existencia, 
+                    item.categoria,
+                    item.categoria_id,
+                    item.estado_id
                 );
             } else {
                 console.log(`Producto ${id} no existe`)
@@ -241,17 +227,17 @@ export class Producto {
     }
 
     // MODIFICAR PRODUCTO  ----- SE UTILIZA PARA MODIFICAR LOS PRODUCTOS DESDE EL MANTENEDOR -----
-    async modifPdto(nombre, precio, imagen, existencia, categ, estado, id) {
+    async modifPdto(nombre, precio, imagen, existencia, categoria_id, id_estado, id) {
         try {
             const resultado = await fetch(`http://localhost:4000/api/v1/producto/${id}`, {
                 method: "PATCH",
-                body: JSON.stringify({ nombre, precio, imagen, existencia, categ, estado, id }),
+                body: JSON.stringify({ nombre, precio, imagen, existencia, categoria_id, id_estado }), 
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "aplication/json"
                 }
             });
-            console.log(resultado)
+           
             const datos = await fetch("http://localhost:4000/api/v1/producto");
             const data = await datos.json();
 
