@@ -33,14 +33,10 @@
 		<div class="container__form container--signin">
 
 			<form action="/ingreso" class="form" method="post" id="form2">
-
-				{{!-- <h2 class="form__title">Registro</h2> --}}
 				<input type="text" placeholder="Nombres" class="input" name="nombres" />
 				<input type="text" placeholder="Apellidos" class="input" name="apellidos" />
 				<input type="text" placeholder="Número de Carné sin puntos" class="input" name="rut" />
 				<input type="text" placeholder="Dirección" class="input" name="direccion" />
-				{{!-- <input type="text" placeholder="Región" class="input" name="RegReg" />
-				<input type="text" placeholder="Comuna" class="input" name="comReg" /> --}}
 				<input type="text" placeholder="Teléfono" class="input" name="telefono" />
 				<input type="email" placeholder="Email" class="input" name="email" />
 				<input type="text" placeholder="Nombre Usuario" class="input" name="usuario1" />
@@ -82,10 +78,6 @@
 	signUpBtn.addEventListener("click", () => {
 		container.classList.add("right-panel-active");
 	});
-
-//document.getElementById("form1").addEventListener("submit", (e) => e.preventDefault());
-//document.getElementById("form2").addEventListener("submit", (e) => e.preventDefault());
-
 
 
 if(document.querySelector(".error-ingreso")) {

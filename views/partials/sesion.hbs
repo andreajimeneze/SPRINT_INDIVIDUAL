@@ -1,7 +1,10 @@
 {{#if user}}
-<span>Bienvenido, {{ user }}</span>
-
-<div class="logout">
-<a href="/logout">Cerrar sesión</a>
+<div class="contenedor-sesion">
+    <div class="sesion-user">
+        <span>Bienvenido, {{ user }}</span>
+    </div>
+    <div class="logout">
+        <a href="/logout">Cerrar sesión</a>
+    </div>
 </div>
 {{/if}}

@@ -1,39 +1,43 @@
 <form action="/adm" method="post" class="form-addPdto">
   <h3 class="m-3">Agregar nuevo producto</h3>
-  <div class="formBody">
+  <div class="form-group formBody">
     <label class="form-label h6 fw-bold" for="nombre">Nombre Producto</label>
-    <input class="form-control-sm rounded" type="text" name="namePdto">
+    <input class="form-control-sm rounded" type="text" name="namePdto" required>
   </div>
-  <div class="formBody">
+  <div class="form-group formBody">
     <label class="form-label h6 fw-bold" for="nombre">Imagen (Ingrese Link)</label>
-    <input class="form-control-sm rounded" type="text" name="imgPdto">
+    <input class="form-control-sm rounded" type="text" name="imgPdto" required>
   </div>
 
   <div class="formBody">
     <label class="form-label h6 fw-bold" for="precio">Precio</label>
-    <input class="form-control-sm rounded" type="text" name="prizePdto">
+    <input class="form-control-sm rounded" type="text" name="prizePdto" required>
   </div>
   <div class="formBody">
     <label class="form-label h6 fw-bold" for="cantPdto">Cant Disponible</label>
-    <input class="form-control-sm rounded" type="text" name="cantPdto">
+    <input class="form-control-sm rounded" type="text" name="cantPdto" required>
   </div>
+ 
   <div class="formBody-select">
-    <label class="form-label h6 fw-bold" for="categ">Categoría</label>
-    <select id="select-cat" name="categ">
+    <label class="form-label h6 fw-bold" for="categoria">Categoría:</label>
+
+    <select id="select-cat" name="categoria">
       <option value="categoria">Categoría</option>
-      {{#each categorias }}
-      <option value="{{ id }}" id="{{ id }}">{{ categoria }}</option>
-      {{/each }}
+       {{#each categ}}
+      <option value="{{id}}">{{categoria}}</option>
+       <h1>{{ categoria }}</h1>
+      {{/each}}
     </select>
   </div>
   <div class="formBody-select">
-    <label class="form-label h6 fw-bold" for="categ">Estado</label>
-    <select id="select-cat" name="estado">
-      <option value="categoria">Estado</option>
-      {{#each estado }}
-      <option value="{{ id }}" id="{{ id }}">{{ estado }}</option>
-      {{/each }}
+    <label class="form-label h6 fw-bold" for="estado">Estado:</label>
+    <select id="select-estado" name="estado">
+      <option value="estado">Estado</option>
+      {{#each estado}}
+      <option value="{{id}}">{{descripcion}}</option>
+      {{/each}}
     </select>
+
   </div>
   <button class="btn btn-primary" type="submit">Agregar</button>
 </form>

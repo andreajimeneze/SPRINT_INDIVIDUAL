@@ -41,13 +41,14 @@
           <input type="text" name="estado" value="{{ estadoDesc }}" class=" inputModName">
         </th>
         <th>
-          <select id="select-estado" name="categ">
+        
+          <select id="select-estadoMod" name="categ">
             <option value="estado">Estado</option>
             {{#each estado }}
-            <option value="{{ id }}" id="estado-{{ id }}">{{ estado }}</option>
-            {{/each }}
+            <option value="{{ this.id }}" id="estado-{{ this.id }}">{{this.descripcion }}</option>
+      
           </select>
-          
+          {{/each}}
         </th>
         <th><button type="submit" value="{{ id }}" class="btn btn-secondary" name="btnEdit">Editar</button></th>
     </form>

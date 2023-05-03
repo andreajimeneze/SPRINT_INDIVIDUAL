@@ -66,20 +66,56 @@ export class Producto {
     }
 
     // OBTIENE TODOS LOS PRODUCTOS ORDENADOS POR PRECIO ASCENDENTE (ORDER BY)
-    async getPdtosByPrize(precio) {
-        try {
-            const resultado = await fetch("http://localhost:4000/api/v1/producto/prize")
-            const data = await resultado.json();
-            console.log(data)
-            if (data.length > 0) {
-                return data;
-            } else {
-                console.log("Producto no encontrado")
-            }
-        } catch (error) {
-            console.log(error)
+    // async getPdtosByPrize(precio) {
+    //     try {
+    //         const resultado = await fetch("http://localhost:4000/api/v1/producto/prize")
+    //         const data = await resultado.json();
+    //         console.log(data)
+    //         if (data.length > 0) {
+    //             return data;
+    //         } else {
+    //             console.log("Producto no encontrado")
+    //         }
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // };
+
+    async ordenarPor(opcion) {
+        let resultado = '';
+        let pdtoData = [];
+        switch (opcion) {
+            case "1":
+                resultado = await fetch('http://localhost:4000/api/v1/producto/prizea');
+
+                break;
+            case "2":
+                resultado = await fetch('http://localhost:4000/api/v1/producto/prizez');
+                break;
+            case "3":
+                resultado = await fetch('http://localhost:4000/api/v1/producto/namea');
+                break;
+            case "4":
+                resultado = await fetch('http://localhost:4000/api/v1/producto/namez');
+                break;
+            default:
+                resultado = await fetch('http://localhost:4000/api/v1/producto');
         }
-    };
+        const data = await resultado.json();
+        data.forEach(row => {
+            pdtoData.push({
+                id: row.id,
+                nombre: row.nombre,
+                precio: row.precio,
+                imagen: row.imagen,
+                categoria: row.categoria
+            })
+        })
+        console.log(pdtoData)
+        return pdtoData
+    }
+
+
 
     // OBTIENE CANTIDAD DE PRODUCTOS POR CATEGORÍA
     async getCantPdtoCateg() {
@@ -156,7 +192,7 @@ export class Producto {
     }
 
     // AGREGA PRODUCTO NUEVO ----- SE UTILIZA PARA AGREGAR PRODUCTOS DESDE EL MANTENEDOR -----
-    async addPdto(nombre, precio, imagen, existencia, categoria_id) {
+    async addPdto(nombre, precio, imagen, existencia, categoria_id, id_estado) {
         const pdto = new Producto()
         const bdpdtos = await pdto.getProductsByCategory()
         let pdtoExist = bdpdtos.find((e) => e.nombre == nombre)
@@ -164,7 +200,7 @@ export class Producto {
         if (!pdtoExist) {
             const resultado = await fetch("http://localhost:4000/api/v1/producto", {
                 method: "POST",
-                body: JSON.stringify({ nombre, precio, imagen, existencia, categoria_id }),
+                body: JSON.stringify({ nombre, precio, imagen, existencia, categoria_id, id_estado }),
                 headers: {
                     "Content-Type": "application/json"
                 }

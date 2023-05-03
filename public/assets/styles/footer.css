@@ -97,12 +97,24 @@ footer {
     margin: 1rem 1.5rem;
     cursor: pointer;
     opacity: 0.6;
-    text-align: left;
+    text-align: left !important;
 }
 
-.menu-item:hover {
-    opacity: 1;
+.menu-item a {
+    font-size: 16px !important;
+    text-decoration: none;
+    color: antiquewhite;
+    text-align:start;
 }
+
+.menu-item a:hover {
+    
+    color: rgb(238, 201, 152);
+}
+
+/* .menu-item:hover {
+    opacity: 1;
+} */
 
 .copyright {
     display: flex;

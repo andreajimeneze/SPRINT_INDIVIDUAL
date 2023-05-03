@@ -5,6 +5,7 @@
 @import url("footer.css");
 @import url("headerAdm.css");
 @import url("index.css");
+@import url("nosotros.css");
 
 
 
@@ -84,7 +85,7 @@ main {
 }
 
 
-/* Formulario contacto */
+/* FORMULARIO CONTACTO */
 
 .form-control {
   font-size: 2rem;
@@ -94,60 +95,10 @@ main {
   margin-bottom: 25px;
 }
 
-.homeText {
-  padding-top: 12rem;
-  padding-left: 2rem;
-  padding-right: 8rem;
-  width: 100%;
-}
-
-.homeText h4 {
-  color: purple;
-  font-size: xx-large;
-  padding-bottom: 2rem;
-}
-
 .mb-3 textarea {
   font-size: 16px;
   width: 300px;
   height: 150px;
-}
-
-.carousel {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding-top: 12rem;
-  padding-right: 2rem;
-  position: relative;
-}
-
-.carousel-inner {
-  width: 500px;
-  height: 300px;
-  margin: 0 auto;
-}
-
-.img-slide {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 3%;
-}
-
-.carousel-control-next {
-  margin-right: 3rem;
-}
-
-/* MODIF.HBS*/
-
-.table.table-striped {
-  width: 70% !important;
-}
-
-#filasPdtos th img {
-  width: 50px;
 }
 
 /*FORM ADDPDTO.HBS*/
@@ -163,7 +114,7 @@ main {
   padding-bottom: 10px;
 }
 
-select#select-cat {
+select#select-cat, select#select-estado {
   width: 350px;
   height: 30px;
 }
@@ -211,5 +162,57 @@ input.inputModName {
 }
 
 input.inputModLink {
-  width: 300px;
+  width: 250px;
 }
+
+select#select-estadoMod  {
+  width: 140px;
+  height: 30px;
+}
+
+/*FORM ELIMINAR PDTO*/
+#filasPdtos th img {
+  width: 50px;
+} 
+
+/*FORM ADD PDTO */
+.mainAdm {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(252, 243, 232) ;
+  width: 80%;
+  height: 100%;
+  padding-top: 2.5rem;
+}
+/* PÁGINA 404*/
+.nofound {
+  background: url(../img/404.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+  width: 100%;
+  padding-top: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/*SESIÓN*/
+.contenedor-sesion {
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  right: 0;
+}
+
+.sesion-user {
+  display: flex;
+  justify-content: end;
+  padding-right: 25px;
+}
+
+div.logout {
+  padding-right: 25px;
+}
+

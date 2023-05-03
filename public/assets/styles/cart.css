@@ -172,3 +172,10 @@ button.btnAddCarro {
   font-size: 18px;
   font-weight: bold;
 }
+
+.carro-vacio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}

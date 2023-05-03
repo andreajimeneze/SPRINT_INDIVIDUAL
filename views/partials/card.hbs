@@ -2,13 +2,20 @@
 <div class="contenedor-tienda">
     <div class="formBody-select-card">
         <label class="form-label h6 fw-bold" for="categ">Ordenar por:</label>
-        <select id="select-tienda" name="categ">
-            <option action="/tienda/minprecio" method="GET" name="minPrize">Precio menor a mayor</option>
-            <option action="/tienda/maxPrize" method="GET" name="maxPrize">Precio mayor a menor</option>
-            <option action="/tienda/nameA" method="GET" name="nameA">Nombre A a Z</option>
-            <option action="/tienda/nameZ" method="GET" name="nameZ">Nombre Z a A</option>
-        </select>
+     <select name="ordenar" onchange="location = this.value">
+        <option>Ordenar</option>
+        <option value="/tienda/1">Precio menor a mayo</option>
+        <option value="/tienda/2">Precio mayor a menor</option>
+        <option value="/tienda/3">Nombre A-Z</option>
+        <option value="/tienda/4">Nombre Z-A</option>
+    </select>
     </div>
+
+    
+
+
+
+
     <div class="row row-cols-1 row-cols-md-2 g-4 contenedor">
 
         {{#each productos }}
@@ -39,28 +46,28 @@
 {{#if prod}}
 <div class="contenedor-tienda">
     <div class="contenedor-cat">
-    {{#each categ}}
-    <div class="divcontainer">
-        <div class="div-img">
-            <a href="/productos?categoria={{ id }}" class="link-imgCat">
-                <img src="{{ img }}" alt="">
-            </a>
+        {{#each categ}}
+        <div class="divcontainer">
+            <div class="div-img">
+                <a href="/productos?categoria={{ id }}" class="link-imgCat">
+                    <img src="{{ img }}" alt="">
+                </a>
+            </div>
+            <div class="div-text">
+                <h4>{{ categoria }}</h4>
+                {{#each ../cantidad}}
+                {{#if (eq categoria ../categoria)}}
+                <p id="{{@index}}">{{cantidad}} productos</p>
+                {{/if}}
+                {{/each }}
+            </div>
         </div>
-        <div class="div-text">
-            <h4>{{ categoria }}</h4>
-            {{#each ../cantidad}}
-            {{#if (eq categoria ../categoria)}}
-            <p id="{{@index}}">{{cantidad}} productos</p>
-          {{/if}}
-            {{/each }}
-        </div>
+        {{/each}}
     </div>
-    {{/each}}
-</div>
 
     <div class="row row-cols-1 row-cols-md-2 g-4 contenedor">
         {{#each prod}}
-        
+
         <div class="row row-cols-1 row-cols-md-2 g-4 cardPdto">
             <div class="col">
                 <div class="card h-100">
@@ -80,7 +87,7 @@
                 </div>
             </div>
         </div>
-       
+
         {{/each}}
     </div>
 
@@ -93,4 +100,3 @@
     </div>
     {{/if}}
 </div>
-{{!-- {{/if}} --}}

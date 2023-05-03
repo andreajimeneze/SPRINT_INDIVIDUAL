@@ -9,7 +9,7 @@ header {
 }
 
 span.navbar-toggler-icon {
-  border-color: rgb(52, 52, 197);
+  border-color: rgb(247, 247, 251);
   border-style: solid;
   border-width: 1.5px 0;
   display: inline-block;
@@ -18,9 +18,14 @@ span.navbar-toggler-icon {
   padding: 1px;
 }
 
+.navbar-nav {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
 a.nav-link {
-  padding-right: 10vh !important;
-  padding-left: 10vh !important;
+  padding-right: 4vh !important;
+  padding-left: 4vh !important;
   padding-top: 10px;
   font-size: 20px;
   color: antiquewhite;
@@ -28,70 +33,22 @@ a.nav-link {
   border-top-width: fit-content;
   transition: all 400ms ease;
   display: inline;
-  width: fit-content;
+  /* width: fit-content; */
 }
 
 a.nav-link:hover {
   color: rgb(167, 150, 129);
-  /* color: rgb(4, 4, 121); */
   font-weight: bold;
   border-top: 2px solid #c7c7c7;
   border-top-width: fit-content;
-  /* border-width: 0px 0px 7px 0px; */
   background: #1f1f1f;
-  width: fit-content;
+  /* width: fit-content; */
 }
 
 .container-image {
   display: flex;
   justify-content: start !important;
   padding-top: 30px;
-}
-
-
-img#imgCarrito {
-  height: 60px !important;
-  background-color: rgb(22, 24, 25) transparent;
-  padding-left: 50px;
-}
-
-img#imgCarrito:hover {
-  color: rgb(29, 148, 150);
-}
-
-nav.navSearch {
-  padding-top: 0px;
-  top: 0;
-}
-
-div.containerSearch {
-  display: flex;
-  background-color: rgb(29, 148, 150);
-  height: 60px;
-  justify-content: end !important;
-}
-
-form.formSearch {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.formSearch input.inputSearch {
-  width: 500px;
-  height: 35px;
-  font-size: 16px;
-}
-
-.btnSearch {
-  width: 70px;
-  height: 35px;
-  background-color: rgb(22, 24, 25);
-  color: antiquewhite;
-}
-
-.btnSearch:hover {
-  background-color: rgb(74, 96, 109)
 }
 
 /*HEADER-BANNER*/
@@ -101,7 +58,6 @@ form.formSearch {
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
-  /* background-color: rgb(164, 154, 154); */
   height: 100px;
 }
 
@@ -109,7 +65,7 @@ form.formSearch {
 .cinta-garantia, .cinta-artesania {
   display: flex;
   flex-direction: row;
-  background-color: rgb(195, 202, 202);
+  background-color: rgb(242, 163, 123);
   justify-content: center;
   width: 100%;
   height: 100px;
@@ -133,14 +89,15 @@ form.formSearch {
 
 /*RESPONSIVIDAD*/
 @media screen and (max-width: 540px) { 
-  /* a .nav-link {
-    padding-left: 14px !important;
-  } */
-
-  img#imgCarrito {
-    height: 40px !important;
-    background-color: rgba(22, 24, 25, 0.8) !important;
+  .navbar-nav {
+    width: 60% !important;
   }
+
+  a.nav-link {
+    width: 100% !important;
+    padding-left: 30px !important;
+  }
+
 
   .cinta-despacho img {
     width: 50px;
@@ -163,38 +120,29 @@ form.formSearch {
   
 }
 
-@media screen and (max-width: 412px) {
-
-  .navbar-nav {
-    width: 45%;
-  }
-
-  a.nav-link {
-    padding-right: 1vh !important;
-    padding-left: 3vh !important;
-    padding-top: 10px;
-    width: 60%;
-    font-size: 22px !important;
-    z-index: 2000 !important;
-  }
-
-}
-
 @media screen and (max-width: 912px) {
+
+  div.navbar-collapse.collapse.show {
+    z-index: 1000;
+  }
 
   .navbar-nav {
     display: flex;
     justify-content: end !important;
-    width: 50%;
+    width: 35%;
     background-color: rgba(22, 24, 25, 0.7);
     z-index: 2000;
     left: 0;
     padding-top: 25px;
   }
 
+  a.btn {
+    padding-left: 100px !important;
+  }
+
   img#imgCarrito {
     height: 50px !important;
-    background-color: rgba(22, 24, 25, 0.7) !important;
+    background-color: rgba(37, 40, 42, 0.7) !important;
   }
 }
 

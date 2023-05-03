@@ -21,7 +21,7 @@ main.ingreso {
 	align-items: center;
 	background-color: var(--white);
 	background: url("https://p4.wallpaperbetter.com/wallpaper/897/178/417/colors-fractal-colorful-pattern-wallpaper-preview.jpg");
-	background-color: rgba(255, 255, 255, 1);	  
+	background-color: rgba(255, 255, 255, 1);
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -56,7 +56,7 @@ main.ingreso {
 	overflow: hidden;
 	position: absolute;
 	width: 95%;
-	
+
 }
 
 .container__form {
@@ -172,7 +172,7 @@ main.ingreso {
 	margin: 0rem;
 }
 
-.form > .btn-in {
+.form>.btn-in {
 	margin-top: 1.5rem;
 }
 
@@ -204,6 +204,7 @@ main.ingreso {
 }
 
 @keyframes show {
+
 	0%,
 	49.99% {
 		opacity: 0;
@@ -238,12 +239,51 @@ main.ingreso {
 /*RESPONSIVIDAD*/
 @media (max-width: 767px) {
 	.container.right-panel-active {
-	  display: flex;
-	  flex-direction: column-reverse !important;
+		display: flex;
+		flex-direction: column-reverse !important;
 	}
-  
+
 	.container__form {
-	  width: 100%;
+		width: 100%;
 	}
-  }
-  
+}
+
+@media (max-width: 540px) {
+	.container__form.container--signup, #form2, .container__overlay, .overlay__panel.overlay--right {
+		display: none !important;
+	}
+
+	.overlay__panel.overlay--left {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		left: 0;
+		width: 100%;
+		margin-right: 500px;
+	}
+
+	div.container__form.container--signin {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		left: 0;
+		width: 100%;
+		margin-right: 500px;
+	}
+
+	/* .container__form {
+		height: 100%;
+		width: 80%;
+	} */
+
+	.container--signin {
+		width: 80%;
+	}
+	
+	.container--signup {
+		width: 20%;
+	}
+	
+}
