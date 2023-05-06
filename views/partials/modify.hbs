@@ -33,42 +33,31 @@
             class="inputModLink">{{ imagen }}</textarea>
         </th>
         <th>
-        <p>{{ categoria }}</p>
+          <p>{{ categoria }}</p>
         </th>
-    <th>
-          <input type="text" name="categoria_id" value="{{ categoria_id }}" class=" inputMod">
-          </th>
-          {{!-- <select id="select-estadoMod" name="categoria">
+        <th>
+          <select id="select-estadoMod" name="categoria_id">
             <option value="estado">Categoria</option>
-            {{#each categ }}
+            {{#each ../categ }}
             <option value="{{ id }}">{{ categoria }}</option>
             {{/each }}
-          </select> --}}
-          {{!-- <input type="hidden" name="categoria" id="{{ id }}" value="{{ categoria_id }}" class="inputModName">
-          <input type="text" id="{{ id }}" value="{{ categoria }}" class="inputModName"> --}}
-        <th>
-          <input type="text" name="existencia" value="{{ existencia }}" class=" inputMod">
-        </th>      
-        <th>
-          <p>{{ estadoDesc }}</p>
-          {{!-- <input type="text" name="estados" value="{{ estadoDesc }}" class=" inputModName"> --}}
+          </select>
         </th>
         <th>
-          {{!-- <input type="text" name="estado" id="{{ id }}" value="{{ estado }}" class="inputModName"> --}}
-          {{!-- <select id="select-estadoMod" name="estado">
+          <input type="text" name="existencia" value="{{ existencia }}">
+        </th>
+        <th>
+          <p>{{ estado }}</p>
+        </th>
+        <th>
+          <select id="select-estadoMod" name="estado">
             <option value="estado">Estado</option>
-            {{#each estados }}
+            {{#each ../estados }}
             <option value="{{ id }}">{{ descripcion }}</option>
             {{/each }}
-          </select> --}}
-{{!-- <select id="select-estado-{{ id }}" name="estado">
-  <option value="">Seleccione un estado</option>
-  {{#each estados }}
-  <option value="{{ id }}" {{#ifEqual estado id}}selected{{/ifEqual}}>{{ descripcion }}</option>
-  {{/each }}
-</select> --}}
-<input type="text" name="id_estado" value="{{ estado }}" class=" inputMod">
+          </select>
         </th>
+
         <th><button type="submit" value="{{ id }}" class="btn btn-secondary" name="btnEdit">Editar</button></th>
     </form>
     </tr>

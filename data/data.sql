@@ -101,3 +101,68 @@ ALTER TABLE registrousuario ADD CONSTRAINT fk_registrousuario_rol
 INSERT INTO rol ("descripcion") VALUES ('admin'), ('user');
 
 ALTER TABLE registrousuario ALTER COLUMN rol_id SET NOT NULL;
+
+CREATE TABLE compra(  
+    id SERIAL NOT NULL PRIMARY KEY,
+    fecha VARCHAR(10),
+    monto INT,
+    id_usuario INT
+);
+ALTER TABLE "detalle_compra" DROP COLUMN "precioPdto";
+
+ALTER TABLE "compra" RENAME COLUMN "monto" TO "monto_neto";
+
+ALTER TABLE "compra" ALTER COLUMN "monto_neto" SET NOT NULL;
+ALTER TABLE "compra" ADD COLUMN "impuesto" INTEGER NULL;
+
+ALTER TABLE "compra" ADD COLUMN "monto_bruto" INTEGER NULL;
+
+ALTER TABLE "compra" ADD COLUMN "gasto_envio" INTEGER NULL;
+
+CREATE TABLE tipo_documento(  
+    id SERIAL NOT NULL PRIMARY KEY,
+    nombre VARCHAR(30) NOT NULL UNIQUE
+);
+
+CREATE SEQUENCE numero_documento_seq;
+
+CREATE TABLE numero_documento (
+    id SERIAL PRIMARY KEY,
+    id_tipo_documento INTEGER NOT NULL REFERENCES tipo_documento(id),
+    numero INTEGER DEFAULT NEXTVAL('numero_documento_seq'),
+    UNIQUE(id_tipo_documento, numero)
+);
+
+CREATE TABLE datos_empresa (
+  id SERIAL PRIMARY KEY,
+  nombre VARCHAR(50) NOT NULL,
+  direccion VARCHAR(100) NOT NULL,
+  telefono VARCHAR(20) NOT NULL,
+  email VARCHAR(50) NOT NULL
+);
+
+ALTER TABLE datos_empresa ADD COLUMN rut VARCHAR(15) NOT NULL;
+
+INSERT INTO datos_empresa (nombre, direccion, telefono, email, rut) VALUES ('Pez Mosaico Limitada', 'Pasaje Esmeralda 14, Valparaíso', '965554730', 'pezmosaico@gmail.com', '76573333-2');
+
+CREATE TABLE detalle_compra(  
+    id SERIAL NOT NULL PRIMARY KEY,
+    id_compra INT,
+    id_pdto INT,
+    cantidad INT,
+    precioPdto INT
+);
+
+CREATE TABLE compra(  
+    id SERIAL NOT NULL PRIMARY KEY,
+    fecha VARCHAR(10),
+    monto INT,
+    id_usuario INT
+);
+
+ALTER TABLE compra ALTER COLUMN monto_bruto SET NOT NULL;
+
+ALTER TABLE compra ALTER COLUMN monto_neto SET NOT NULL;
+
+ALTER TABLE compra ALTER COLUMN impuesto SET NOT NULL;
+

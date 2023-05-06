@@ -11,6 +11,12 @@ export const formatCL = function (num) {
     }).format(num);
 }
 
+export const monedaANumero = function(valor) {
+    const numero = parseFloat(valor.replace(/[^\d.-]/g, ''));
+    return isNaN(numero) ? 0 : numero * 1000;
+  }
+  
+
 export const eq = function(a, b) {
     return a === b
 }

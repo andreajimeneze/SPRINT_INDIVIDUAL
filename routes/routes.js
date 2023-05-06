@@ -6,13 +6,14 @@ import flash from "express-flash";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
+import PDFDocument from "pdfkit";
 import { Producto } from "../utils/Class/Producto.js";
 import { Usuario } from "../utils/Class/Usuario.js";
 import { Canasta } from "../utils/Class/Canasta.js";
 import { Categoria } from "../utils/Class/Categoria.js";
 import { Estado } from "../utils/Class/Estado.js";
 import { Compra } from "../utils/Class/Compra.js";
-import { formatCL, capFirstMay } from "../helpers/helpers.js";
+import { formatCL, capFirstMay, monedaANumero } from "../helpers/helpers.js";
 import { verificarTokenAdmin } from "../utils/funciones.js";
 
 dotenv.config();
@@ -82,7 +83,7 @@ router.get("/productos", async (req, res) => {
   const prod = await pdto.getProductByCategory(cat_id);
   const categ = await cat.getCategorias()
   const cantCat = await pdto.getCantPdtoCateg();
-  
+
   res.render("tienda", { prod: prod, categ, cantidad: cantCat })
 })
 
@@ -112,7 +113,7 @@ router.get("/ingreso", (req, res) => {
 router.post('/auth', async (req, res, next) => {
   const usuario = req.body.usuario;
   const password = CryptoJS.SHA256(req.body.password).toString();
- 
+
   try {
     const resultado = await user.getUsuarios(usuario, password);
 
@@ -121,12 +122,12 @@ router.post('/auth', async (req, res, next) => {
       const userRol = resultado.user.rol_id;
       const userName = resultado.user.nombres;
       console.log(userName)
-     
+
       const token = jwt.sign({ user: resultado.user.id, userName: userName, rol_id: userRol }, process.env.JWT_SECRET);
       res.cookie("token", token, { httpOnly: true });
       console.log(token)
 
-      if (userRol === 1) {     
+      if (userRol === 1) {
         res.redirect("sesionadm");
       } else {
         res.redirect("tienda");
@@ -168,7 +169,7 @@ router.get("/eliminarPdto", verificarTokenAdmin, async (req, res) => {
 
 router.get("/modifPdto", verificarTokenAdmin, async (req, res) => {
   usuario = req.session.user.nombres;
-  
+
   res.render("modifPdto", {
     user: usuario,
     message: "Usuario administrador",
@@ -271,42 +272,62 @@ router.delete("/cart/:id", (req, res) => {
 })
 
 
-/*-------------------------F O R M A L I Z A C I Ó N  D E  C O M P R A S-------------------------*/
+/*-------------F O R M A L I Z A C I Ó N  D E  C O M P R A S-------------*/
 
-// AGREGAR COMPRA A BASE DE DATOS
-// router.post("/compra", async (req, res) => {
-//   const fecha = new Date().toLocaleDateString();
-//   const totalFinal = req.body.compras;
-//   const id_usuario = null;
-//   const compra = new Compra()
-// console.log(fecha)
-// console.log(id_usuario)
-// console.log(totalFinal)
-//   const compraRealizada = await compra.realizarCompra(fecha, totalFinal, id_usuario)
-//   // console.log(compraRealizada)
-//   res.redirect("tienda")
-// })
+// FORMALIZAR COMPRA POR TRANSACCIÓN 
+router.post("/compra", async (req, res) => {
+  const fecha = new Date().toLocaleDateString();
+  const monto_neto = monedaANumero(req.body.monto_neto);
+  const impuesto = monedaANumero(req.body.impuesto);
+  const monto_bruto = monedaANumero(req.body.monto_bruto);
+  const gasto_envio = monedaANumero(req.body.gasto_envio);
+  const id_usuario = 8;
 
-// AGREGAR DETALLE COMPRA A BASE DE DATOS
-// router.post("/detalle", (req, res) => {
-//   const { idPdto, cantPdto, precioPdto } = req.body
-// })
+  const productos = req.body.productos.map(p => ({
+    id: p.id,
+    nombre: p.nombre,
+    precio: p.precio,
+    cantidad: p.cantidad
+  }));
+  
+  const compra = new Compra()
+  const compraRealizada = await compra.realizarCompra( fecha, monto_neto, id_usuario, impuesto, monto_bruto, gasto_envio, productos )
+  // console.log(compraRealizada)
+  res.redirect("tienda")
+})
+
+router.get('/compra/:id', async (req, res) => {
+  const doc = new PDFDocument();
+  const compra = new Compra()
+  await compra.getCompraById(req.params.id);
+
+  res.attachment('compra.pdf');
+  doc.pipe(res);
+
+  doc
+    .fontSize(25)
+    .text(`Factura de compra #${compra.id}`, 100, 100);
+
+  // Aquí puedes agregar más contenido al documento
+
+  doc.end();
+});
 
 
 /*-------------------------------M A N T E N E D O R --------------------------------*/
 
 // OBTENER SELECT PARA ESTADOS Y CATEGORÍAS EN MANTENEDOR AGREGAR PRODUCTO
-router.get("/add", async(req, res) => {
+router.get("/add", async (req, res) => {
   try {
     const categ = await cat.getCategorias();
     const estado = await est.getEstados();
-  
+
     res.render("addPdto", { categ: categ, estado: estado });
   } catch (error) {
     console.error(error);
     res.status(500).send("Ha ocurrido un error");
   }
-  
+
 })
 
 // AGREGAR NUEVO PRODUCTO DESDE MANTENEDOR
@@ -353,7 +374,8 @@ router.get("/modif", async (_req, res) => {
       cat.getCategorias(),
       est.getEstados(),
     ]);
-  
+    console.log(prod)
+
     res.render("modifPdto", { prod: prod, categ: categ, estados: estados });
   } catch (error) {
     console.error(error);
