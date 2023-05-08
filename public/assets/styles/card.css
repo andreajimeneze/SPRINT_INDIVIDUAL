@@ -4,7 +4,8 @@
   width: 100%;
 }
 
-.formBody-select-card, .cont-link-tiendaCat {
+.formBody-select-card,
+.cont-link-tiendaCat {
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -15,6 +16,7 @@
 .formBody-select-card label {
   padding-right: 10px;
 }
+
 .select-tienda {
   width: 200px;
   height: 30px;
@@ -130,9 +132,9 @@ div.agregarCarro {
   flex-direction: row;
   justify-content: space-around;
   background-color: rgb(251, 225, 194);
-  margin-top: 76px;
 }
-.link-imgCat img{
+
+.link-imgCat img {
   width: 80px;
   height: 80px;
   border-radius: 80px;
@@ -143,36 +145,50 @@ div.agregarCarro {
   transition: all 400ms ease;
 }
 
-.link-imgCat img:hover { 
-box-shadow: 2px 3px 12px rgb(0, 0, 0, 0.4);
+.link-imgCat img:hover {
+  box-shadow: 2px 3px 12px rgb(0, 0, 0, 0.4);
   transform: translateY(-1%);
 }
 
 
 /*Responsividad*/
- @media screen and (max-width: 912px) {
+@media screen and (max-width: 912px) {
+
   .contenedor,
-.contenedor-prodCat {
-  grid-template-columns: repeat(2, 1fr);
-  width: 100%;
+  .contenedor-prodCat {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .cardPdto {
+    width: 100%;
+    height: 100%;
+  }
+
+  .col {
+    width: 100%;
+  }
 }
 
-.card {
-  width: 100%;
-}
-.cardPdto {
-  width: 100%;
-  height: 100%;
+@media screen and (max-width: 540px) {
+  .contenedor-cat {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 0px;
+  }
+
+  .link-imgCat img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+  }
+
+  .div-text h4 {
+    font-size: 14px;
 }
 
-.col {
-  width: 100%;
 }
-}
-
-/* @media screen and (max-width: 390px) {
-  .contenedor,
-.contenedor-prodCat {
-  width: 100%;
-  grid-template-columns: 1fr;
-} */

@@ -5,8 +5,8 @@
         <table class="cart">
             <thead class="thead-cart">
                 <tr id="headTitleCart">
-                    <th>ID</th>
-                    <th>Imagen</th>
+                    <th id="table-id">ID</th>
+                    <th id="table-img">Imagen</th>
                     <th>Nombre</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
@@ -18,8 +18,8 @@
             {{#each canasta }}
             <tbody>
                 <tr class="table-row">
-                    <td> {{ id }}</td>
-                    <td><img src="{{foto}}" alt="" id="img-cart"></td>
+                    <td id="table-id"> {{ id }}</td>
+                    <td id="table-img"><img src="{{foto}}" alt="" id="img-cart"></td>
                     <td>{{ nombre }}</td>
                     <td id="precioPdto_{{ id }}" name="prize">{{ precio}}</td>
                     <form action="/cart/updateCant" method="post">

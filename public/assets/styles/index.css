@@ -175,7 +175,7 @@ justify-content: center;
       left: 10px !important;
     }
 
-  /* INTENTO DE RESPONSIVIDAD*/
+  /* RESPONSIVIDAD*/
 
   @media screen and (max-width: 540px ) {
     .contenedor-index {
@@ -200,14 +200,16 @@ justify-content: center;
     align-items: flex-start;
   }
 
-  .right-box-left,
   .right-box-right {
     flex-basis: 100%;
-    width: 100%;
+    max-width: 100%;
   }
 
 .right-box-left {
   order: 1;
+  flex-basis: 100%;
+  max-width: 100%;
+  padding: 15px;
 }
   .body-slide {
     padding-top: 4vh;
@@ -271,6 +273,10 @@ justify-content: center;
 @media screen and (max-width: 1024px ) { 
 .cont-recuadros {
   padding: 70px 20px;
+}
+
+.right-col {
+  max-width: 100%;
 }
 
 .left-box {
