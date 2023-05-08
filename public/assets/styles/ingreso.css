@@ -184,6 +184,11 @@ main.ingreso {
 	outline: none;
 }
 
+#form11,
+#form22 {
+	display: none;
+}
+
 .form {
 	background-color: var(--white);
 	display: flex;
@@ -249,7 +254,11 @@ main.ingreso {
 }
 
 @media (max-width: 540px) {
-	.container__form.container--signup, #form2, .container__overlay, .overlay__panel.overlay--right {
+
+	.container__form.container--signup,
+	#form2,
+	.container__overlay,
+	.overlay__panel.overlay--right {
 		display: none !important;
 	}
 
@@ -273,17 +282,43 @@ main.ingreso {
 		margin-right: 500px;
 	}
 
-	/* .container__form {
-		height: 100%;
-		width: 80%;
+	.form-cel {
+		display: grid;
+		grid-template-rows: 1fr 1fr;
+	}
+
+	.registro-cel {
+		display: flex;
+		flex-direction: row;
+	}
+
+	#form11, #form22 {
+		display: flex;
+		top: 0;
+		position: absolute;
+		margin-top: 42vh;
+		height: 400px;
+		margin-left: 6vh;
+	}
+
+	/* #form22 {
+		display: flex;
+		top: 1;
+		position: absolute;
+		height: 500px;
+		margin-left: 6vh;
 	} */
+
+	#no_register, #register {
+		cursor: pointer;
+	}
 
 	.container--signin {
 		width: 80%;
 	}
-	
+
 	.container--signup {
 		width: 20%;
 	}
-	
+
 }
