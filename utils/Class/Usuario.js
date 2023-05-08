@@ -20,7 +20,7 @@ export class Usuario {
 
     async getUsuarios(usuario, password) {
         try {
-          const resultado = await fetch("http://localhost:4000/api/v1/usuario")
+          const resultado = await fetch('http://localhost:4000/api/v1/usuario')
           const data = await resultado.json();
       
           let index = data.findIndex((e) => e.usuario === usuario)
@@ -34,7 +34,7 @@ export class Usuario {
               return { success: false, message: 'Nombre de usuario o contraseña incorrectos' };
             }
           } else {
-            console.log("Usuario no existe")
+            console.log('Usuario no existe')
           }
         } catch (err) {
           return { message: 'Ocurrió un error en la base de datos' };
@@ -68,17 +68,17 @@ export class Usuario {
           
             if (userName === undefined) {
 
-                const resultado = await fetch("http://localhost:4000/api/v1/usuario", {
-                    method: "POST",
+                const resultado = await fetch('http://localhost:4000/api/v1/usuario', {
+                    method: 'POST',
                     body: JSON.stringify({ nombres, apellidos, rut, direccion, telefono, email, usuario, password, rol_id }),
                     headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "aplication/json"
+                        'Content-Type': 'application/json',
+                        'Accept': 'aplication/json'
                     }
                 });
                 return true;
             } else {
-                console.log("Usuario y/o rut ya existen")
+                console.log('Usuario y/o rut ya existen')
             }
         } catch (error) {
             console.log(error)

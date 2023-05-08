@@ -207,13 +207,32 @@ select#select-estadoMod  {
   right: 0;
 }
 
-.sesion-user {
+.sesion-user, div.logout {
   display: flex;
   justify-content: end;
-  padding-right: 25px;
+  margin-top: 2vh;
+  padding-right: 35px;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 0.7px;
 }
 
-div.logout {
+/* div.logout {
   padding-right: 25px;
+  font-weight: bold;
+} */
+
+/*SESIONADM*/
+.content-cardCompra {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20vh;
 }
 
+.card-stadist {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 25px;
+}

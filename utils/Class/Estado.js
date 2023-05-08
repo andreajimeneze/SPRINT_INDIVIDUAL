@@ -7,7 +7,7 @@ export class Estado {
     async getEstados() {
         let dataEstado = [];
         try {
-            const resultado = await fetch("http://localhost:4000/api/v1/estado");
+            const resultado = await fetch('http://localhost:4000/api/v1/estado');
             const data = await resultado.json();
 
             data.forEach(rows => {

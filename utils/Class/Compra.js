@@ -4,20 +4,22 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 export class Compra {
-  constructor() {
+  constructor(fecha, monto_neto, id_usuario, impuesto, monto_bruto, gasto_envio, productos) {
     this.fecha = new Date().toLocaleDateString();;
-    this.monto_neto = 0;
-    this.impuesto = 0;
-    this.monto_bruto = 0;
-    this.gasto_envio = 0;
-    this.id_usuario = '';
+    this.monto_neto = monto_neto;
+    this.id_usuario = id_usuario;
+    this.impuesto = impuesto;
+    this.monto_bruto = monto_bruto;
+    this.gasto_envio = gasto_envio;
+    this.productos = productos;
+  
   }
 
   // REALIZAR COMPRA
   async realizarCompra(fecha, monto_neto, id_usuario, impuesto, monto_bruto, gasto_envio, productos) {
     try {
-      const respuesta = await fetch("http://localhost:4000/api/v1/compra", {
-        method: "POST",
+      const respuesta = await fetch('http://localhost:4000/api/v1/compra', {
+        method: 'POST',
         body: JSON.stringify({
           compra: {
             fecha,
@@ -30,17 +32,17 @@ export class Compra {
           productos
         }),
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         }
       });
 
       const datos = await respuesta.json();
-      console.log(datos)
+   
       return datos;
     } catch (error) {
       console.log(error);
-      console.log("No se pudo realizar la compra");
+      console.log('No se pudo realizar la compra');
     }
   }
 

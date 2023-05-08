@@ -38,7 +38,24 @@
             <a class="nav-link" href="/tienda">Tienda</a>
             <a class="nav-link" href="/nosotros">Nosotros</a>
             <a class="nav-link" href="/contacto">Contacto</a>
-            <a class="nav-link" href="/ingreso">Ingreso</a>
+
+{{#if userName }}
+    <!-- si hay un usuario logueado, se muestra su información -->
+    <div class="user-info">
+      <div class="user-photo">
+        <img src="" alt="">
+      </div>
+      <div class="user-name">Bienvenido, {{ userName }}</div>
+      <a class="nav-link" href="/logout">Cerrar sesión</a>
+    </div>
+  {{else}}
+    <!-- si no hay un usuario logueado, se muestra el enlace para ingresar -->
+    <a class="nav-link" href="/ingreso">Ingreso</a>
+  {{/if}}
+    {{!-- <a class="nav-link" href="/ingreso">Ingreso</a> --}}
+ 
+
+            {{!-- <a class="nav-link" href="/ingreso">Ingreso</a> --}}
               <div class="cart-notification" value="">1</div>
               <a class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                 aria-controls="offcanvasRight" onclick="window.location.href='/cart'">
@@ -49,5 +66,4 @@
         </div>
       </div>
     </nav>
-    {{> sesion }}
   </header>

@@ -156,7 +156,7 @@ button.btnAddCarro {
 
 .botones-cart {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   justify-content: space-evenly;
   padding-top: 40px;
 }

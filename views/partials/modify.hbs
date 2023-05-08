@@ -37,7 +37,7 @@
         </th>
         <th>
           <select id="select-estadoMod" name="categoria_id">
-            <option value="estado">Categoria</option>
+            <option value="categoria">Categoria</option>
             {{#each ../categ }}
             <option value="{{ id }}">{{ categoria }}</option>
             {{/each }}
@@ -47,10 +47,10 @@
           <input type="text" name="existencia" value="{{ existencia }}">
         </th>
         <th>
-          <p>{{ estado }}</p>
+          <p>{{ estadoDesc }}</p>
         </th>
         <th>
-          <select id="select-estadoMod" name="estado">
+          <select id="select-estadoMod" name="id_estado">
             <option value="estado">Estado</option>
             {{#each ../estados }}
             <option value="{{ id }}">{{ descripcion }}</option>

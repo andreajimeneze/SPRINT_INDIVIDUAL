@@ -15,7 +15,7 @@ export class Producto {
         let dataPdto = [];
 
         try {
-            const resultado = await fetch("http://localhost:4000/api/v1/producto");
+            const resultado = await fetch('http://localhost:4000/api/v1/producto');
             const data = await resultado.json();
 
             data.forEach(rows => {
@@ -43,7 +43,7 @@ export class Producto {
         let dataPdto = [];
 
         try {
-            const resultado = await fetch("http://localhost:4000/api/v1/producto/estado");
+            const resultado = await fetch('http://localhost:4000/api/v1/producto/estado');
             const data = await resultado.json();
 
             data.forEach(rows => {
@@ -69,17 +69,17 @@ export class Producto {
         let resultado = '';
         let pdtoData = [];
         switch (opcion) {
-            case "1":
+            case '1':
                 resultado = await fetch('http://localhost:4000/api/v1/producto/prizea');
 
                 break;
-            case "2":
+            case '2':
                 resultado = await fetch('http://localhost:4000/api/v1/producto/prizez');
                 break;
-            case "3":
+            case '3':
                 resultado = await fetch('http://localhost:4000/api/v1/producto/namea');
                 break;
-            case "4":
+            case '4':
                 resultado = await fetch('http://localhost:4000/api/v1/producto/namez');
                 break;
             default:
@@ -95,7 +95,7 @@ export class Producto {
                 categoria: row.categoria
             })
         })
-      
+
         return pdtoData
     }
 
@@ -107,7 +107,7 @@ export class Producto {
         try {
             const resultado = await fetch('http://localhost:4000/api/v1/producto/categ');
             const data = await resultado.json();
-           
+
             data.forEach((rows) => {
                 dCantCat.push({
                     cantidad: rows.cantidad,
@@ -136,7 +136,7 @@ export class Producto {
                     item.nombre,
                     item.precio,
                     item.imagen,
-                    item.existencia, 
+                    item.existencia,
                     item.categoria,
                     item.categoria_id,
                     item.estado_id
@@ -155,7 +155,7 @@ export class Producto {
     async getProductByCategory(categoria) {
         const dataPdto = []
         try {
-            const resultado = await fetch("http://localhost:4000/api/v1/producto");
+            const resultado = await fetch('http://localhost:4000/api/v1/producto');
             const data = await resultado.json();
 
             const items = data.filter(e => e.categoria_id == categoria)
@@ -184,20 +184,21 @@ export class Producto {
         let pdtoExist = bdpdtos.find((e) => e.nombre == nombre)
 
         if (!pdtoExist) {
-            const resultado = await fetch("http://localhost:4000/api/v1/producto", {
-                method: "POST",
+            const resultado = await fetch('http://localhost:4000/api/v1/producto', {
+                method: 'POST',
                 body: JSON.stringify({ nombre, precio, imagen, existencia, categoria_id, id_estado }),
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json',
+                    'Accept': 'aplication/json'
                 }
             });
 
-            const datos = await fetch("http://localhost:4000/api/v1/producto");
+            const datos = await fetch('http://localhost:4000/api/v1/producto');
             const data = await datos.json();
 
             return data
         } else {
-            console.log("Producto ya existe en la Base de Datos")
+            console.log('Producto ya existe en la Base de Datos')
             return null
         }
     }
@@ -207,15 +208,15 @@ export class Producto {
         try {
 
             const resultado = await fetch(`http://localhost:4000/api/v1/producto/${id}`, {
-                method: "DELETE",
+                method: 'DELETE',
                 headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "aplication/json"
+                    'Content-Type': 'application/json',
+                    'Accept': 'aplication/json'
                 }
             });
 
             if (resultado.status === 200) {
-                const datos = await fetch("http://localhost:4000/api/v1/producto");
+                const datos = await fetch('http://localhost:4000/api/v1/producto');
                 const data = await datos.json();
 
                 return data
@@ -230,15 +231,15 @@ export class Producto {
     async modifPdto(nombre, precio, imagen, existencia, categoria_id, id_estado, id) {
         try {
             const resultado = await fetch(`http://localhost:4000/api/v1/producto/${id}`, {
-                method: "PATCH",
-                body: JSON.stringify({ nombre, precio, imagen, existencia, categoria_id, id_estado }), 
+                method: 'PATCH',
+                body: JSON.stringify({ nombre, precio, imagen, existencia, categoria_id, id_estado }),
                 headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "aplication/json"
+                    'Content-Type': 'application/json',
+                    'Accept': 'aplication/json'
                 }
             });
-           
-            const datos = await fetch("http://localhost:4000/api/v1/producto");
+
+            const datos = await fetch('http://localhost:4000/api/v1/producto');
             const data = await datos.json();
 
         } catch (e) {

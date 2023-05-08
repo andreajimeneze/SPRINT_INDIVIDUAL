@@ -81,7 +81,7 @@ calcTotalFinal() {
 // CALCULAR IVA
   calcImpuesto(totalBruto) {
     const impuestos = totalBruto * 0.19;
-    console.log(impuestos)
+  
     return impuestos;
   }
 
