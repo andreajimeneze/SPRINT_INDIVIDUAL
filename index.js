@@ -20,6 +20,10 @@ app.use(router)
 app.use(express.json());
 app.use(express.static("public"))
 app.use(express.static("helpers"))
+app.use(function(req, res, next) {
+  res.locals.user = req.session.user; 
+  next();
+});
 
 app.get('error', ( req, res ) => {
   res.render('error');

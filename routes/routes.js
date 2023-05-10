@@ -56,48 +56,54 @@ router.use(flash({
 
 // VISTA INDEX (LINK CATEGORÍAS CON GROUP BY)
 router.get('/', async (req, res) => {
+  usuario = req.session.user;
   const categ = await cat.getCategorias()
   const cantCat = await pdto.getCantPdtoCateg();
 
-  res.render('index', { categ, cantidad: cantCat })
+  res.render('index', { categ, cantidad: cantCat, user: usuario })
 })
 
 // CARGAR TIENDA CON PRODUCTOS (JOIN CON TABLA CATEGORÍA)
 router.get('/tienda', async (req, res) => {
-
+  usuario = req.session.user;
+  console.log(usuario)
   const productos = await pdto.getProductsByCategory();
 
-  res.render('tienda', { productos })
+  res.render('tienda', { productos, user: usuario })
 })
 
 //ORDER BY EN TIENDA
 router.get('/tienda/:num', async (req, res) => {
+  usuario = req.session.user;
   const { num } = req.params
   const productos = await pdto.ordenarPor(num);
 
-  res.render('tienda', { productos })
+  res.render('tienda', { productos, user: usuario })
 })
 
 // VISTA PRODUCTOS POR CATEGORÍA --- EN INDEX (LINK DE CATEGORÍAS CON GROUP BY)
 router.get('/productos', async (req, res) => {
+  usuario = req.session.user;
   const cat_id = parseInt(req.query.categoria);
   const prod = await pdto.getProductByCategory(cat_id);
   const categ = await cat.getCategorias()
   const cantCat = await pdto.getCantPdtoCateg();
 
-  res.render('tienda', { prod: prod, categ, cantidad: cantCat })
+  res.render('tienda', { prod: prod, categ, cantidad: cantCat, user: usuario })
 })
 
 
 /* --------------- C O N T A C T 0  Y  N O S O T R O S -----------------*/
 // VISTA CONTACTO
-router.get('/contacto', (_req, res) => {
-  res.render('contacto')
+router.get('/contacto', (req, res) => {
+  usuario = req.session.user;
+  res.render('contacto', { user: usuario })
 })
 
 // VISTA NOSOTROS 
-router.get('/nosotros', (_req, res) => {
-  res.render('nosotros')
+router.get('/nosotros', (req, res) => {
+  usuario = req.session.user;
+  res.render('nosotros', { user: usuario })
 })
 
 
@@ -105,17 +111,18 @@ router.get('/nosotros', (_req, res) => {
 
 // VISTA INGRESO CON MENSAJE ERROR #IF
 router.get('/ingreso', (req, res) => {
+  usuario = req.session.user;
   const msjError = req.flash('error');
-  res.render('ingreso', { msjError })
+  const msjInfo = req.flash('info');
+  res.render('ingreso', { msjError, msjInfo, user: usuario })
 });
 
 // ACCEDER A SESIÓN CON USUARIO Y PASSWORD, EN CASO DE SER ADMINISTRADOR SE GUARDA TOKEN EN LA COOKIE Y SE REDIRECCIONA A SESIONADMIN. EN CASO DE SER SÓLO USUARIO, SE REDIRIGE A LA TIENDA Y EN CASO DE CONTRASEÑA SE QUEDA EN INGRESO
 
 router.post('/auth', async (req, res, next) => {
-  const usuario = req.body.usuario;
-  const password = CryptoJS.SHA256(req.body.password).toString();
-
   try {
+    const usuario = req.body.usuario;
+    const password = CryptoJS.SHA256(req.body.password).toString();
     const resultado = await user.getUsuarios(usuario, password);
 
     if (resultado.success) {
@@ -132,7 +139,7 @@ router.post('/auth', async (req, res, next) => {
         res.redirect('tienda');
       }
     } else {
-      req.flash('error', resultado.message);
+      req.flash('error', 'Usuario y/o contraseña incorrectos');
       res.redirect('ingreso');
     }
   } catch (error) {
@@ -150,21 +157,6 @@ router.get('/sesionadm', verificarTokenAdmin, async (req, res) => {
   });
 });
 
-// RUTA PARA QUE SE CARGUE DIV CON EL USUARIO LOGUEADO (NO FUNCIONA)
-router.get('/', async (req, res) => {
-  const usuario = req.body.usuario;
-  const password = CryptoJS.SHA256(req.body.password).toString();
-
-  const resultado = await user.getUsuarios(usuario, password);
-  if (resultado.success) {
-    req.session.user = resultado.user;
-    const userName = req.session.user.nombres;
-    
-    res.render('index', { userName })
-  }
-});
-
-
 // SE CIERRA LA SESIÓN DEL USUARIO
 router.get('/logout', (req, res) => {
   req.session.destroy();
@@ -177,14 +169,15 @@ router.get('/logout', (req, res) => {
 // REGISTRAR NUEVO USUARIO
 router.post('/ingreso', async (req, res) => {
   const { nombres, apellidos, rut, direccion, telefono, email, usuario1, pass } = req.body;
-  const rol = 2;
+  const rol = 2; // Desde el registro de usuario sólo pueden registrarse usuarios rol 2
 
   const newUsuario = await user.setUsuario(nombres, apellidos, rut, direccion, telefono, email, usuario1, pass, rol)
-
+console.log(newUsuario)
   if (newUsuario === true) {
+    req.flash('info', 'Usuario registrado. Puedes ingresar a tu cuenta')
     res.redirect('ingreso')
   } else {
-    req.flash('error2', 'rut o nombre de usuario ya existen.');
+    req.flash('error', 'rut o nombre de usuario ya existen.');
     res.redirect('ingreso')
   }
 });
@@ -194,6 +187,7 @@ router.post('/ingreso', async (req, res) => {
 
 //VISTA RENDERIZADA DE LA CANASTA
 router.get('/cart', (req, res) => {
+  usuario = req.session.user;
   req.session.cart = cart;
   const canasta = cart.items;
   const totalBruto = cart.calcTotal();
@@ -201,11 +195,12 @@ router.get('/cart', (req, res) => {
   const totalNeto = totalBruto - iva;
   const envio = cart.calcEnvio(parseInt(totalBruto));
   const totalFinal = totalBruto + envio;
-  res.render('cart', { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal) });
+  res.render('cart', { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal), user: usuario });
 });
 
 // AGREGAR PRODUCTOS A LA CANASTA
 router.post('/cart', async (req, res) => {
+  usuario = req.session.user;
   const pdtoId = parseInt(req.body.btnAdd);
   const prod = await pdto.getProductById(pdtoId);
   const pdtoAgregado = cart.addPdto(prod, 1);
@@ -217,13 +212,14 @@ router.post('/cart', async (req, res) => {
   const envio = cart.calcEnvio(parseInt(totalBruto));
   const totalFinal = totalBruto + envio;
 
-  res.render('cart', { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal) });
+  res.render('cart', { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal), user: usuario });
 
 });
 
 
 // ACTUALIZAR CANTIDAD PDTOS EN CANASTA (MÉTODO CLASS CANASTA CALCULA SUBTOTALES). ASIMISMO SE EJECUTA EL MÉTODO CALCULAR TOTALES AL RENDERIZAR LA PÁGINA CART.
 router.post('/cart/updateCant', (req, res) => {
+  usuario = req.session.user;
   const pdtoId = parseInt(req.body.addOne);
   const prodId = parseInt(req.body.btnMinus)
   cart.agregarCant(pdtoId);
@@ -235,18 +231,20 @@ router.post('/cart/updateCant', (req, res) => {
   const totalNeto = totalBruto - iva;
   const envio = cart.calcEnvio(parseInt(totalBruto));
   const totalFinal = totalBruto + envio;
-  res.render('cart', { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal) });
+  res.render('cart', { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal), user: usuario });
 
 });
 
 // VACIAR CANASTA
-router.delete('/cart', (_req, res) => {
+router.delete('/cart', (req, res) => {
+  usuario = req.session.user;
   cart.vaciarCarro()
-  res.render('cart');
+  res.render('cart', { user: usuario });
 })
 
 // ELIMINAR UN PRODUCTO DE LA CANASTA
 router.delete('/cart/:id', (req, res) => {
+  usuario = req.session.user;
   const id = parseInt(req.params.id);
   cart.deletePdtoCart(id)
   req.session.cart = cart;
@@ -256,7 +254,7 @@ router.delete('/cart/:id', (req, res) => {
   const totalNeto = totalBruto - iva;
   const envio = cart.calcEnvio(parseInt(totalBruto));
   const totalFinal = totalBruto + envio;
-  res.render('cart', { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal) });
+  res.render('cart', { products: cart.items, totalBruto: formatCL(totalBruto), totalNeto: formatCL(totalNeto), canasta: canasta, iva: formatCL(iva), envio: formatCL(envio), totalFinal: formatCL(totalFinal), user: usuario });
 
 })
 
@@ -271,7 +269,18 @@ router.post('/compra', async (req, res) => {
   const monto_bruto = monedaANumero(req.body.monto_bruto);
   const gasto_envio = monedaANumero(req.body.gasto_envio);
   const id_usuario = req.session.user ? req.session.user.id : req.body.usuario || 0;
-  
+
+  // Se obtiene nombre y apellido del usuario cuando está registrado y se utiliza en la generación de la factura. En caso de que no haya usuario registrado envío id_usuario.
+  const usuario = await user.getUsuario(id_usuario)
+  let user_name;
+
+  if (req.session.user) {
+    user_name = (usuario.nombres + ' ' + usuario.apellidos)
+  } else {
+    user_name = id_usuario;
+  }
+
+  // Se obtienen los productos que se compran para luego utilizarlo en la factura.
   const productos = req.body.productos.map(p => ({
     id: p.id,
     nombre: p.nombre,
@@ -279,26 +288,27 @@ router.post('/compra', async (req, res) => {
     cantidad: p.cantidad
   }));
 
+  // Se ejecuta la transacción de compra.
   const compra = new Compra(fecha, monto_neto, id_usuario, impuesto, monto_bruto, gasto_envio, productos)
 
   const compraRealizada = await compra.realizarCompra(fecha, monto_neto, id_usuario, impuesto, monto_bruto, gasto_envio, productos)
-  
+
+  // Se obtiene el id de compra y se utiliza como número de factura.
+  const compraId = compraRealizada.compraId;
+
   const empresa = new Empresa();
   const datosEmpresa = await empresa.getDatosEmpresa();
-  
-  // const doc = new PDFDocument()
 
-  const docGenerado = await generarFactura(compra, datosEmpresa);
- 
+  // Se genera la factura con la compra realizada.
+  const docGenerado = await generarFactura(user_name, compraId, compra, datosEmpresa);
 
-  // Enviar el archivo PDF como respuesta
+
+  // Envia el archivo PDF como respuesta al cliente.
   res.setHeader('Content-Type', 'application/pdf');
   res.setHeader('Content-Disposition', 'attachment; filename=factura.pdf');
 
   docGenerado.pipe(res)
-  // doc.on('finish', function () {
-  //   res.redirect('tienda');
-  // });
+
 });
 
 /*-------------------------------M A N T E N E D O R --------------------------------*/
@@ -352,7 +362,7 @@ router.delete('/adm/:id', async (req, res) => {
 
 // OBTENER PRODUCTOS PARA MANTENEDOR MODIFICAR EN VISTA PROTEGIDA
 router.get('/modif', verificarTokenAdmin, async (req, res) => {
-  usuario = req.session.user.nombres;
+  usuario = req.session.user;
   const prod = await pdto.getPdtosEstado()
   const categ = await cat.getCategorias();
   const estados = await est.getEstados();

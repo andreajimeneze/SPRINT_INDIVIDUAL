@@ -6,7 +6,9 @@
 @import url("headerAdm.css");
 @import url("index.css");
 @import url("nosotros.css");
-
+@import url("add.css");
+@import url("delete.css");
+@import url("modify.css");
 
 
 :root {
@@ -101,96 +103,13 @@ main {
   height: 150px;
 }
 
-/*FORM ADDPDTO.HBS*/
-.form-addPdto {
-  width: 100%;
-  margin-top: 2rem;
-  margin-left: 220px;
-}
-
-.formBody-select {
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 10px;
-}
-
-select#select-cat, select#select-estado {
-  width: 350px;
-  height: 30px;
-}
-
-.formBody input {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid grey;
-  width: 350px;
-}
-
-/* FORM MODPDTO - MODIFICAR*/
-#imgModif {
-  width: 50px;
-}
-
-.tablaPdtos {
-  width: 50%;
-}
-
-.body-adm {
-  width: calc(100% - 220px);
-  right: 0;
-  margin-left: 220px;
-}
-
-input {
-  background-color: #fff;
-  border: none;
-  padding: 0.5rem 0.9rem;
-  margin: 0.5rem 0;
-  width: 100%;
-}
-
-input.inputMod {
-  background-color: #fff;
-  border: none;
-  padding: 0.5rem 0.9rem;
-  margin: 0.5rem 0;
-  width: 70px;
-}
-
-input.inputModName {
-  width: 150px;
-}
-
-input.inputModLink {
-  width: 250px;
-}
-
-select#select-estadoMod  {
-  width: 140px;
-  height: 30px;
-}
-
-/*FORM ELIMINAR PDTO*/
-#filasPdtos th img {
-  width: 50px;
-} 
-
-/*FORM ADD PDTO */
-.mainAdm {
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(252, 243, 232) ;
-  width: 100%;
-  height:fit-content;
-  padding-top: 2.5rem;
-}
 
 /* PÁGINA 404*/
 .nofound {
   background: url(../img/404.jpg);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 100%;
   padding-top: 400px;
   display: flex;
@@ -207,7 +126,8 @@ select#select-estadoMod  {
   right: 0;
 }
 
-.sesion-user, div.logout {
+.sesion-user,
+div.logout {
   display: flex;
   justify-content: end;
   margin-top: 2vh;
@@ -216,11 +136,6 @@ select#select-estadoMod  {
   font-size: 15px;
   line-height: 0.7px;
 }
-
-/* div.logout {
-  padding-right: 25px;
-  font-weight: bold;
-} */
 
 /*SESIONADM*/
 .content-cardCompra {

@@ -85,7 +85,34 @@ a.nav-link:hover {
   padding-left: 10px;
 }
 
+/* LOGIN */
+.user-photo {
+  display: flex;
+  justify-content: center;
+}
 
+.user-photo img {
+  width: 40px;
+}
+
+div.user-name {
+  color: antiquewhite;
+  
+}
+
+.user-name {
+  text-align: center;
+  font-size: 15px !important;
+}
+
+div.user-info {
+  text-align: center !important;
+}
+
+div.user-info a {
+  text-decoration: none;
+  font-size: 15px !important;
+}
 
 /*RESPONSIVIDAD*/
 @media screen and (max-width: 540px) { 

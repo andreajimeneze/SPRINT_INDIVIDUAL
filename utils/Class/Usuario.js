@@ -25,8 +25,7 @@ export class Usuario {
       
           let index = data.findIndex((e) => e.usuario === usuario)
           const userExist = data[index];
-         console.log(userExist.nombres)
-      
+            
           if (userExist) {
             if (userExist.password === password) {
               return { success: true, user: userExist, message: 'Usuario con credenciales' };
@@ -34,7 +33,7 @@ export class Usuario {
               return { success: false, message: 'Nombre de usuario o contraseña incorrectos' };
             }
           } else {
-            console.log('Usuario no existe')
+            return { success: false, message: 'Usuario no existe' };
           }
         } catch (err) {
           return { message: 'Ocurrió un error en la base de datos' };
@@ -52,6 +51,9 @@ export class Usuario {
             if (item) {
                 return {
                     id: item.id,
+                    nombres: item.nombres,
+                    apellidos: item.apellidos,
+                    direccion: item.direccion,
                     usuario: item.usuario,
                     rol: item.rol_id
                 }
@@ -65,12 +67,21 @@ export class Usuario {
         try {
             const user = new Usuario()
             const userName = await user.getUsuarios(usuario, password)
-          
-            if (userName === undefined) {
+          console.log(userName)
+            if (!userName.success) {
 
                 const resultado = await fetch('http://localhost:4000/api/v1/usuario', {
                     method: 'POST',
-                    body: JSON.stringify({ nombres, apellidos, rut, direccion, telefono, email, usuario, password, rol_id }),
+                    body: JSON.stringify({ 
+                        nombres, 
+                        apellidos, 
+                        rut, 
+                        direccion, 
+                        telefono, 
+                        email, 
+                        usuario, 
+                        password, 
+                        rol_id }),
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'aplication/json'

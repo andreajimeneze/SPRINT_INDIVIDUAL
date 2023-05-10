@@ -72,6 +72,7 @@
                 {{/each}}
 
                 <input type="hidden" name="totalFinal" value="{{ totalFinal }}"></input>
+                
                 <button class="btn btn-primary" type="submit">COMPRAR</button>
         </form>
         <form action="/cart/?_method=DELETE" method="post">
@@ -87,7 +88,10 @@
         <h2>Su carro de compras está vacío</h2>
     </div>
     {{/if}}
+
+   
 </main>
+
 
 <script>
     const form = document.querySelector('.form-compra');

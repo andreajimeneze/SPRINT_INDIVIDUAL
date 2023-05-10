@@ -223,13 +223,13 @@ main.ingreso {
 	}
 }
 
-.error-ingreso {
+.error-ingreso  {
 	display: flex;
 	justify-content: center;
 	color: red;
 }
 
-.error-registro {
+.info-registro {
 	display: flex;
 	justify-content: center;
 	color: blue;

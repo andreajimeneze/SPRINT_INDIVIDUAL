@@ -39,31 +39,39 @@
             <a class="nav-link" href="/nosotros">Nosotros</a>
             <a class="nav-link" href="/contacto">Contacto</a>
 
-{{#if userName }}
-    <!-- si hay un usuario logueado, se muestra su información -->
-    <div class="user-info">
-      <div class="user-photo">
-        <img src="" alt="">
-      </div>
-      <div class="user-name">Bienvenido, {{ userName }}</div>
-      <a class="nav-link" href="/logout">Cerrar sesión</a>
-    </div>
-  {{else}}
-    <!-- si no hay un usuario logueado, se muestra el enlace para ingresar -->
-    <a class="nav-link" href="/ingreso">Ingreso</a>
-  {{/if}}
-    {{!-- <a class="nav-link" href="/ingreso">Ingreso</a> --}}
- 
+            {{#if user }}
+            <!-- si hay un usuario logueado, se muestra su información -->
+            <div class="user-info">
+              <div class="user-photo">
+                <img src="/./assets/img/user.svg" alt="">
+              </div>
+              <div class="user-name">Bienvenido, {{ user.nombres }}</div>
+              <a class="nav-link-log" href="/logout">Cerrar sesión</a>
+            </div>
+            {{else}}
+            <!-- si no hay un usuario logueado, se muestra el enlace para ingresar -->
+            <a class="nav-link" href="/ingreso">Ingreso</a>
+            {{/if}}
+            {{!-- <a class="nav-link" href="/ingreso">Ingreso</a> --}}
+
 
             {{!-- <a class="nav-link" href="/ingreso">Ingreso</a> --}}
-              <div class="cart-notification" value="">1</div>
-              <a class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                aria-controls="offcanvasRight" onclick="window.location.href='/cart'">
+            <div class="cart-notification" value="">1</div>
+            <a class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+              aria-controls="offcanvasRight" onclick="window.location.href='/cart'">
 
-                <img src="/./assets/img/shopping-bag-ui-svgrepo-com.svg" alt="" id="imgCarrito" height="60px">
-              </a>
+              <img src="/./assets/img/shopping-bag-ui-svgrepo-com.svg" alt="" id="imgCarrito" height="50px">
+            </a>
           </div>
         </div>
       </div>
     </nav>
   </header>
+
+  {{!-- <script>
+    const userName = req.session.user.nombres;
+    console.log(userName);
+    const userElement = document.querySelector(".user-name");
+    userElement.textContent = "Bienvenido, " + userName;
+
+  </script> --}}

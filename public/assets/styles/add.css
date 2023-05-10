@@ -1,0 +1,77 @@
+.mainAdm {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(252, 243, 232);
+    width: 100%;
+    height: fit-content;
+    padding-top: 2.5rem;
+}
+
+.form-addPdto {
+    width: 100%;
+    margin-top: 2rem;
+    margin-left: 220px;
+}
+
+.formBody-select {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+}
+
+select#select-cat,
+select#select-estado {
+    width: 350px;
+    height: 30px;
+}
+
+.formBody input {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid grey;
+    width: 350px;
+}
+
+@media screen and (max-width: 940px) {
+    .body-adm {
+        width: calc(100% - 300px);
+    }
+
+    .mainAdm {
+        width: calc(100% - 220px);
+    }
+
+    .form-addPdto {
+        width: 100%;
+        margin-top: 2rem;
+        margin-left: 80px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .body-adm {
+        width: calc(100% - 120px);
+        margin-left: 70px;
+    }
+
+    select#select-cat,
+    select#select-estado {
+        width: 230px;
+    }
+
+    .formBody input {
+        width: 230px;
+    }
+
+    label.form-label {
+        font-size: 12px;
+    }
+
+    .contenedor-sesion {
+        width: calc(100% - 150px);
+    }
+
+    .contenedor-sesion {
+        width: 100%;
+    }
+}

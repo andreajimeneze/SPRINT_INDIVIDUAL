@@ -12,7 +12,7 @@ export class Empresa {
         try {
             const resultado = await fetch('http://localhost:4000/api/v1/empresa')
             const data = await resultado.json()
-          console.log(data)
+         
             return data
         } catch (error) {
             throw error;

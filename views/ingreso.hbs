@@ -3,14 +3,10 @@
 	<div class="container right-panel-active">
 		<!-- Sign Up -->
 		<div class="container__form container--signup">
-			{{#if msjError2 }}
-			<div class="error-registro">
-				<span>{{ msjError2 }}</span>
-			</div>
-			{{/if}}
-			{{#if msjError3 }}
-			<div class="error-registro">
-				<span>{{ msjError3 }}</span>
+			
+			{{#if msjInfo }}
+			<div class="info-registro">
+				<span>{{ msjInfo }}</span>
 			</div>
 			{{/if}}
 			<form action="/auth" method="post" class="form" id="form1">
@@ -21,7 +17,6 @@
 				</div>
 				{{/if}}
 				<input type="text" placeholder="Usuario" class="input" name="usuario" />
-				{{!-- <input type="email" placeholder="Email" class="input" name="email" /> --}}
 				<input type="password" placeholder="Password" class="input" name="password" />
 				<a href="#" class="link">Olvidaste tu clave?</a>
 				<button class="btn btn-in" value="btn-access" type="submit" id="btn-in"
@@ -66,13 +61,12 @@
 <div class="form-cel">
 	<form action="/auth" method="post" class="form" id="form11">
 		<h2 class="form__title">Acceso usuario</h2>
-		{{#if msjError }}
+		{{!-- {{#if msjError }}
 		<div class="error-ingreso">
 			<span>{{ msjError }}</span>
 		</div>
-		{{/if}}
+		{{/if}} --}}
 		<input type="text" placeholder="Usuario" class="input" name="usuario" />
-		{{!-- <input type="email" placeholder="Email" class="input" name="email" /> --}}
 		<input type="password" placeholder="Password" class="input" name="password" />
 		<a href="#" class="link">Olvidaste tu clave?</a>
 		<button class="btn btn-in" value="btn-access" type="submit" id="btn-in" name="btn-action">Ingresar</button>
@@ -140,10 +134,10 @@
 		}, 3000)
 	}
 
-	if (document.querySelector(".error-registro")) {
-		const msjeFlash = document.querySelector(".error-registro");
+	if (document.querySelector(".info-registro")) {
+		const msjeFlash = document.querySelector(".info-registro");
 		setTimeout(() => {
 			msjeFlash.classList.add("d-none");
-		}, 3000)
+		}, 4000)
 	}
 </script>

@@ -1,0 +1,42 @@
+#imgModif {
+    width: 50px;
+  }
+
+  .tablaPdtos {
+    width: 50%;
+  }
+
+  .body-adm {
+    width: calc(100% - 220px);
+    right: 0;
+    margin-left: 220px;
+  }
+
+  input {
+    background-color: #fff;
+    border: none;
+    padding: 0.5rem 0.9rem;
+    margin: 0.5rem 0;
+    width: 100%;
+  }
+
+  input.inputMod {
+    background-color: #fff;
+    border: none;
+    padding: 0.5rem 0.9rem;
+    margin: 0.5rem 0;
+    width: 70px;
+  }
+
+  input.inputModName {
+    width: 150px;
+  }
+
+  input.inputModLink {
+    width: 250px;
+  }
+
+  select#select-estadoMod {
+    width: 140px;
+    height: 30px;
+  }

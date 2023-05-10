@@ -38,7 +38,7 @@ export class Compra {
       });
 
       const datos = await respuesta.json();
-   
+  
       return datos;
     } catch (error) {
       console.log(error);
