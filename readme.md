@@ -13,7 +13,7 @@ Instrucciones para ejecutar el proyecto:
     - dotenv: paquete que permite la lectura sencilla de las variables de entorno en archivos de extensión;
     - pdfkit: librería que permite la generación de archivos pdf.
 
-Su instalación es su instalación se realiza en el terminal de la siguiente manera: npm i "nombre de la librería" (sin comillas) Asimismo, y para poder visualizar el proyecto en tiempo real, se sugiera instalar nodemon.
+Su instalación se realiza en el terminal de la siguiente manera: npm i "nombre de la librería" (sin comillas) Asimismo, y para poder visualizar el proyecto en tiempo real, se sugiera instalar nodemon.
 
 2) Este proyecto hace uso de API, implementada en el repositorio: https://github.com/andreajimeneze/API_SPRINT cuyas dependencias y otras consideraciones se encuentran en el Readme de ese repositorio.
 
