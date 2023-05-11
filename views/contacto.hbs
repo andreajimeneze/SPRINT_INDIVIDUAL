@@ -2,24 +2,19 @@
 <main class="ingreso">
   <div class="container right-panel-active">
 
-    <div class="container__form container--signup">
+    <div class="container-form container-contact">
       <form class="form" id="form">
-        <h2 class="form__title">Contáctanos</h2>
-        <h6>Envíanos tus comentarios, sugerencias o reclamos y te responderemos a la brevedad</h6>
-        <input type="text" placeholder="Nombres" class="input" name="nombre" required />
-        <input type="email" placeholder="Email" class="input" name="correo" required />
+        <h2 class="text-contact">Contáctanos</h2>
+        <h6 class="text-contact">Envíanos tus comentarios, sugerencias o reclamos y te responderemos a la brevedad</h6>
+        <input type="text" placeholder="Nombres" class="input-contact" name="nombre" required />
+        <input type="email" placeholder="Email" class="input-contact" name="correo" required />
         <div class="mb-3">
           <label for="textarea" class="form-label">Comentarios</label>
-          <textarea class="form-control" id="textarea" rows="3" name="mensaje" required></textarea>
+          <textarea class="form-control" id="textarea-contact" rows="3" name="mensaje" required></textarea>
         </div>
-        <input type="submit" id="button" class="btn btn-primary" value="Enviar">
+        <input type="submit" id="button-contact" class="btn btn-primary" value="Enviar">
       </form>
     </div>
-
-    <div class="overlay__panel overlay--right">
-      <input type="submit" id="button" class="btn btn-primary" value="Enviar">
-    </div>
-  </div>
   
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 

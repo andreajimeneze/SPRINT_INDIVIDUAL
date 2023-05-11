@@ -301,15 +301,7 @@ main.ingreso {
 		margin-left: 6vh;
 	}
 
-	/* #form22 {
-		display: flex;
-		top: 1;
-		position: absolute;
-		height: 500px;
-		margin-left: 6vh;
-	} */
-
-	#no_register, #register {
+		#no_register, #register {
 		cursor: pointer;
 	}
 
@@ -321,4 +313,20 @@ main.ingreso {
 		width: 20%;
 	}
 
+	#no_register, #register {
+		padding-top: 20px;
+	}
+	
+	#no_register:hover, #register:hover {
+		color: rgb(56, 56, 129);
+	}
+
+	.info-register {
+		display: flex;
+		justify-content: center;
+	}
+
+	.info-register span {
+		padding-top: 10px;
+	}
 }

@@ -1,0 +1,68 @@
+div.container-form.container-contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    width: 100%;
+    margin-right: 500px;
+}
+
+.container-form {
+height: 100%;
+width: 80%;
+position: absolute;
+top: 0;
+transition: all 0.6s ease-in-out;
+}
+
+.container-contact{
+left: 0;
+width: 50%;
+z-index: 2;
+}
+
+.form-title {
+font-weight: 300;
+margin: 0;
+margin-bottom: 1.25rem;
+}
+
+
+/* .overlay-panel {
+align-items: center;
+display: flex;
+flex-direction: column;
+height: 100%;
+justify-content: center;
+position: absolute;
+text-align: center;
+top: 0;
+transform: translateX(0);
+transition: transform 0.6s ease-in-out;
+width: 50%;
+} */
+
+.mb-3 textarea {
+    width: 550px !important;
+    font-size: 16px;
+    height: 150px;
+}
+
+
+/* @media screen and (max-width: 540px) {
+    input.input-contact, #textarea-contact, h2.text-contact, h6.text-contact, input#button-contact {
+        width: 380px !important;
+    }
+} */
+
+@media (max-width: 540px) {
+.text-contact, .input-contact, #textarea-contact, #button-contact {
+    width: 380px !important;
+    max-width: 280px;
+}
+
+.container.right-panel-active {
+    height: 530px;
+  }
+}

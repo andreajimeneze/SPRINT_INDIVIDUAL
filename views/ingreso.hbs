@@ -3,7 +3,7 @@
 	<div class="container right-panel-active">
 		<!-- Sign Up -->
 		<div class="container__form container--signup">
-			
+
 			{{#if msjInfo }}
 			<div class="info-registro">
 				<span>{{ msjInfo }}</span>
@@ -61,17 +61,14 @@
 <div class="form-cel">
 	<form action="/auth" method="post" class="form" id="form11">
 		<h2 class="form__title">Acceso usuario</h2>
-		{{!-- {{#if msjError }}
-		<div class="error-ingreso">
-			<span>{{ msjError }}</span>
-		</div>
-		{{/if}} --}}
+
 		<input type="text" placeholder="Usuario" class="input" name="usuario" />
 		<input type="password" placeholder="Password" class="input" name="password" />
 		<a href="#" class="link">Olvidaste tu clave?</a>
 		<button class="btn btn-in" value="btn-access" type="submit" id="btn-in" name="btn-action">Ingresar</button>
-
-		<span id="no_register">No estás registrado? Regístrate aquí</span>
+		<div>
+			<span id="no_register">No estás registrado? Regístrate aquí</span>
+		</div>
 	</form>
 	<div class="registro-cel">
 
@@ -85,9 +82,11 @@
 			<input type="text" placeholder="Nombre Usuario" class="input" name="usuario1" />
 			<input type="password" placeholder="Password" class="input" name="pass" />
 			<button class="btn btn-in" type="submit" value="btn-regist" id="" name="btn-action">Regístrate</button>
-
-			<span id="register">Si estás registrado: Ingresa aquí</span>
+			<div class="info-register">
+				<span id="register">Si estás registrado: Ingresa aquí</span>
+			</div>
 		</form>
+
 	</div>
 
 </div>
