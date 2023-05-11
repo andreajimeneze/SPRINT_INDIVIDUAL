@@ -36,7 +36,7 @@ export async function generarFactura(user_name, compraId, compra, datosEmpresa) 
     width: 450,
     align: 'center'
   });
-  // console.log(compraRealizada.compraId)
+  
   doc.moveDown(2);
   doc.fontSize(12).text(`Fecha: ${compra.fecha}`);
   doc.fontSize(12).text(`Cliente: ${user_name}`);
@@ -67,25 +67,29 @@ export async function generarFactura(user_name, compraId, compra, datosEmpresa) 
     width: 450,
     align: 'right'
   });
+  
   doc.text(`Impuesto: ${formatCL(compra.impuesto)}`, {
     width: 450,
     align: 'right'
   });
+  
   doc.text(`Monto bruto: ${formatCL(compra.monto_bruto)}`, {
     width: 450,
     align: 'right'
   });
+  
   doc.text(`Gasto envío: ${formatCL(compra.gasto_envio)}`, {
     width: 450,
     align: 'right'
   });
-  const total = compra.monto_bruto + compra.gasto_envio;
 
+  const total = compra.monto_bruto + compra.gasto_envio;
+  doc.moveDown(1);
   doc.font('Helvetica-Bold').fontSize(14).text(`Total: ${formatCL(total)}`, {
     width: 450,
     align: 'right'
   });
-  console.log(compra)
+  
   doc.end()
 
   return doc
