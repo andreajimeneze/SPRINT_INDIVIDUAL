@@ -15,7 +15,7 @@ Instrucciones para ejecutar el proyecto:
 
 Su instalación se realiza en el terminal de la siguiente manera: npm i "nombre de la librería" (sin comillas) Asimismo, y para poder visualizar el proyecto en tiempo real, se sugiera instalar nodemon.
 
-2) Este proyecto hace uso de API, implementada en el repositorio: https://github.com/andreajimeneze/API_SPRINT cuyas dependencias y otras consideraciones se encuentran en el Readme de ese repositorio.
+2) Este proyecto hace uso de API, implementada en el repositorio: https://github.com/andreajimeneze/API_SPRINT cuyas dependencias y otras consideraciones se encuentran en el Readme de ese repositorio. Mención especial es la necesidad de ejecución de las querys para cargar la base de datos de manera mínima para poder recorrer la aplicación. Para ingresar al mantenedor, se debe ingresar por el link ingreso con el usuario: admin y la contraseña 9165.
 
 3) El proyecto se encuentra levantado en puerto 3000 y se accede a él por navegador en http://localhost:3000.
 
