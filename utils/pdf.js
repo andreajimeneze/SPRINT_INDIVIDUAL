@@ -68,7 +68,7 @@ export async function generarFactura(user_name, compraId, compra, datosEmpresa) 
     align: 'right'
   });
   
-  doc.text(`Impuesto: ${formatCL(compra.impuesto)}`, {
+  doc.text(`IVA 19%: ${formatCL(compra.impuesto)}`, {
     width: 450,
     align: 'right'
   });

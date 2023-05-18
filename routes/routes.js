@@ -27,6 +27,7 @@ const user = new Usuario();
 const cat = new Categoria();
 const est = new Estado();
 let usuario;
+let userRol; 
 
 
 // Métodos de Middlewares
@@ -57,19 +58,21 @@ router.use(flash({
 // VISTA INDEX (LINK CATEGORÍAS CON GROUP BY)
 router.get('/', async (req, res) => {
   usuario = req.session.user;
+  userRol = 1;
   const categ = await cat.getCategorias()
   const cantCat = await pdto.getCantPdtoCateg();
 
-  res.render('index', { categ, cantidad: cantCat, user: usuario })
+  res.render('index', { categ, cantidad: cantCat, user: usuario, userRol })
 })
 
 // CARGAR TIENDA CON PRODUCTOS (JOIN CON TABLA CATEGORÍA)
 router.get('/tienda', async (req, res) => {
   usuario = req.session.user;
   console.log(usuario)
+  userRol = 1;
   const productos = await pdto.getProductsByCategory();
 
-  res.render('tienda', { productos, user: usuario })
+  res.render('tienda', { productos, user: usuario, userRol })
 })
 
 //ORDER BY EN TIENDA
@@ -97,13 +100,15 @@ router.get('/productos', async (req, res) => {
 // VISTA CONTACTO
 router.get('/contacto', (req, res) => {
   usuario = req.session.user;
-  res.render('contacto', { user: usuario })
+  userRol = 1;
+  res.render('contacto', { user: usuario, userRol })
 })
 
 // VISTA NOSOTROS 
 router.get('/nosotros', (req, res) => {
   usuario = req.session.user;
-  res.render('nosotros', { user: usuario })
+  userRol = 1;
+  res.render('nosotros', { user: usuario, userRol })
 })
 
 
@@ -295,6 +300,7 @@ router.post('/compra', async (req, res) => {
 
   // Se obtiene el id de compra y se utiliza como número de factura.
   const compraId = compraRealizada.compraId;
+  
 
   const empresa = new Empresa();
   const datosEmpresa = await empresa.getDatosEmpresa();
@@ -305,7 +311,7 @@ router.post('/compra', async (req, res) => {
 
   // Envia el archivo PDF como respuesta al cliente.
   res.setHeader('Content-Type', 'application/pdf');
-  res.setHeader('Content-Disposition', 'attachment; filename=factura.pdf');
+  res.setHeader('Content-Disposition', `attachment; filename=factura ${ compraId }.pdf`);
 
   docGenerado.pipe(res)
 
@@ -362,7 +368,7 @@ router.delete('/adm/:id', async (req, res) => {
 
 // OBTENER PRODUCTOS PARA MANTENEDOR MODIFICAR EN VISTA PROTEGIDA
 router.get('/modif', verificarTokenAdmin, async (req, res) => {
-  usuario = req.session.user;
+  usuario = req.session.user.nombres;
   const prod = await pdto.getPdtosEstado()
   const categ = await cat.getCategorias();
   const estados = await est.getEstados();
