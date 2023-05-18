@@ -53,7 +53,7 @@
             <a class="nav-link" href="/ingreso">Ingreso</a>
             {{/if}}
             
-            {{#if userRol }}
+            {{#if (eq userRol 1) }}
              <a class="nav-link" href="/sesionadm">Admin</a>
              {{else}}
             <div class="cart-notification" value="">1</div>

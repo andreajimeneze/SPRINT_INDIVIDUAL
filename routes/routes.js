@@ -58,7 +58,12 @@ router.use(flash({
 // VISTA INDEX (LINK CATEGORÍAS CON GROUP BY)
 router.get('/', async (req, res) => {
   usuario = req.session.user;
-  userRol = 1;
+  if( usuario ) {
+    userRol = usuario.rol_id;
+  } else {
+    userRol = 2;
+  }
+  
   const categ = await cat.getCategorias()
   const cantCat = await pdto.getCantPdtoCateg();
 
@@ -68,8 +73,12 @@ router.get('/', async (req, res) => {
 // CARGAR TIENDA CON PRODUCTOS (JOIN CON TABLA CATEGORÍA)
 router.get('/tienda', async (req, res) => {
   usuario = req.session.user;
-  console.log(usuario)
-  userRol = 1;
+  if( usuario ) {
+    userRol = usuario.rol_id;
+  } else {
+    userRol = 2;
+  }
+
   const productos = await pdto.getProductsByCategory();
 
   res.render('tienda', { productos, user: usuario, userRol })
@@ -100,14 +109,24 @@ router.get('/productos', async (req, res) => {
 // VISTA CONTACTO
 router.get('/contacto', (req, res) => {
   usuario = req.session.user;
-  userRol = 1;
+  if( usuario ) {
+    userRol = usuario.rol_id; 
+  } else {
+    userRol = 2;
+  }
+
   res.render('contacto', { user: usuario, userRol })
 })
 
 // VISTA NOSOTROS 
 router.get('/nosotros', (req, res) => {
   usuario = req.session.user;
-  userRol = 1;
+  if( usuario ) {
+    userRol = usuario.rol_id;
+  } else {
+    userRol = 2;
+  }
+  
   res.render('nosotros', { user: usuario, userRol })
 })
 
@@ -177,7 +196,7 @@ router.post('/ingreso', async (req, res) => {
   const rol = 2; // Desde el registro de usuario sólo pueden registrarse usuarios rol 2
 
   const newUsuario = await user.setUsuario(nombres, apellidos, rut, direccion, telefono, email, usuario1, pass, rol)
-console.log(newUsuario)
+
   if (newUsuario === true) {
     req.flash('info', 'Usuario registrado. Puedes ingresar a tu cuenta')
     res.redirect('ingreso')

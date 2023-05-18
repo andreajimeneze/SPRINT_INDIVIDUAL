@@ -22,13 +22,13 @@ export class Usuario {
         try {
           const resultado = await fetch('http://localhost:4000/api/v1/usuario')
           const data = await resultado.json();
-      
+
           let index = data.findIndex((e) => e.usuario === usuario)
           const userExist = data[index];
-            
+          
           if (userExist) {
             if (userExist.password === password) {
-              return { success: true, user: userExist, message: 'Usuario con credenciales' };
+              return { success: true, user: userExist, userRol: userExist.rol_id, message: 'Usuario con credenciales' };
             } else {
               return { success: false, message: 'Nombre de usuario o contraseña incorrectos' };
             }
